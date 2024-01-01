@@ -21,4 +21,5 @@ Route::controller(AuthController::class)->group(function () {
 });
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'home')->name('home');
+    Route::get('/about', 'about')->name('about');
 });

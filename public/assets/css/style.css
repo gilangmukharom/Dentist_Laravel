@@ -15,7 +15,7 @@
     min-height: 40vh;
 }
 
-.header .img-wrapper img {
+.header .img-wrapper img, .img-about img {
     background-size: cover;
     object-fit: cover;
     background-position: center;
@@ -23,6 +23,18 @@
 
 .header .img-wrapper{
     height: 80vh;
+}
+
+.img-about{
+    position: relative;
+    height: 50vh;
+    z-index: 3;
+}
+
+.about-wave{
+    bottom: 0;
+    right: 0;
+    z-index: 4;
 }
 
 .card-testi img{

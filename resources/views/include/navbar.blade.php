@@ -10,10 +10,10 @@
         </div>        
         <ul class="navbar-nav">
             <li class="nav-item me-3">
-                <a class="nav-link text-prim font-weight-bold" href="href="{{ url('/') }}" style="font-weight: bold;">Home</a>
+                <a class="nav-link text-prim font-weight-bold" href="{{ url('/') }}" style="font-weight: bold;">Home</a>
             </li>
             <li class="nav-item me-3">
-                <a class="nav-link text-prim" href="#footer" style="font-weight: bold;">About</a>
+                <a class="nav-link text-prim" href="{{ url('/about') }}" style="font-weight: bold;">About</a>
             </li>
             <li class="nav-item me-3">
                 <a class="nav-link text-prim" href="#footer" style="font-weight: bold;">Contact Us</a>
