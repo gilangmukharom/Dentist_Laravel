@@ -23,7 +23,7 @@
     </div>
 
     <div class="about-box">
-        <div class="about-content position-relative">
+        <div class="about-content">
             <div class="about-text w-50">
                 <h1>About Us</h1>
                 <p>GIO Dental Care are located in Strategic Locations in Yogyakarta (Babarsari, Ambarukmo, Seturan, Gejayan, Kaliurang, Godean), Magelang, Semarang, Jember, and Bali (Denpasar), Indonesia.
@@ -32,8 +32,10 @@
                     GiO Restores, Beautifies, and Enhances the natural beauty of your smile with the latest technology, resulting in a healthy and beautiful smile. We treat yours wholeheartedly.
                     Sayang GiO, Ingat Gigi, Ingat GiO!</p>
             </div>
-                <img src="{{ asset('assets/img/login-animation.png')}}" alt="" class="img-fluid w-25 position-absolute">
-                <img src="{{asset('assets/img/wave.png')}}" alt="" class="position-absolute about-wave">
+            <div class="about-image">
+              <img src="{{ asset('assets/img/login-animation.png')}}" alt="" class="img-about w-25">
+              <img src="{{asset('assets/img/wave.png')}}" alt="" class="about-wave">
+            </div>
         </div>
     </div>
   </div>

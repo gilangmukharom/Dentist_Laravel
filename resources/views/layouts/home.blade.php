@@ -42,10 +42,10 @@
     </div>
   </div>
 
-  <div class="container-text">
-    <div class="text-content">
+  <div class="container-text d-flex flex-row justify-content-between w-90 m-auto mt-5 pb-5">
+    <div class="text-content d-flex flex-column justify-content-center">
       <h2>Mari Jaga Kesehatan Gigimu!</h2>
-      <p>Menjaga kesehatan gigi dan mulut sebenarnya tidak sulit karena dapat dilakukan sendiri di rumah. Yang
+      <p class="w-80">Menjaga kesehatan gigi dan mulut sebenarnya tidak sulit karena dapat dilakukan sendiri di rumah. Yang
         terpenting adalah sikap konsisten dan menjadikannya sebagai bagian dari rutinitas. Kebiasaan yang harus
         dilakukan untuk menjaga mesehatan gigi dan mulut adalah rutin menggosok gigi, menggunakan sikat gigi
         yang lembut dan pasta gigi berflouride, berkumur dengan obat kumur, membersihkan gigi menggunakan benang
@@ -54,14 +54,13 @@
       <h2>Dr.drg. Endah Aryati Eko Ningtyas,MDSc</h2>
     </div>
     <div class="text-image">
-      <img src="" alt="">
-      <img src="" alt="">
+      <img src="{{ asset('assets/img/content1.png') }}" alt="" class="w-80">
     </div>
   </div>
 
-  <div class="container-gallery w-100 bg-1">
+  <div class="container-gallery w-100 bg-1 p-5">
     <h1 class="text-center text-white m-5">Gallery Video Edukasi Menyikat Gigi</h1>
-    <div class="content-gallery d-flex justify-content-around">
+    <div class="content-gallery d-flex justify-content-around p-5 flex-wrap gap-sm-5">
       <div class="youtube_frame">
         <iframe src="https://www.youtube.com/embed/nvOHBRzDs4A" class="w-100 h-100"></iframe>
       </div>
@@ -104,6 +103,10 @@
       </div>
     </div>
   </div>
+
+  <footer>
+    @include('include.footer')
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
   </script>

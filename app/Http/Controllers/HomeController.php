@@ -13,4 +13,9 @@ class HomeController extends Controller
     {
         return view('layouts/about');
     }
+
+    public function errorPage()
+    {
+        return view('auth/error');
+    }
 }
