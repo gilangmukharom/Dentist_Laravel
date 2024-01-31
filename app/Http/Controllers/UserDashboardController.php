@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Questions;
+use App\Models\Soal_keterampilan;
 use Illuminate\Http\Request;
 
 class UserDashboardController extends Controller
@@ -48,8 +50,42 @@ class UserDashboardController extends Controller
     }
     public function quiz_keterampilan()
     {
-        return view('user.quiz_keterampilan');
+        $questions = Questions::inRandomOrder()->limit(1)->first(); // Ambil pertanyaan secara acak
+        return view('user/quiz_keterampilan', compact('questions'));
     }
+
+    public function checkAnswer(Request $request)
+    {
+        $question = Questions::findOrFail($request->question_id);
+
+        // Mengambil jawaban benar dari database
+        $correctAnswer = $question->correct_option;
+
+        // Mendapatkan jawaban yang dikirimkan oleh pengguna
+        $selectedOption = $request->selected_option;
+
+        // Memeriksa apakah jawaban yang dikirimkan benar atau salah
+        $isCorrect = ($selectedOption == $correctAnswer);
+
+        // Mengembalikan respons JSON dengan status jawaban benar atau salah
+        return response()->json(['correct' => $isCorrect]);
+    }
+
+    public function getNextQuestion($questionNumber)
+    {
+        $nextQuestion = Questions::find($questionNumber + 1);
+
+        if (!$nextQuestion) {
+            return response()->json(['error' => 'Question not found'], 404);
+        }
+
+        return response()->json([
+            'question' => $nextQuestion->question,
+            'image_path1' => asset('assets/img/pengetahuan/' . $nextQuestion->image_path),
+            'image_path2' => asset('assets/img/pengetahuan/' . $nextQuestion->image_path2),
+        ]);
+    }
+    
     public function quiz_pengetahuan()
     {
         return view('user.quiz_pengetahuan');

@@ -2,14 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
     public function register(){
         return view('auth/register');
     }
+
+    public function register_auth(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'username' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'alamat' => 'required|string',
+            'sekolah' => 'required|string',
+            'nama_ortu' => 'required|string',
+            'password' => 'required|string|min:6',
+        ]);
+
+        $user = User::create([
+            'username' => $request->username,
+            'tempat_lahir' => $request->tempat_lahir,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'alamat' => $request->alamat,
+            'sekolah' => $request->sekolah,
+            'nama_ortu' => $request->nama_ortu,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect('/login')->with('registration_success', true);
+    }
     public function login(){
         return view('auth/login');
+    }
+
+    public function login_auth(Request $request)
+    {
+        // Validasi data
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+            return redirect('/user/index');
+        }
+
+        // Jika login gagal
+        return back()->withErrors(['username' => 'Username atau password salah!']);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

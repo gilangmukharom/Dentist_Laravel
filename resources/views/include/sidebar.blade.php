@@ -79,6 +79,15 @@
                 </ul>
               </div>
             </li>
+            <li class="nav-item">
+              <a class="nav-link active text-0" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+                <span>Logout</span>
+              </a>
+            </li>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
           </ul>
         </div>
       </nav>

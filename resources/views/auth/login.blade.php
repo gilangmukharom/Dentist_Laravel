@@ -28,29 +28,45 @@
     </div>
 
     <div class="login-form w-100 m-auto">
-      <form action="" method="post" class="form-control d-flex flex-column gap-3 m-auto">
+      <form action="{{ url('/login_auth') }}" method="post" class="form-control d-flex flex-column gap-3 m-auto">
+        @csrf
+
         <h1 class="m-auto">Login</h1>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul class="list-unstyled text-center">
+            @foreach ($errors->all() as $error)
+            <li>
+              {{ $error }}
+            </li>
+            @endforeach
+          </ul>
+        </div>
+        @endif
         <div class="login-username d-flex flex-column">
           <label for="username">Username</label>
           <input type="text" name="username" class="form-control">
         </div>
 
         <div class="form-group password-input-group">
-            <label for="password">Password</label>
-            <div class="input-group">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility()">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                </div>
+          <label for="password">Password</label>
+          <div class="input-group">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button" onclick="togglePasswordVisibility()">
+                <i class="fas fa-eye"></i>
+              </button>
             </div>
+          </div>
         </div>
 
         <input type="submit" value="Login" class="bg-2 w-50 m-auto btn">
 
         <div class="register-buton m-auto">
-          <a href="{{ route('register') }}" class="d-flex text-decoration-none"><p style="color: #A5A5A5">Belum punya akun?</p><p style="color: #FFBD13">Daftar disini</p></a>
+          <a href="{{ route('register') }}" class="d-flex text-decoration-none">
+            <p style="color: #A5A5A5">Belum punya akun?</p>
+            <p style="color: #FFBD13">Daftar disini</p>
+          </a>
         </div>
 
       </form>
@@ -60,18 +76,18 @@
 
   <script>
     function togglePasswordVisibility() {
-        var passwordInput = document.getElementById('password');
-        var showPasswordBtn = document.querySelector('.password-input-group button i');
+      var passwordInput = document.getElementById('password');
+      var showPasswordBtn = document.querySelector('.password-input-group button i');
 
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            showPasswordBtn.className = 'fas fa-eye-slash';
-        } else {
-            passwordInput.type = 'password';
-            showPasswordBtn.className = 'fas fa-eye';
-        }
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        showPasswordBtn.className = 'fas fa-eye-slash';
+      } else {
+        passwordInput.type = 'password';
+        showPasswordBtn.className = 'fas fa-eye';
+      }
     }
-</script>
+  </script>
 </body>
 
 </html>
