@@ -24,26 +24,40 @@
     </div>
     <div class="content-panduan-pretest w-90 z-1 bg-light rounded position-absolute align-self-center">
       <div class="title-panduan">
-        <div class="time-panduan p-3">
-          <h1>Test Sikap Tans Dent</h1>
-          <p>Tangaal : 2 Februari 2024</p>
-          <p>Jam : 07.00</p>
+        <div class="time-panduan p-3 w-50">
+          <h1>Selamat kamu berhasil melanjutkan ke soal bagian 2</h1>
         </div>
         <div class="panduan-pretest d-flex flex-column align-items-center m-auto w-90">
           <div class="title-panduan-pretest">
-            <h1>Panduan mengisi test sikap</h1>
+            <h2>Panduan mengisi test sikap</h2>
           </div>
           <div class="box-panduan">
-            <p>Pre-test dentist digunakan untuk mengetahui pengetahuan, sikap, tindakan serta debris indikator pada anak.
-              Dalam hal ini pre test akan di bagi dalam empat sesi pengisian:
+            <p>Pada bagian test sikap ini kamu di tugaskan memilih yang paling setuju atau tidak setuju dalam jawabanmu.
+                Setiap jawaban yang benar akan memperoleh poin 4.
             </p>
-            <p>1.Test pengetahuan</p>
-            <p>1.Test sikap</p>
-            <p>1.Test tindakan</p>
-            <p>1.Test debris index</p>
-            <p>Selama proses menjalankan test anak diharapkan untuk menyelesaikan seluruh test yang ada.
-              Apabila sudah berhasil mengisi pre test anak dapat mengakses menu lain yang tersedia di tans dent ini.
-            </p>
+            <p>Dengan keterangan sebagai berikut:</p>
+            <table class="border border-2 border-black">
+                <tr>
+                    <td>SS</td>
+                    <td class="gap">:</td>
+                    <td>Sangat Setuju</td>
+                </tr>
+                <tr>
+                    <td>S</td>
+                    <td class="gap">:</td>
+                    <td>Setuju</td>
+                </tr>
+                <tr>
+                    <td>TS</td>
+                    <td class="gap">:</td>
+                    <td>Tidak Setuju</td>
+                </tr>
+                <tr>
+                    <td>STS</td>
+                    <td class="gap">:</td>
+                    <td>Sangat Tidak Setuju</td>
+                </tr>
+            </table>
             <p>Semangat dan selamat mengerjakan!</p>
           </div>
           <div class="button-panduan p-3">

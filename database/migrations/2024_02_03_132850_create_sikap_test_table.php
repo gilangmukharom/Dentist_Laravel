@@ -6,9 +6,12 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('pretests', function (Blueprint $table) {
+        Schema::create('sikap_test', function (Blueprint $table) {
             $table->id();
             $table->text('text');
             $table->json('choices');
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pretests');
+        Schema::dropIfExists('sikap_test');
     }
 };
