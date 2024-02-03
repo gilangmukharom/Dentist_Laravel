@@ -39,14 +39,17 @@
       <span class="error-message" id="error-message1"></span>
       <div id="correct-answer-message" style="display: none; color: green;">Jawaban Benar!</div>
     </div>
-    <button id="next-question-btn" class="btn btn-primary">Soal Berikutnya</button>
   </div>
 
 
-  <script>
+<script>
     $(document).ready(function() {
       let timer = 30; // Waktu quiz (dalam detik)
       let currentQuestion = 1; // Nomor soal saat ini
+      let answeredQuestions = [];
+      let correctAnswersCount = 0; // Menambahkan variabel untuk menghitung jawaban benar
+      const maxQuestions = 3; // Menentukan batas jumlah pertanyaan
+
       loadQuestion(currentQuestion); // Memuat soal pertama
 
       let interval = setInterval(function() {
@@ -77,14 +80,24 @@
               console.log("Jawaban Benar!");
               $('#correct-answer-message').show();
               $('#error-message1').hide();
+              answeredQuestions.push(questionId);
+              correctAnswersCount++; // Menambah jumlah jawaban benar
+
+              if (correctAnswersCount >= maxQuestions) {
+                // Jika sudah menjawab 3x, alihkan ke halaman finish_keterampilan
+                window.location.href = '/user/finish_keterampilan';
+                return;
+              }
             } else {
               // Logika jika jawaban salah
-              $('#error-message1').text('Jawaban Salah').show(); // Menampilkan pesan jawaban salah
-              $('#correct-answer-message').hide(); // Menyembunyikan pesan jawaban benar jika ada
+              $('#error-message1').text('Jawaban Salah').show();
+              $('#correct-answer-message').hide();
             }
+
             // Tambahkan logika untuk memuat soal berikutnya setelah mendapatkan jawaban
-            currentQuestion++;
-            loadQuestion(currentQuestion);
+            getNextRandomQuestionId(answeredQuestions, function() {
+              loadQuestion(currentQuestion);
+            });
           },
           error: function() {
             // Logika jika ada kesalahan
@@ -93,10 +106,37 @@
         });
       });
 
+      // Fungsi untuk memuat pertanyaan secara acak yang belum pernah muncul
+      function getNextRandomQuestionId(answeredQuestions, callback) {
+  $.ajax({
+    url: '/quiz/get-next-random-question',
+    method: 'GET',
+    data: {
+      answered_questions: answeredQuestions,
+    },
+    success: function (response) {
+      // Pastikan response memiliki properti question_id
+      if (response.question_id) {
+        currentQuestion = response.question_id;
+        callback(); // Panggil callback setelah mendapatkan pertanyaan acak
+        resetTimer();
+      } else {
+        console.log('No question_id in response');
+        console.log("Semua pertanyaan sudah dijawab.");
+        // Tambahkan logika jika semua pertanyaan sudah dijawab
+        window.location.href = '/user/finish_keterampilan';
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log('Error loading random question:', textStatus, errorThrown);
+    }
+  });
+}
+
       // Fungsi untuk memuat soal menggunakan Ajax
-      function loadQuestion(questionNumber) {
+      function loadQuestion(questionId) {
         $.ajax({
-          url: '/quiz/get-next-question/' + questionNumber,
+          url: '/quiz/get-next-question/' + questionId,
           method: 'GET',
           success: function(response) {
             // Perbarui UI dengan soal baru
@@ -107,13 +147,19 @@
             // Sembunyikan pesan jawaban benar/salah
             $('#correct-answer-message, #error-message1').hide();
           },
-          error: function() {
-            console.log('Error loading question');
+          error: function(jqXHR, textStatus, errorThrown) {
+            console.log('Error loading question:', textStatus, errorThrown);
           }
         });
       }
+
+      function resetTimer() {
+        timer = 30;
+      }
     });
   </script>
+
+
 </body>
 
 </html>

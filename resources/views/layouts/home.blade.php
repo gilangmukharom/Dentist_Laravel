@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+  @vite(['resources/css/style.css', 'resources/js/app.js']);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -24,7 +24,7 @@
       <h1>Selamat Datang di Tans’ Dent </h1>
       <p>Tan’s Dent-Card QR Model Berbasis Website merupakan website edukasi menggosok gigi dengan media
         interaktif untuk memfasilitasi keterampilan menggosok gigi anak usia dini</p>
-      <input type="button" value="Masuk" class="btn bg-2 w-50">
+      <button value="Masuk" class="btn bg-2 w-50" onclick="window.location='{{ url("/login") }}'">Masuk</button>
     </div>
   </div>
 

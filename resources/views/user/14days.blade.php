@@ -1,6 +1,6 @@
 @extends('include.sidebar')
 @section('content')
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+@vite(['resources/css/style.css', 'resources/js/app.js']);
     <h1 class="h2">Daily Activity 14 Days</h1>
 
     <div class="content-14days">

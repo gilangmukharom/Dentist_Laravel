@@ -63,7 +63,7 @@
                   <i class="fa fa-cogs" aria-hidden="true"></i> Teeth Q
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="#" id="activity-link">Pretest</a></li>
+                  <li><a class="dropdown-item" href="#" id="pretest-link">Pretest</a></li>
                   <li><a class="dropdown-item" href="#" id="activity-link">Postest</a></li>
                 </ul>
               </div>
@@ -90,6 +90,10 @@
             </form>
           </ul>
         </div>
+        <button class="btn btn-toggle d-md-none w-100 bg-1" id="sidebarToggle">
+          <i class="fa fa-align-justify" aria-hidden="true"></i>
+          <span>Menu</span>
+        </button>
       </nav>
 
       <!-- Content -->
@@ -106,6 +110,10 @@
 
   <script>
     $(document).ready(function() {
+      $('#sidebarToggle').on('click', function() {
+        $('#sidebar').toggleClass('d-none'); // Toggling the sidebar visibility
+        $('#main-content').toggleClass('col-md-9 ms-sm-auto col-lg-10'); // Adjusting main content width
+      });
       // Fungsi untuk memuat konten dinamis
       function loadContent(url) {
         $.ajax({
@@ -140,8 +148,6 @@
         // Load content based on the clicked link
         if (linkId === 'dashboard-link') {
           loadContent('{{ route("user.index") }}');
-        } else if (linkId === 'activity-link') {
-          loadContent('{{ route("user.activity") }}');
         } else if (linkId === 'video-link') {
           loadContent('{{ route("user.video") }}');
         } else if (linkId === 'teeth-link') {
@@ -154,6 +160,8 @@
           loadContent('{{ route("user.quiz") }}');
         } else if (linkId === 'panduan-link') {
           loadContent('{{ route("user.panduan") }}');
+        } else if (linkId === 'pretest-link') {
+          window.location.href = '/user/panduan_pretest';;
         }
 
         $('.nav-link').removeClass('active text-1');

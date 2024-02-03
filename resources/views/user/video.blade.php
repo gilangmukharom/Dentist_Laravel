@@ -1,7 +1,7 @@
 @extends('include.sidebar')
 
 @section('content')
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+@vite(['resources/css/style.css', 'resources/js/app.js'])
     <h1 class="h2">Video</h1>
     <hr>
     <div class="box-video d-flex flex-row">

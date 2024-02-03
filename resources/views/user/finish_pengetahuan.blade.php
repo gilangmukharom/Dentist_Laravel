@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+  @vite(['resources/css/style.css', 'resources/js/app.js']);
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -24,6 +24,7 @@
         </div>
         <div class="body-finish-pengetahuan d-flex flex-column justify-content-center align-items-center">
             <img src="{{asset('assets/img/award.png')}}" class="w-75" alt="">
+            {{ $percentageScore }}%
             <div class="button-finish">
                 <button>Dashboard</button>
                 <button>Lihat Skor</button>

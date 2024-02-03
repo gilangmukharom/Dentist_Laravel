@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('option2');
             $table->string('correct_option'); // Menyimpan nilai pilihan yang benar
             $table->string('image_path')->nullable(); // Menyimpan path gambar
+            $table->string('image_path2')->nullable(); // Menyimpan path gambar
             $table->timestamps();
         });
     }

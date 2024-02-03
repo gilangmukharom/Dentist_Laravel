@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pretest;
 use App\Models\Questions;
 use App\Models\Soal_keterampilan;
 use Illuminate\Http\Request;
@@ -73,7 +74,7 @@ class UserDashboardController extends Controller
 
     public function getNextQuestion($questionNumber)
     {
-        $nextQuestion = Questions::find($questionNumber + 1);
+        $nextQuestion = Questions::find($questionNumber);
 
         if (!$nextQuestion) {
             return response()->json(['error' => 'Question not found'], 404);
@@ -84,6 +85,22 @@ class UserDashboardController extends Controller
             'image_path1' => asset('assets/img/pengetahuan/' . $nextQuestion->image_path),
             'image_path2' => asset('assets/img/pengetahuan/' . $nextQuestion->image_path2),
         ]);
+    }
+
+    public function getNextRandomQuestion(Request $request)
+    {
+        $answeredQuestions = $request->answered_questions;
+
+        // Ambil pertanyaan secara acak yang belum pernah muncul
+        $nextQuestion = Questions::whereNotIn('id', $answeredQuestions)
+            ->inRandomOrder()
+            ->first();
+
+        if (!$nextQuestion) {
+            return response()->json(['error' => 'All questions answered'], 404);
+        }
+
+        return response()->json(['question_id' => $nextQuestion->id]);
     }
     
     public function quiz_pengetahuan()
@@ -105,5 +122,87 @@ class UserDashboardController extends Controller
     public function skor_pengetahuan()
     {
         return view('user.skor_pengetahuan');
+    }
+
+    public function panduan_pretest()
+    {
+        return view('user.panduan_pretest');
+    }
+
+    public function pretest()
+    {
+        $pretests = Pretest::all();
+        return view('user.pretest', compact('pretests'));
+    }
+
+    public function hasil_pretest()
+    {
+        $percentageScore = session('pretest_score');
+
+        return view('user.finish_pengetahuan', compact('percentageScore'));
+    }
+
+    public function cek_pretest(Request $request)
+    {
+        $answers = $request->input('answers');
+        $result = '';
+        $score = 0;
+        $totalQuestions = count($answers);
+
+        foreach ($answers as $answer) {
+            $pretests = Pretest::find($answer['question_id']);
+
+            if ($pretests->correct_answer === $answer['answer']) {
+                $score++;
+            }
+        }
+
+        $percentageScore = ($score / $totalQuestions) * 100;
+
+        session(['pretest_score' => $percentageScore]);
+        $result .= '<br>Skor Anda:<br>';
+        $result .= $percentageScore . '%';
+        // return response()->json(['result' => $result, 'score' => $score]);
+        return response()->json(['result' => $result, 'percentage_score' => $percentageScore]);
+    }
+
+    public function panduan_sikap()
+    {
+        return view('user.panduan_sikap');
+    }
+
+    public function test_sikap()
+    {
+        return view('user.test_sikap');
+    }
+
+    public function panduan_tindakan()
+    {
+        return view('user.panduan_tindakan');
+    }
+
+    public function test_tindakan()
+    {
+        return view('user.test_tindakan');
+    }
+
+    public function panduan_debris()
+    {
+        return view('user.panduan_debris');
+    }
+
+    public function test_debris()
+    {
+        return view('user.test_debris');
+    }
+
+    public function panduan_postest()
+    {
+        return view('user.panduan_postest');
+    }
+
+    public function postest()
+    {
+        return view('user.postest');
     }
 }
