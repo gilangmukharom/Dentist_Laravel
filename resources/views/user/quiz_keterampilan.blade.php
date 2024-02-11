@@ -26,140 +26,90 @@
   <div class="box-keterampilan d-flex flex-column justify-content-center align-items-center">
     <div class="soal-keterampilan m-5 bg-light p-4 rounded-5">
       <h1>
-        {{ $questions->question }}
+        {{ $q_keterampilans->pertanyaan }}
       </h1>
     </div>
     <div class="jawaban-keterampilan d-flex flex-column flex-lg-row flex-md-row flex-sm-column gap-5 justify-content-center align-items-center">
-      <button class="option" data-answer="option1">
-        <img src="{{ asset('assets/img/pengetahuan/' . $questions->image_path) }}" alt="Option 1">
-      </button>
-      <button class="option" data-answer="option2">
-        <img src="{{ asset('assets/img/pengetahuan/' . $questions->image_path2) }}" alt="Option 2">
-      </button>
-      <span class="error-message" id="error-message1"></span>
-      <div id="correct-answer-message" style="display: none; color: green;">Jawaban Benar!</div>
+      <form action="{{ route('user.cek_quiz_keterampilan') }}" method="POST" id="quizForm">
+        @csrf
+        <div class="pilihan d-flex flex-rows">
+          @foreach($q_keterampilans->jawaban as $jawaban)
+          <input type="radio" name="jawaban" value="{{$jawaban->id}}">
+          <img src="{{ asset('assets/img/Keterampilan/' . $jawaban->image_path) }}" alt="Option Image" width="50"><br>
+          @endforeach
+        </div>
+        <button type="button" id="nextButton" class="btn btn-primary">Next</button>
+        <button type="submit" id="submitButton" class="btn btn-primary">Submit</button>
+        <input type="hidden" name="answers[]" id="answers" value="">
+        <input type="hidden" id="currentQuestionId" value="{{ $q_keterampilans->id }}">
+      </form>
     </div>
   </div>
 
-
-<script>
-    $(document).ready(function() {
-      let timer = 30; // Waktu quiz (dalam detik)
-      let currentQuestion = 1; // Nomor soal saat ini
-      let answeredQuestions = [];
-      let correctAnswersCount = 0; // Menambahkan variabel untuk menghitung jawaban benar
-      const maxQuestions = 3; // Menentukan batas jumlah pertanyaan
-
-      loadQuestion(currentQuestion); // Memuat soal pertama
-
-      let interval = setInterval(function() {
-        $('#timer').text(timer--);
-        if (timer < 0) {
-          clearInterval(interval);
-          // Logika jika waktu habis
-        }
-      }, 1000);
-
-      $('.option').on('click', function() {
-        let selectedOption = $(this).data('answer').toString();
-        let questionId = currentQuestion;
-
-        console.log("Selected Option: " + selectedOption);
-
-        $.ajax({
-          url: '/quiz/check-answer',
-          method: 'POST',
-          data: {
-            _token: '{{ csrf_token() }}',
-            question_id: questionId,
-            selected_option: selectedOption,
-          },
-          success: function(response) {
-            console.log("Server Response: " + response.correct);
-            if (response.correct) {
-              console.log("Jawaban Benar!");
-              $('#correct-answer-message').show();
-              $('#error-message1').hide();
-              answeredQuestions.push(questionId);
-              correctAnswersCount++; // Menambah jumlah jawaban benar
-
-              if (correctAnswersCount >= maxQuestions) {
-                // Jika sudah menjawab 3x, alihkan ke halaman finish_keterampilan
-                window.location.href = '/user/finish_keterampilan';
-                return;
-              }
-            } else {
-              // Logika jika jawaban salah
-              $('#error-message1').text('Jawaban Salah').show();
-              $('#correct-answer-message').hide();
-            }
-
-            // Tambahkan logika untuk memuat soal berikutnya setelah mendapatkan jawaban
-            getNextRandomQuestionId(answeredQuestions, function() {
-              loadQuestion(currentQuestion);
-            });
-          },
-          error: function() {
-            // Logika jika ada kesalahan
-            console.log('Error checking answer');
-          }
-        });
-      });
-
-      // Fungsi untuk memuat pertanyaan secara acak yang belum pernah muncul
-      function getNextRandomQuestionId(answeredQuestions, callback) {
-  $.ajax({
-    url: '/quiz/get-next-random-question',
-    method: 'GET',
-    data: {
-      answered_questions: answeredQuestions,
-    },
-    success: function (response) {
-      // Pastikan response memiliki properti question_id
-      if (response.question_id) {
-        currentQuestion = response.question_id;
-        callback(); // Panggil callback setelah mendapatkan pertanyaan acak
-        resetTimer();
-      } else {
-        console.log('No question_id in response');
-        console.log("Semua pertanyaan sudah dijawab.");
-        // Tambahkan logika jika semua pertanyaan sudah dijawab
-        window.location.href = '/user/finish_keterampilan';
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      console.log('Error loading random question:', textStatus, errorThrown);
-    }
-  });
-}
-
-      // Fungsi untuk memuat soal menggunakan Ajax
-      function loadQuestion(questionId) {
-        $.ajax({
-          url: '/quiz/get-next-question/' + questionId,
-          method: 'GET',
-          success: function(response) {
-            // Perbarui UI dengan soal baru
-            $('.soal-keterampilan h1').text(response.question);
-            // Ganti sumber gambar atau konten lainnya sesuai kebutuhan
-            $('.option[data-answer="option1"] img').attr('src', response.image_path1);
-            $('.option[data-answer="option2"] img').attr('src', response.image_path2);
-            // Sembunyikan pesan jawaban benar/salah
-            $('#correct-answer-message, #error-message1').hide();
-          },
-          error: function(jqXHR, textStatus, errorThrown) {
-            console.log('Error loading question:', textStatus, errorThrown);
-          }
-        });
-      }
-
-      function resetTimer() {
-        timer = 30;
-      }
-    });
+  <script>
+    @if(session('correct_answer'))
+        var correctAnswersCount = {{ Session::get('correct_answers_count', 0) }};
+        alert("Jawaban Anda benar! Total jawaban benar: " + correctAnswersCount);
+    @elseif(session('incorrect_answer'))
+        alert("jawaban Anda Salah!");
+    @endif
   </script>
-
-
+    <script>
+        $(document).ready(function() {
+            $('#nextButton').click(function() {
+                var userAnswerId = $('input[name="jawaban"]:checked').val();
+                var currentQuestionId = $('#currentQuestionId').val();
+                var answers = $('#answers').val();
+    
+                answers += currentQuestionId + ':' + userAnswerId + ',';
+                $('#answers').val(answers);
+    
+                var url = "{{ route('user.next_quiz_keterampilan', ':currentQuestionId') }}";
+                url = url.replace(':currentQuestionId', currentQuestionId);
+    
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    success: function(response) {
+                        $('.soal-keterampilan h1').text(response.pertanyaan);
+                        $('#currentQuestionId').val(response.id);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+    
+            $('#submitButton').click(function() {
+                var userAnswerId = $('input[name="jawaban"]:checked').val();
+                var currentQuestionId = $('#currentQuestionId').val();
+                var answers = $('#answers').val();
+    
+                answers += currentQuestionId + ':' + userAnswerId;
+    
+                $.ajax({
+                    type: "POST",
+                    url: "{{ route('user.cek_quiz_keterampilan') }}",
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        jawaban: userAnswerId
+                    },
+                    success: function(response) {
+                        if (response.correct) {
+                            var correctAnswersCount = response.total_correct;
+                            alert("Jawaban Anda benar! Total jawaban benar: " + correctAnswersCount);
+                            // Tampilkan atau perbarui total jawaban keterampilan jika diperlukan
+                        } else {
+                            alert("Jawaban Anda salah!");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

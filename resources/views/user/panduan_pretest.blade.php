@@ -48,7 +48,7 @@
           </div>
           <div class="button-panduan p-3">
             <button class="rounded" onclick="window.location='/user/index'">Kembali</button>
-            <button class="rounded" onclick="window.location='/user/pretest'">Mulai kerjakan</button>
+            <button class="rounded" onclick="window.location='/user/test_pengetahuan'">Mulai kerjakan</button>
           </div>
         </div>
       </div>

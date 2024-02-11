@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Pretest;
-use App\Models\Questions;
-use App\Models\Soal_keterampilan;
+use App\Models\daily_activities;
+use App\Models\jawaban_pengetahuans;
+use App\Models\Jawaban_quiz_keterampilan;
+use App\Models\Jawaban_quiz_keterampilans;
+use Illuminate\Support\Facades\Session;
+use App\Models\jawaban_sikaps;
+use App\Models\qpengetahuans;
+use App\Models\qsikaps;
+use App\Models\Quiz_keterampilan;
+use App\Models\Quiz_keterampilans;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class UserDashboardController extends Controller
 {
@@ -17,6 +27,49 @@ class UserDashboardController extends Controller
     {
         return view('user.activity');
     }
+
+    public function daily_activities()
+    {
+        $schedules = daily_activities::where('user_id', Auth::id())->get();
+        return view('user.daily_activitiy_index', compact('schedules'));
+    }
+
+    public function views_create_daily()
+    {
+        return view('user.daysactivity');
+    }
+
+    public function create_daily(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'waktu_sikat_gigi_pagi' => 'required|date_format:H:i',
+            'waktu_sikat_gigi_malam' => 'required|date_format:H:i',
+            'bukti' => 'required|image|max:2048', // maksimal ukuran 2MB
+            'deskripsi' => 'nullable|string',
+        ]);
+
+        $userId = Auth::id();
+
+        $existingActivitiesCount = daily_activities::where('user_id', $userId)->count();
+
+        $newDayValue = ($existingActivitiesCount % 14) + 1;
+
+        $bukti = $request->file('bukti')->store('bukti_sikat_gigi');
+
+        $schedule = new daily_activities();
+        $schedule->user_id = Auth::id();
+        $schedule->nama = $request->nama;
+        $schedule->waktu_sikat_gigi_pagi = $request->waktu_sikat_gigi_pagi;
+        $schedule->waktu_sikat_gigi_malam = $request->waktu_sikat_gigi_malam;
+        $schedule->bukti = $bukti;
+        $schedule->deskripsi = $request->deskripsi;
+        $schedule->day = $newDayValue;
+        $schedule->save();
+
+        return redirect()->route('user.14days')->with('success', 'Jadwal berhasil dibuat.');
+    }
+
     public function teethq()
     {
         return view('user.teethq');
@@ -49,58 +102,40 @@ class UserDashboardController extends Controller
     {
         return view('user.quiz');
     }
+    
     public function quiz_keterampilan()
     {
-        $questions = Questions::inRandomOrder()->limit(1)->first(); // Ambil pertanyaan secara acak
-        return view('user/quiz_keterampilan', compact('questions'));
+        $q_keterampilans = Quiz_keterampilans::with('jawaban')->first(); // Ambil pertanyaan pertama
+        return view('user.quiz_keterampilan', compact('q_keterampilans'));
     }
 
-    public function checkAnswer(Request $request)
+    public function next_quiz_keterampilan($currentQuestionId)
     {
-        $question = Questions::findOrFail($request->question_id);
+        $nextQuestion = Quiz_keterampilans::where('id', '>', $currentQuestionId)->first();
+        $nextQuestion->load('jawaban');
 
-        // Mengambil jawaban benar dari database
-        $correctAnswer = $question->correct_option;
-
-        // Mendapatkan jawaban yang dikirimkan oleh pengguna
-        $selectedOption = $request->selected_option;
-
-        // Memeriksa apakah jawaban yang dikirimkan benar atau salah
-        $isCorrect = ($selectedOption == $correctAnswer);
-
-        // Mengembalikan respons JSON dengan status jawaban benar atau salah
-        return response()->json(['correct' => $isCorrect]);
+        return $nextQuestion;
     }
 
-    public function getNextQuestion($questionNumber)
+    public function cek_quiz_keterampilan(Request $request)
     {
-        $nextQuestion = Questions::find($questionNumber);
+        $userAnswerId = $request->input('jawaban');
+        $jawaban = Jawaban_quiz_keterampilans::find($userAnswerId);
 
-        if (!$nextQuestion) {
-            return response()->json(['error' => 'Question not found'], 404);
+        $isCorrect = $jawaban->jawaban_benar;
+
+        // Memperbarui total jawaban keterampilan pengguna yang sedang masuk
+        if ($isCorrect) {
+            $user_id = Auth::id();
+            $user = User::find($user_id);
+            $user->update([
+                'total_jawaban_keterampilan' => $user->total_jawaban_keterampilan + 1
+            ]);
+
+            return redirect()->back()->with('correct_answer', true);
+        } else {
+            return redirect()->back()->with('incorrect_answer', true);
         }
-
-        return response()->json([
-            'question' => $nextQuestion->question,
-            'image_path1' => asset('assets/img/pengetahuan/' . $nextQuestion->image_path),
-            'image_path2' => asset('assets/img/pengetahuan/' . $nextQuestion->image_path2),
-        ]);
-    }
-
-    public function getNextRandomQuestion(Request $request)
-    {
-        $answeredQuestions = $request->answered_questions;
-
-        // Ambil pertanyaan secara acak yang belum pernah muncul
-        $nextQuestion = Questions::whereNotIn('id', $answeredQuestions)
-            ->inRandomOrder()
-            ->first();
-
-        if (!$nextQuestion) {
-            return response()->json(['error' => 'All questions answered'], 404);
-        }
-
-        return response()->json(['question_id' => $nextQuestion->id]);
     }
     
     public function quiz_pengetahuan()
@@ -129,41 +164,44 @@ class UserDashboardController extends Controller
         return view('user.panduan_pretest');
     }
 
-    public function pretest()
+    public function test_pengetahuan()
     {
-        $pretests = Pretest::all();
-        return view('user.pretest', compact('pretests'));
+        $pertanyaans = qpengetahuans::all();
+        return view('user.test_pengetahuan', compact('pertanyaans'));
     }
 
-    public function hasil_pretest()
+    public function hasil_test_pengetahuan(Request $request)
     {
-        $percentageScore = session('pretest_score');
+        $user_id = Auth::id();
+        $pertanyaans = $request->input('pertanyaan');
+        $correctAnswers = 0;
 
-        return view('user.finish_pengetahuan', compact('percentageScore'));
-    }
-
-    public function cek_pretest(Request $request)
-    {
-        $answers = $request->input('answers');
-        $result = '';
-        $score = 0;
-        $totalQuestions = count($answers);
-
-        foreach ($answers as $answer) {
-            $pretests = Pretest::find($answer['question_id']);
-
-            if ($pretests->correct_answer === $answer['answer']) {
-                $score++;
+        foreach ($pertanyaans as $questionId => $selectedOption) {
+            $pertanyaan = qpengetahuans::findOrFail($questionId);
+            if ($selectedOption === $pertanyaan->jawaban_benar) {
+                $correctAnswers++;
             }
         }
 
-        $percentageScore = ($score / $totalQuestions) * 100;
+        // Temukan user
+        $user = User::find($user_id);
 
-        session(['pretest_score' => $percentageScore]);
-        $result .= '<br>Skor Anda:<br>';
-        $result .= $percentageScore . '%';
-        // return response()->json(['result' => $result, 'score' => $score]);
-        return response()->json(['result' => $result, 'percentage_score' => $percentageScore]);
+        // Pastikan user ditemukan sebelum menyimpan data
+        if ($user) {
+            // Tambahkan jumlah jawaban yang benar
+            $user->total_jawaban_pengetahuan += $correctAnswers;
+
+            // Simpan perubahan ke database
+            $user->save();
+
+            // Menampilkan alert jika berhasil disimpan
+            Session::flash('success', 'Data berhasil disimpan!');
+        } else {
+            // Menampilkan alert jika user tidak ditemukan
+            Session::flash('error', 'User tidak ditemukan.');
+        }
+
+        return redirect('user/test_pengetahuan');
     }
 
     public function panduan_sikap()
@@ -173,7 +211,41 @@ class UserDashboardController extends Controller
 
     public function test_sikap()
     {
-        return view('user.test_sikap');
+        $test_sikaps = qsikaps::all();
+        return view('user/test_sikap', compact('test_sikaps'));
+    }
+
+    public function cek_test_sikap(Request $request)
+    {
+        $user_id = Auth::id();
+        $jawaban = $request->input('jawaban');
+
+        foreach ($jawaban as $qsikaps_id => $jawab) {
+            jawaban_sikaps::create([
+                'qsikaps_id' => $qsikaps_id,
+                'user_id' => $user_id,
+                'jawaban' => $jawab
+            ]);
+        }
+
+        $total_jawaban = jawaban_sikaps::where('user_id', $user_id)->sum('jawaban');
+
+        $user = User::find($user_id);
+        $user->total_jawaban_sikap = $total_jawaban;
+        $user->save();
+
+        return redirect('user/test_sikap');
+    }
+
+    public function total_sikap()
+    {
+        $user_id = Auth::id();
+
+        // Mengambil total jawaban dari basis data menggunakan model User
+        $totalJawaban = User::find($user_id)->total_jawaban_sikap;
+
+        // Mengirim total jawaban ke view untuk ditampilkan
+        return view('user/total_sikap', ['totalJawaban' => $totalJawaban]);
     }
 
     public function panduan_tindakan()
@@ -184,16 +256,6 @@ class UserDashboardController extends Controller
     public function test_tindakan()
     {
         return view('user.test_tindakan');
-    }
-
-    public function panduan_debris()
-    {
-        return view('user.panduan_debris');
-    }
-
-    public function test_debris()
-    {
-        return view('user.test_debris');
     }
 
     public function panduan_postest()

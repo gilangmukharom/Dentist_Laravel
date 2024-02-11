@@ -11,12 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sikap_test', function (Blueprint $table) {
+        Schema::create('qpengetahuans', function (Blueprint $table) {
             $table->id();
-            $table->text('text');
-            $table->json('choices');
-            $table->string('correct_answer');
+            $table->text('pertanyaan');
+            $table->json('pilihan');
+            $table->string('jawaban_benar');
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('total_jawaban_pengetahuan')->default(0);
         });
     }
 
@@ -25,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sikap_test');
+        Schema::dropIfExists('qpengetahuans');
     }
 };

@@ -26,6 +26,7 @@ class User extends Authenticatable
         'sekolah',
         'nama_ortu',
         'role',
+        'total_jawban_keterampilan',
     ];
 
     /**

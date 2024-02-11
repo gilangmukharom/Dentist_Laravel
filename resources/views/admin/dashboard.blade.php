@@ -1,4 +1,4 @@
-@extends('include.sidebar')
+@extends('include.sidebar_admin')
 
 @section('content')
     <div class="container-dashboard p-5">

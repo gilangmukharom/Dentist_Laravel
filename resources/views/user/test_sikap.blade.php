@@ -14,16 +14,23 @@
 <body>
   <div class="container">
     <div class="logo">
-        <img src="{{ asset('assets/img/logo.png') }}" alt="logo tans dent" height="40">
+      <img src="{{ asset('assets/img/logo.png') }}" alt="logo tans dent" height="40">
     </div>
-    <form id="pretest-form" class="rounded m-auto p-4 w-90 border border-2">
+    <form id="pretest-form" class="rounded m-auto p-4 w-90 border border-2" method="POST" action="{{ url('user/cek_test_sikap') }}">
+      @csrf
       <h1 class="mt-2 mb-4">Sikap</h1>
-
-      <div class="navigation d-flex flex-row justify-content-end gap-3 p-5">
-        <button type="button" class="btn btn-secondary prev-question">Soal Sebelumnya</button>
-        <button type="button" class="btn btn-secondary next-question">Soal Berikutnya</button>
-        <button type="button" class="btn btn-primary d-none check-answers">Submit Jawaban</button>
-      </div>
+      @foreach ($test_sikaps as $sikap)
+        <div>
+            <p>{{ $sikap->pertanyaan }}</p>
+            <div class="pilihan_jawaban d-flex flex-column">
+              <label><input type="radio" name="jawaban[{{ $sikap->id }}]" id="jawaban_[{{ $sikap->id }}]_1" value="1"> SS</label>
+              <label><input type="radio" name="jawaban[{{ $sikap->id }}]" value="2"> S</label>
+              <label><input type="radio" name="jawaban[{{ $sikap->id }}]" value="3"> TS</label>
+              <label><input type="radio" name="jawaban[{{ $sikap->id }}]" value="4"> STS</label>
+            </div>
+        </div>
+    @endforeach
+    <button type="submit">Submit</button>
     </form>
   </div>
 
