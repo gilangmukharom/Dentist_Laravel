@@ -54,62 +54,39 @@
         alert("jawaban Anda Salah!");
     @endif
   </script>
-    <script>
-        $(document).ready(function() {
-            $('#nextButton').click(function() {
-                var userAnswerId = $('input[name="jawaban"]:checked').val();
-                var currentQuestionId = $('#currentQuestionId').val();
-                var answers = $('#answers').val();
-    
-                answers += currentQuestionId + ':' + userAnswerId + ',';
-                $('#answers').val(answers);
-    
-                var url = "{{ route('user.next_quiz_keterampilan', ':currentQuestionId') }}";
-                url = url.replace(':currentQuestionId', currentQuestionId);
-    
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    success: function(response) {
-                        $('.soal-keterampilan h1').text(response.pertanyaan);
-                        $('#currentQuestionId').val(response.id);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
-    
-            $('#submitButton').click(function() {
-                var userAnswerId = $('input[name="jawaban"]:checked').val();
-                var currentQuestionId = $('#currentQuestionId').val();
-                var answers = $('#answers').val();
-    
-                answers += currentQuestionId + ':' + userAnswerId;
-    
-                $.ajax({
-                    type: "POST",
-                    url: "{{ route('user.cek_quiz_keterampilan') }}",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        jawaban: userAnswerId
-                    },
-                    success: function(response) {
-                        if (response.correct) {
-                            var correctAnswersCount = response.total_correct;
-                            alert("Jawaban Anda benar! Total jawaban benar: " + correctAnswersCount);
-                            // Tampilkan atau perbarui total jawaban keterampilan jika diperlukan
-                        } else {
-                            alert("Jawaban Anda salah!");
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
+<script>
+    $(document).ready(function() {
+        $('#nextButton').click(function() {
+            var currentQuestionId = $('#currentQuestionId').val();
+            var url = "{{ route('user.next_quiz_keterampilan', ':currentQuestionId') }}";
+            url = url.replace(':currentQuestionId', currentQuestionId);
+
+            $.ajax({
+                type: "GET",
+                url: url,
+                success: function(response) {
+                    // Memperbarui tampilan dengan pertanyaan dan pilihan jawaban baru
+                    $('.soal-keterampilan h1').text(response.pertanyaan);
+
+                    // Menghapus semua pilihan jawaban sebelumnya
+                    $('.pilihan').empty();
+
+                    // Menambahkan pilihan jawaban baru
+                    response.jawaban.forEach(function(jawaban) {
+                        $('.pilihan').append('<input type="radio" name="jawaban" value="' + jawaban.id + '">' +
+                            '<img src="{{ asset("assets/img/Keterampilan/") }}/' + jawaban.image_path + '" alt="Option Image" width="50"><br>');
+                    });
+
+                    // Memperbarui nilai ID pertanyaan saat ini
+                    $('#currentQuestionId').val(response.id);
+                },
+                error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
             });
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>
