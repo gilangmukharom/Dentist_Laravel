@@ -21,7 +21,7 @@ class AdminDashboardController extends Controller
     public function delete_data()
     {
         // Tabel yang ingin dikecualikan
-        $excludedTables = ['users', 'qsikaps', 'qpengetahuans'];
+        $excludedTables = ['users', 'qsikaps', 'jawaban_sikaps', 'qpengetahuans', 'qtindakans', 'jawaban_quiz_keterampilans', 'quiz_keterampilans'];
 
         // Mendapatkan semua nama tabel di database
         $tables = DB::select('SHOW TABLES');

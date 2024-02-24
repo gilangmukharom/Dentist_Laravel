@@ -13,16 +13,19 @@ return new class extends Migration
     {
         Schema::create('quiz_keterampilans', function (Blueprint $table) {
             $table->id();
-            $table->text('pertanyaan');
+            $table->text('question');
+            $table->string('option_a');
+            $table->string('image_a')->nullable();
+            $table->string('option_b');
+            $table->string('image_b')->nullable();
             $table->timestamps();
         });
 
         Schema::create('jawaban_quiz_keterampilans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_pertanyaan_quiz');
-            $table->string('jawaban');
-            $table->boolean('jawaban_benar');
-            $table->string('image_path')->nullable();
+            $table->text('answer');
+            $table->boolean('is_correct')->default(false);
             $table->timestamps();
 
             $table->foreign('id_pertanyaan_quiz')->references('id')->on('quiz_keterampilans')->onDelete('cascade');

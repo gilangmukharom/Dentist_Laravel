@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Jawaban_quiz_keterampilans extends Model
 {
-    protected $fillable = ['id_pertanyaan_quiz', 'jawaban', 'jawaban_benar', 'image_path'];
+    protected $fillable = ['id_pertanyaan_quiz', 'answer', 'is_correct'];
 
-    public function quiz_keterampilan()
+    public function quiz_keterampilans()
     {
         return $this->belongsTo(Quiz_keterampilans::class, 'id_pertanyaan_quiz');
     }

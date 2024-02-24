@@ -287,6 +287,24 @@
     border: 1px solid #A5A5A5;
 }
 
+.container-pretest-teethq
+.box-statistik
+.card-teethq-pretest{
+    background-color: #34baf7;
+}
+
+.profile-dashboard .dropdown .profile-picture img {
+    width: 100%;
+}
+
+.profile-dashboard .dropdown .profile-picture {
+    width: 50px;
+    height: 50px;
+    background-color: #1c5570;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
 @media (max-width: 767px) {
     .sidebar {
         height: fit-content;

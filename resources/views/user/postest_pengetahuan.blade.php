@@ -20,7 +20,7 @@
     {{ Session::get('error') }}
   </div>
   @endif
-  <form method="post" action="{{ route('user.test_tindakan.submit') }}">
+  <form method="post" action="{{ route('user.test_pengetahuan.submit') }}">
     @csrf
     @foreach($pertanyaans as $question)
     <p>

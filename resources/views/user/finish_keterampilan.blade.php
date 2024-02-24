@@ -24,6 +24,7 @@
         </div>
         <div class="body-finish-pengetahuan d-flex flex-column justify-content-center align-items-center">
             <img src="{{asset('assets/img/award.png')}}" class="w-75" alt="">
+            <p>Correct Answers: {{ $percentage }}</p>
             <div class="button-finish">
                 <button>Dashboard</button>
                 <button>Lihat Skor</button>

@@ -59,7 +59,7 @@
         @csrf
         <h1 class="m-auto p-3">Register</h1>
         <div class="register-username d-flex flex-column form-group">
-          <label for="username">Username<span class="text-danger">*</span></label>
+          <label for="username">Username / Nama<span class="text-danger">*</span></label>
           <input type="text" name="username" class="form-control" required>
           <div class="invalid-feedback"></div>
         </div>

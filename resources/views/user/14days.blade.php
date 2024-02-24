@@ -1,28 +1,28 @@
 @extends('include.sidebar')
 @section('content')
 @vite(['resources/css/style.css', 'resources/js/app.js'])
-    <h1 class="h2">Daily Activity 14 Days</h1>
+    <h1 class="h2">Aktivitas Harian</h1>
 
     <div class="content-14days">
         @php
             $user_id = auth()->id();
+            $currentDate = now(); // Tanggal dan waktu saat ini
         @endphp
         @for ($i = 1; $i <= 14; $i++)
             @php
-                $colorClass = 'red'; // By default, set color to red
+                $activity = \App\Models\daily_activities::where('user_id', $user_id)
+                    ->where('day', $i - 1)
+                    ->first();
 
-                // For day 1, always set color to green if filled by the logged-in user
-                if ($i === 1 ) {
+                // Set warna menjadi hijau untuk day 1 dan berdasarkan selisih tanggal untuk day lainnya
+                if ($i === 1 || ($activity && $currentDate->diffInDays($activity->created_at) >= ($i - 1))) {
                     $colorClass = 'green';
-                }
-
-                // Check if user has filled day 1 and current day is 3, 4, 5, ..., 14
-                if ($user_id && $i <= 14 && \App\Models\daily_activities::where('user_id', $user_id)->where('day', $i - 1)->exists()) {
-                    $colorClass = 'green';
+                } else {
+                    $colorClass = 'red';
                 }
             @endphp
             <div class="card-14days" id="card-{{ $i }}" style="background-color: {{ $colorClass }}" data-day="{{ $i }}">
-                <h1>Day {{ $i }}</h1>
+                <h1>Hari {{ $i }}</h1>
             </div>
         @endfor
     </div>
@@ -30,7 +30,7 @@
     <script src="{{ asset('assets/js/components.js') }}"></script>
 
     <script>
-        // Add click event listener to each card
+        // Tambahkan event click listener untuk setiap kartu
         document.querySelectorAll('.card-14days').forEach(function(card) {
             var day = card.dataset.day;
     
@@ -39,7 +39,7 @@
                 if (bgColor === 'green') {
                     window.location.href = '{{ route("user.daysactivity") }}' + '?day=' + day;
                 } else {
-                    alert('Silahkan isi dulu day ' + day);
+                    alert('Silakan isi terlebih dahulu hari ' + (day-1));
                 }
             });
         });

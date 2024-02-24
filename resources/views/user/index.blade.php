@@ -1,13 +1,28 @@
 @extends('include.sidebar')
 
 @section('content')
+    @vite(['resources/css/style.css', 'resources/js/app.js'])
     <div class="container-dashboard p-5">
         <div class="header-dashboard d-flex justify-content-between">
             <div class="title-dashboard">
                 <h1>Dashboard</h1>
             </div>
             <div class="profile-dashboard">
-                <h1>sajdsab</h1>
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle d-inline-flex align-items-center gap-2" type="button"
+                        id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="profile-picture">
+                            <img src="{{ asset('assets/img/profile.png') }}" alt="profile">
+                        </div>
+                        <div class="profile-name">
+                            <p>Gilang Mukharom</p>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li><button class="dropdown-item" onclick="window.location.href='{{ route('user.edit-profile') }}'">Edit Profile</button></li>
+                        <li><button class="dropdown-item" onclick="window.location.href='{{ route('logout') }}'">Logout</button></li>                        
+                    </ul>
+                </div>
             </div>
         </div>
 
@@ -25,6 +40,4 @@
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 @endsection

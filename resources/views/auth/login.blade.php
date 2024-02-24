@@ -44,7 +44,7 @@
         </div>
         @endif
         <div class="login-username d-flex flex-column">
-          <label for="username">Username</label>
+          <label for="username">Username / Nama</label>
           <input type="text" name="username" class="form-control">
         </div>
 
