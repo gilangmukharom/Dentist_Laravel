@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\daily_activities;
-use App\Models\Jawaban_quiz_keterampilans;
 use Illuminate\Support\Facades\Session;
 use App\Models\jawaban_sikaps;
 use App\Models\Postest_jawaban_sikaps;
@@ -14,6 +13,7 @@ use App\Models\QPtindakans;
 use App\Models\qsikaps;
 use App\Models\qtindakans;
 use App\Models\Quiz_keterampilans;
+use App\Models\Quiz_pengetahuans;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -141,27 +141,85 @@ class UserDashboardController extends Controller
         }
         $percentage = ($correctAnswersCount / $totalQuestions) * 100;
 
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        if ($user) {
+            $user->total_jawaban_keterampilan = $percentage;
+            $user->save();
+
+            // Menampilkan alert jika berhasil disimpan
+            Session::flash('success', 'Data berhasil disimpan!');
+        } else {
+            // Menampilkan alert jika user tidak ditemukan
+            Session::flash('error', 'User tidak ditemukan.');
+        }
+
+
         return view('user.finish_keterampilan', compact('percentage'));
     }
 
-    public function cek_quiz_keterampilan(Request $request, Quiz_keterampilans $q_keterampilans, $option)
-    {
-        $answerData = [
-            'answer' => $request->input("option_$option"),
-            'is_correct' => $request->input('correct_answer') === $option,
-        ];
+    // public function cek_quiz_keterampilan(Request $request, Quiz_keterampilans $q_keterampilans, $option)
+    // {
+    //     $answerData = [
+    //         'answer' => $request->input("option_$option"),
+    //         'is_correct' => $request->input('correct_answer') === $option,
+    //     ];
 
-        if ($request->hasFile("image_$option")) {
-            $imagePath = $request->file("image_$option")->store("images/questions", "public");
-            $answerData['image'] = $imagePath;
-        }
+    //     if ($request->hasFile("image_$option")) {
+    //         $imagePath = $request->file("image_$option")->store("images/questions", "public");
+    //         $answerData['image'] = $imagePath;
+    //     }
 
-        $q_keterampilans->answers()->create($answerData);
-    }
-    
+    //     $q_keterampilans->answers()->create($answerData);
+    // }
+
     public function quiz_pengetahuan()
     {
-        return view('user.quiz_pengetahuan');
+        $q_pengetahuans = Quiz_pengetahuans::with('jawabans')->get();
+
+        return view('user.quiz_pengetahuan', compact('q_pengetahuans'));
+    }
+
+    public function hasil_quiz_pengetahuan(Request $request)
+    {
+        $request->validate([
+            'jawabans.*' => 'required',
+        ], [
+            'jawabans.*.required' => 'Please select an answer for each question.',
+        ]);
+
+        $userAnswers = $request->input('jawabans');
+        $correctAnswersCount = 0;
+        $totalQuestions = count($userAnswers);
+
+        foreach ($userAnswers as $questionId => $userAnswer) {
+            $question = Quiz_pengetahuans::find($questionId);
+
+            if ($question) {
+                $correctAnswer = $question->jawabans()->where('is_correct', true)->first();
+
+                if ($correctAnswer && $correctAnswer->answer === $userAnswer) {
+                    $correctAnswersCount++;
+                }
+            }
+        }
+        $percentage = ($correctAnswersCount / $totalQuestions) * 100;
+
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        if ($user) {
+            $user->total_jawaban_pengetahuan = $percentage;
+            $user->save();
+
+            // Menampilkan alert jika berhasil disimpan
+            Session::flash('success', 'Data berhasil disimpan!');
+        } else {
+            // Menampilkan alert jika user tidak ditemukan
+            Session::flash('error', 'User tidak ditemukan.');
+        }
+
+
+        return view('user.finish_pengetahuan', compact('percentage'));
     }
     public function finish_pengetahuan()
     {

@@ -23,6 +23,8 @@ return new class extends Migration
             $table->integer('total_jawaban_tindakans')->default(0);
             $table->date('tanggal_pretest')->nullable();
             $table->date('tanggal_postest')->nullable();
+            $table->date('tanggal_quiz_keterampilan')->nullable();
+            $table->date('tanggal_quiz_pengetahuan')->nullable();
         });
     }
 

@@ -20,12 +20,13 @@
             <h1>Quiz</h1>
             <p class="text-0">Keterampilan Gigi dan Mulut</p>
         </div>
-        <div class="timer-keterampilan bg-light rounded-5 p-2">
-            <h1 id="timer">30</h1>
+        <div class="timer-keterampilan bg-light rounded-circle p-2">
+            <h2 id="time">30</h2>
         </div>
     </div>
     <div class="box-keterampilan d-flex flex-column justify-content-center align-items-center">
-        <div class="jawaban-keterampilan d-flex flex-column flex-lg-row flex-md-row flex-sm-column gap-5 justify-content-center align-items-center">
+        <div
+            class="jawaban-keterampilan d-flex flex-column flex-lg-row flex-md-row flex-sm-column gap-5 justify-content-center align-items-center">
             <form action="{{ route('user.hasil_quiz_keterampilan') }}" method="POST" id="quizForm">
                 @csrf
                 @foreach ($q_keterampilans as $index => $question)
@@ -37,25 +38,48 @@
                             </h1>
                         </div>
                         <div class="pilihan d-flex flex-rows d-flex justify-content-center gap-3">
-                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_a) }}"
                                     alt="Option Image" width="50"><br>
-                                <input type="radio" name="jawabans[{{ $question->id }}]" value="A" required>
+                                <input type="radio" name="jawabans[{{ $question->id }}]" value="A">
                             </label>
-                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_b) }}"
                                     alt="Option Image" width="50"><br>
-                                <input type="radio" name="jawabans[{{ $question->id }}]" value="B" required>
+                                <input type="radio" name="jawabans[{{ $question->id }}]" value="B">
+                            </label>
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                                <img src="{{ asset('assets/img/Keterampilan/' . $question->image_c) }}"
+                                    alt="Option Image" width="50"><br>
+                                <input type="radio" name="jawabans[{{ $question->id }}]" value="C">
                             </label>
                         </div>
                     </div>
                 @endforeach
                 <button type="button" onclick="nextQuestion()">Lanjutkan</button>
-                <button type="submit" style="display: none;" id="submitButton">Submit Answers</button>
+                <button type="submit" style="display: none;" id="submitButton">Submit</button>
             </form>
         </div>
 
         <script>
+            var timerDuration = 3;
+            var timerElement = document.getElementById('timer');
+
+            function startTimer() {
+                var timer = setInterval(function() {
+                    timerDuration--;
+                    timerElement.innerText = timerDuration;
+
+                    if (timerDuration <= 0) {
+                        clearInterval(timer);
+                        nextQuestion();
+                    }
+                }, 1000);
+            }
+
             function nextQuestion() {
                 const currentQuestion = document.querySelector('.soal_jawab:not([style*="display: none"])');
                 const nextQuestion = document.querySelector(
@@ -69,8 +93,16 @@
                         document.getElementById('submitButton').style.display = "block";
                         document.querySelector('button[type="button"]').style.display = "none";
                     }
+
+                    // Restart timer for the next question
+                    timerDuration = 3;
+                    timerElement.innerText = timerDuration;
+                    startTimer();
+                } else {
+                    document.getElementById('submitButton').click();
                 }
             }
+            startTimer();
         </script>
 </body>
 

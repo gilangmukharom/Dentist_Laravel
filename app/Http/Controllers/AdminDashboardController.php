@@ -39,4 +39,9 @@ class AdminDashboardController extends Controller
         // Redirect kembali ke halaman sebelumnya
         return redirect()->back()->with('status', 'Data pada semua field kecuali tabel users, qsikaps, dan qpengetahuans berhasil dihapus.');
     }
+
+    public function informasi()
+    {
+        return view('admin.informasi');
+    }
 }

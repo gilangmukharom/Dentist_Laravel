@@ -16,77 +16,41 @@
   <!-- Font Awesome CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
 
-  <!-- Custom Styles -->
-  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css">
+  @vite(['resources/css/style.css', 'resources/js/app.js'])
 
   <!-- Bootstrap Bundle JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- Scripts -->
-  <script src="{{ asset('js/app.js') }}" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@5.10.0/main.min.css" />
 </head>
 
 <body>
   <div class="container-fluid">
     <div class="row">
-      <!-- Sidebar -->
       <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-1 sidebar">
         <div class="position-sticky">
           <img src="{{ asset('assets/img/logo3.png') }}" alt="Logo Dentist" height="50" class="mt-lg-5 mb-lg-3">
           <ul class="nav flex-column gap-3 gap-lg-4">
             <li class="nav-item">
-              <a class="nav-link active text-0" href="#" id="dashboard-link">
+              <a class="nav-link active text-0" href={{ route('admin.index') }} id="dashboard-link">
                 <i class="fa fa-home" aria-hidden="true"></i>
                 <span>Dashboard</span>
               </a>
             </li>
 
             <li class="nav-item">
-              <div class="dropdown">
-                <button class="btn dropdown-toggle text-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-th-list" aria-hidden="true"></i> Daily Activity
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="#" id="quiz">Quiz</a></li>
-                  <li><a class="dropdown-item" href="#" id="14days">14 Days</a></li>
-                  <li><a class="dropdown-item" href="#" id="video-link">Video</a></li>
-                </ul>
-              </div>
+              <a class="nav-link active text-0" href={{ route('admin.setting') }} id="setting-link">
+                <i class="fa fa-cog" aria-hidden="true"></i>
+                <span>Reset Data</span>
+              </a>
             </li>
 
             <li class="nav-item">
-              <div class="dropdown">
-                <button class="btn dropdown-toggle text-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-cogs" aria-hidden="true"></i> Teeth Q
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="#" id="pretest-link">Pretest</a></li>
-                  <li><a class="dropdown-item" href="#" id="activity-link">Postest</a></li>
-                </ul>
-              </div>
-            </li>
-
-            <li class="nav-item">
-              <div class="dropdown">
-                <button class="btn dropdown-toggle text-0" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-bell" aria-hidden="true"></i> Information
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li><a class="dropdown-item" href="#" id="info-link">Informasi Umum</a></li>
-                  <li><a class="dropdown-item" href="#" id="panduan-link">Panduan Tans</a></li>
-                </ul>
-              </div>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link active text-0" href="#" id="setting-link">
-                <i class="fa fa-home" aria-hidden="true"></i>
-                <span>Setting</span>
+              <a class="nav-link active text-0" href="{{ route('admin.informasi') }}" id="info-link">
+                <i class="fa fa-bell" aria-hidden="true"></i>
+                <span>Informasi</span>
               </a>
             </li>
 
@@ -109,9 +73,9 @@
       </nav>
 
       <!-- Content -->
-      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="main-content">
+      <main class="col-md-10 ms-sm-auto col-lg-10" id="main-content">
         <!-- Toggle Sidebar Button -->
-        <button class="btn btn-toggle d-md-none w-100 bg-1" id="sidebarToggle">
+        <button class="btn btn-toggle d-md-none w-50 bg-1" id="sidebarToggle">
           <i class="fa fa-align-justify" aria-hidden="true"></i>
           <span>Menu</span>
         </button>
@@ -162,25 +126,12 @@
           loadContent('{{ route("user.index") }}');
         } else if (linkId === 'setting-link') {
           loadContent('{{ route("admin.setting") }}');
-        } else if (linkId === 'video-link') {
-          loadContent('{{ route("user.video") }}');
-        } else if (linkId === 'teeth-link') {
-          loadContent('{{ route("user.teethq") }}');
         } else if (linkId === 'info-link') {
-          loadContent('{{ route("user.info") }}');
-        } else if (linkId === '14days') {
-          loadContent('{{ route("user.14days") }}');
-        } else if (linkId === 'quiz') {
-          loadContent('{{ route("user.quiz") }}');
-        } else if (linkId === 'panduan-link') {
-          loadContent('{{ route("user.panduan") }}');
-        } else if (linkId === 'pretest-link') {
-          window.location.href = '/user/panduan_pretest';;
+          loadContent('{{ route("admin.informasi") }}');
         }
 
         $('.nav-link').removeClass('active text-1');
         $(this).addClass('active text-1');
-
 
         $('li.nav-item').removeClass('bg-light rounded');
         $(this).closest('li.nav-item').addClass('bg-light rounded');

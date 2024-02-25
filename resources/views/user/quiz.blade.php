@@ -1,7 +1,7 @@
 @extends('include.sidebar')
 
 @section('content')
-@vite(['resources/css/style.css', 'resources/js/app.js']);
+@vite(['resources/css/style.css', 'resources/js/app.js'])
 <h1 class="h2">Quiz</h1>
 <div class="box-quiz w-100">
   <div class="navigasi-quiz d-flex flex-row w-100 justify-content-between align-content-center">

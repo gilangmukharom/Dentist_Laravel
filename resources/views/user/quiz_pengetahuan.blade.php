@@ -18,18 +18,83 @@
             <p class="text-0">Pengetahuan Gigi dan Mulut</p>
         </div>
         <div class="timer-pengetahuan bg-light rounded-5 p-2">
-            <h1 id="timer">30</h1>
+            <h2 id="time">30</h2>
         </div>
     </div>
     <div class="box-pengetahuan d-flex flex-column justify-content-center align-items-center">
-        <div class="soal-pengetahuan m-5 bg-light p-4 rounded-5">
-            <h1>Manakah makanan yang tidak baik untuk gigi?</h1>
-        </div>
         <div class="jawaban-pengetahuan d-flex flex-row gap-5 justify-content-center align-items-center">
-            <img src="{{asset('assets/img/pengetahuan/1.png')}}" class="w-25" alt="">
-            <img src="{{asset('assets/img/pengetahuan/2.png')}}" class="w-25" alt="">
+            <form action="{{ route('user.hasil_quiz_pengetahuan') }}" method="POST" id="quizForm">
+                @csrf
+                @foreach ($q_pengetahuans as $index => $question)
+                    <div class="soal_jawab" data-question="{{ $index }}"
+                        style="display: {{ $index === 0 ? 'block' : 'none' }}">
+                        <div class="soal-pengetahuan m-5 bg-light p-4 rounded-5">
+                            <h1>
+                                {{ $question->question }}
+                            </h1>
+                        </div>
+                        <div class="pilihan d-flex flex-rows d-flex justify-content-center gap-3">
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                                <img src="{{ asset('assets/img/Keterampilan/' . $question->image_a) }}"
+                                    alt="Option Image" width="50"><br>
+                                <input type="radio" name="jawabans[{{ $question->id }}]" value="A">
+                            </label>
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                                <img src="{{ asset('assets/img/Keterampilan/' . $question->image_b) }}"
+                                    alt="Option Image" width="50"><br>
+                                <input type="radio" name="jawabans[{{ $question->id }}]" value="B">
+                            </label>
+                        </div>
+                    </div>
+                @endforeach
+                <button type="button" onclick="nextQuestion()">Lanjutkan</button>
+                <button type="submit" style="display: none;" id="submitButton">Submit</button>
+            </form>
         </div>
     </div>
+
+    <script>
+        var timerDuration = 3;
+        var timerElement = document.getElementById('timer');
+
+        function startTimer() {
+            var timer = setInterval(function() {
+                timerDuration--;
+                timerElement.innerText = timerDuration;
+
+                if (timerDuration <= 0) {
+                    clearInterval(timer);
+                    nextQuestion();
+                }
+            }, 1000);
+        }
+
+        function nextQuestion() {
+            const currentQuestion = document.querySelector('.soal_jawab:not([style*="display: none"])');
+            const nextQuestion = document.querySelector(
+                `.soal_jawab[data-question="${parseInt(currentQuestion.dataset.question) + 1}"]`);
+
+            if (nextQuestion) {
+                currentQuestion.style.display = "none";
+                nextQuestion.style.display = "block";
+
+                if (nextQuestion.dataset.question === "{{ count($q_pengetahuans) - 1 }}") {
+                    document.getElementById('submitButton').style.display = "block";
+                    document.querySelector('button[type="button"]').style.display = "none";
+                }
+
+                // Restart timer for the next question
+                timerDuration = 3;
+                timerElement.innerText = timerDuration;
+                startTimer();
+            } else {
+                document.getElementById('submitButton').click();
+            }
+        }
+        startTimer();
+    </script>
 </body>
 
 </html>

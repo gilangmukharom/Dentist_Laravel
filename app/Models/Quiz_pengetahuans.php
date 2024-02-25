@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Quiz_keterampilans extends Model
+class Quiz_pengetahuans extends Model
 {
 
-    protected $fillable = ['question', 'option_a', 'image_a', 'option_b', 'image_b', 'option_c', 'image_c'];
+    protected $fillable = ['question', 'option_a', 'image_a', 'option_b', 'image_b'];
 
     public function jawabans()
     {

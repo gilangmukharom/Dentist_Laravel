@@ -41,12 +41,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/quiz', [UserDashboardController::class, 'quiz'])->middleware('role:user')->name('user.quiz');
     Route::get('/user/quiz_keterampilan', [UserDashboardController::class, 'quiz_keterampilan'])->middleware('role:user')->name('user.quiz_keterampilan');
     Route::post('/user/hasil_quiz_keterampilan', [UserDashboardController::class, 'hasil_quiz_keterampilan'])->middleware('role:user')->name('user.hasil_quiz_keterampilan');
-
-    Route::get('/user/quiz_pengetahuan', [UserDashboardController::class, 'quiz_pengetahuan'])->middleware('role:user')->name('user.quiz_pengetahuan');
-    
-    Route::get('/user/finish_pengetahuan', [UserDashboardController::class, 'finish_pengetahuan'])->middleware('role:user')->name('user.finish_pengetahuan');
     Route::get('/user/finish_keterampilan', [UserDashboardController::class, 'finish_keterampilan'])->middleware('role:user')->name('user.finish_keterampilan');
     Route::get('/user/skor_keterampilan', [UserDashboardController::class, 'skor_keterampilan'])->middleware('role:user')->name('user.skor_keterampilan');
+
+    Route::get('/user/quiz_pengetahuan', [UserDashboardController::class, 'quiz_pengetahuan'])->middleware('role:user')->name('user.quiz_pengetahuan');
+    Route::post('/user/hasil_quiz_pengetahuan', [UserDashboardController::class, 'hasil_quiz_pengetahuan'])->middleware('role:user')->name('user.hasil_quiz_pengetahuan');
+    Route::get('/user/finish_pengetahuan', [UserDashboardController::class, 'finish_pengetahuan'])->middleware('role:user')->name('user.finish_pengetahuan');
     Route::get('/user/skor_pengetahuan', [UserDashboardController::class, 'skor_pengetahuan'])->middleware('role:user')->name('user.skor_pengetahuan');
     
     Route::get('/user/panduan_pretest', [UserDashboardController::class, 'panduan_pretest'])->middleware('role:user')->name('user.panduan_pretest');
@@ -79,5 +79,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/admin/index', [AdminDashboardController::class, 'index'])->middleware('role:admin')->name('admin.index');
     Route::get('/admin/setting', [AdminDashboardController::class, 'setting'])->middleware('role:admin')->name('admin.setting');
+    Route::get('/admin/informasi', [AdminDashboardController::class, 'informasi'])->middleware('role:admin')->name('admin.informasi');
     Route::post('/admin/delete_data', [AdminDashboardController::class, 'delete_data'])->middleware('role:admin')->name('admin.delete_data');
 });

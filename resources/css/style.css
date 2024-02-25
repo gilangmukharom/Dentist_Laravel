@@ -153,6 +153,53 @@
     min-height: 100vh;
 }
 
+.element-dashboard{
+    right: 5vh;
+}
+
+.element-dashboard .card-element{
+    height: 200px;
+    width: 250px;
+}
+
+.fc-toolbar-title{
+    font-size: 20px !important;
+    color: #34baf7;
+    width: 100% !important;
+}
+
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events{
+    display: none;
+}
+
+.fc .fc-col-header-cell-cushion, .fc .fc-daygrid-day-number{
+    font-size: small;
+    text-align: center !important;
+    color: black;
+    text-decoration: none;
+}
+
+.fc-button-group{
+    width: 10px !important;
+}
+
+.fc-toolbar-chunk .fc-today-button{
+    display: none;
+}
+
+.fc-toolbar-chunk{
+    padding: 10px;
+}
+
+.fc-toolbar-chunk .fc-button-group{
+    display: none;
+}
+
+.fc-scrollgrid-sync-inner {
+    color: black;
+    text-decoration: none;
+}
+
 .btn-toggle {
     background-color: #34baf7;
     border-top-left-radius: 0;
@@ -313,6 +360,10 @@
     .sidebar ul {
         text-align: center;
         padding-bottom: 20px;
+    }
+
+    .fc-toolbar-title {
+        font-size: 16px !important; /* Adjust the font size for smaller screens */
     }
 
     .btn-toggle {
