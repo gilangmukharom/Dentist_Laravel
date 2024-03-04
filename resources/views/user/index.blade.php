@@ -27,15 +27,36 @@
         </div>
 
         <div class="body-dashboard">
-            <div class="notes-dashboard">
-                <div class="title-notes">Daily activity 14 Days</div>
-                <div class="body-notes">Selamat Datang, Intan! Yuk mulai aktivitas hari ini</div>
-                <div class="notes-button">
-                    <a href="#" class="btn btn-primary">Mulai</a>
-                </div>
-            </div>
-            <div class="calendar-dashboard">
-                <div id="calendar"></div>
+            <div class="leaderboard">
+                <table class="w-100">
+                    <tr class="text-center">
+                        <td class="p-3">
+                            <p>No</p>
+                        </td>
+                        <td class="p-3">
+                            <p>Nama</p>
+                        </td>
+                        <td>
+                            <p>Skor Sikap</p>
+                        </td>
+                        <td>
+                            <p>Skor Tindakan</p>
+                        </td>
+                        <td>
+                            <p>Skor Pengetahuan</p>
+                        </td>
+                        <td>
+                            <p>Skor Daily</p>
+                        </td>
+                    </tr>
+                    <tr class="rounded border shadow text-center">
+                        <td class="pt-4 pb-4">1</td>
+                        <td class="pt-4 pb-4">{{$username}}</td>
+                        <td>{{$kategori_sikap}}</td>
+                        <td>{{$kategori_tindakan}}</td>
+                        <td>{{$kategori_pengetahuan}}</td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>

@@ -39,6 +39,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/daysactivity', [UserDashboardController::class, 'daysactivity'])->middleware('role:user')->name('user.daysactivity');
 
     Route::get('/user/quiz', [UserDashboardController::class, 'quiz'])->middleware('role:user')->name('user.quiz');
+    Route::get('/user/history-quiz', [UserDashboardController::class, 'history_quiz'])->middleware('role:user')->name('user.history_quiz');
+    
     Route::get('/user/quiz_keterampilan', [UserDashboardController::class, 'quiz_keterampilan'])->middleware('role:user')->name('user.quiz_keterampilan');
     Route::post('/user/hasil_quiz_keterampilan', [UserDashboardController::class, 'hasil_quiz_keterampilan'])->middleware('role:user')->name('user.hasil_quiz_keterampilan');
     Route::get('/user/finish_keterampilan', [UserDashboardController::class, 'finish_keterampilan'])->middleware('role:user')->name('user.finish_keterampilan');

@@ -15,6 +15,8 @@ use App\Models\qtindakans;
 use App\Models\Quiz_keterampilans;
 use App\Models\Quiz_pengetahuans;
 use App\Models\User;
+use App\Models\User_quiz_keterampilans;
+use App\Models\User_quiz_pengetahuans;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -23,7 +25,47 @@ class UserDashboardController extends Controller
 {
     public function index()
     {
-        return view('user.index');
+        $user = Auth::user();
+
+        // Mendapatkan nilai dari field username
+        $username = $user->username;
+        $tanggal_pretest = $user->tanggal_pretest;
+        $skor_sikap = $user->total_jawaban_sikap;
+        $skor_tindakan = $user->total_jawaban_tindakans;
+        $skor_pengetahuan = $user->total_jawaban_pengetahuan;
+
+        if ($skor_sikap >= 80) {
+            $kategori_sikap = 'Sangat Baik';
+        } elseif ($skor_sikap >= 60) {
+            $kategori_sikap = 'Baik';
+        } elseif ($skor_sikap >= 50) {
+            $kategori_sikap = 'Cukup';
+        } else {
+            $kategori_sikap = 'Kurang';
+        }
+
+        if ($skor_tindakan >= 80) {
+            $kategori_tindakan = 'Sangat Baik';
+        } elseif ($skor_tindakan >= 60) {
+            $kategori_tindakan = 'Baik';
+        } elseif ($skor_tindakan >= 50) {
+            $kategori_tindakan = 'Cukup';
+        } else {
+            $kategori_tindakan = 'Kurang';
+        }
+
+        if ($skor_pengetahuan >= 80) {
+            $kategori_pengetahuan = 'Sangat Baik';
+        } elseif ($skor_pengetahuan >= 60) {
+            $kategori_pengetahuan = 'Baik';
+        } elseif ($skor_pengetahuan >= 50) {
+            $kategori_pengetahuan = 'Cukup';
+        } else {
+            $kategori_pengetahuan = 'Kurang';
+        }
+
+        // Mengirim data username ke view
+        return view('user.index', compact('username', 'tanggal_pretest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
     }
     public function edit_profile()
     {
@@ -108,10 +150,18 @@ class UserDashboardController extends Controller
     {
         return view('user.quiz');
     }
+    public function history_quiz()
+    {
+        $user_id = auth()->id();
+        $user = User::find($user_id);
+
+        $quizKeterampilan = $user->quiz_keterampilan;
+        return view('user.history_quiz', compact('user', 'quizKeterampilan'));
+    }
 
     public function quiz_keterampilan(Request $request)
     {
-        $q_keterampilans = Quiz_keterampilans::with('jawabans')->get();
+        $q_keterampilans = Quiz_keterampilans::with('jawabans')->inRandomOrder()->limit(5)->get();
 
         return view('user.quiz_keterampilan', compact('q_keterampilans'));
     }
@@ -141,11 +191,16 @@ class UserDashboardController extends Controller
         }
         $percentage = ($correctAnswersCount / $totalQuestions) * 100;
 
-        $user_id = Auth::id();
-        $user = User::find($user_id);
+        $id_user = Auth::id();
+        $user = User::find($id_user);
         if ($user) {
-            $user->total_jawaban_keterampilan = $percentage;
-            $user->save();
+
+            $quiz_keterampilan = new User_quiz_keterampilans([
+                'nilai_quiz_keterampilan' => $percentage,
+                'tanggal_quiz_keterampilan' => Carbon::now(),
+            ]);
+
+            $user->quiz_keterampilan()->save($quiz_keterampilan);
 
             // Menampilkan alert jika berhasil disimpan
             Session::flash('success', 'Data berhasil disimpan!');
@@ -154,28 +209,12 @@ class UserDashboardController extends Controller
             Session::flash('error', 'User tidak ditemukan.');
         }
 
-
         return view('user.finish_keterampilan', compact('percentage'));
     }
 
-    // public function cek_quiz_keterampilan(Request $request, Quiz_keterampilans $q_keterampilans, $option)
-    // {
-    //     $answerData = [
-    //         'answer' => $request->input("option_$option"),
-    //         'is_correct' => $request->input('correct_answer') === $option,
-    //     ];
-
-    //     if ($request->hasFile("image_$option")) {
-    //         $imagePath = $request->file("image_$option")->store("images/questions", "public");
-    //         $answerData['image'] = $imagePath;
-    //     }
-
-    //     $q_keterampilans->answers()->create($answerData);
-    // }
-
     public function quiz_pengetahuan()
     {
-        $q_pengetahuans = Quiz_pengetahuans::with('jawabans')->get();
+        $q_pengetahuans = Quiz_pengetahuans::with('jawabans')->inRandomOrder()->limit(5)->get();
 
         return view('user.quiz_pengetahuan', compact('q_pengetahuans'));
     }
@@ -205,11 +244,16 @@ class UserDashboardController extends Controller
         }
         $percentage = ($correctAnswersCount / $totalQuestions) * 100;
 
-        $user_id = Auth::id();
-        $user = User::find($user_id);
+        $id_user = Auth::id();
+        $user = User::find($id_user);
         if ($user) {
-            $user->total_jawaban_pengetahuan = $percentage;
-            $user->save();
+
+            $quiz_pengetahuan = new User_quiz_pengetahuans([
+                'nilai_quiz_pengetahuan' => $percentage,
+                'tanggal_quiz_pengetahuan' => Carbon::now(),
+            ]);
+
+            $user->quiz_pengetahuan()->save($quiz_pengetahuan);
 
             // Menampilkan alert jika berhasil disimpan
             Session::flash('success', 'Data berhasil disimpan!');
@@ -217,7 +261,6 @@ class UserDashboardController extends Controller
             // Menampilkan alert jika user tidak ditemukan
             Session::flash('error', 'User tidak ditemukan.');
         }
-
 
         return view('user.finish_pengetahuan', compact('percentage'));
     }

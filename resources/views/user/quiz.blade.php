@@ -8,7 +8,7 @@
     <div class="url-quiz">
       <p class="m-auto">Quiz > pilih jenis quiz</p>
     </div>
-    <button class="border-0 rounded text-0 p-2">History</button>
+    <button class="border-0 rounded text-0 p-2" onclick="window.location='{{ route('user.history_quiz') }}'">History</button>
   </div>
   <hr>
   <div class="body-quiz d-flex gap-4 justify-content-center align-content-center">
