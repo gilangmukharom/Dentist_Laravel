@@ -6,7 +6,7 @@
     <div class="content-14days">
         @php
             $user_id = auth()->id();
-            $currentDate = now(); // Tanggal dan waktu saat ini
+            $currentDate = now();
         @endphp
         @for ($i = 1; $i <= 14; $i++)
             @php

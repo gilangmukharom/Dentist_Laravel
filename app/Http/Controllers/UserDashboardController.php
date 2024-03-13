@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\daily_activities;
+use App\Models\Daily_core;
+use App\Models\Daily_cores;
 use Illuminate\Support\Facades\Session;
 use App\Models\jawaban_sikaps;
 use App\Models\Postest_jawaban_sikaps;
@@ -73,18 +75,14 @@ class UserDashboardController extends Controller
     }
     public function activity()
     {
-        return view('user.activity');
+        $schedules = Daily_cores::where('user_id', Auth::id())->get();
+        return view('user.activity', compact('schedules'));
     }
 
     public function daily_activities()
     {
         $schedules = daily_activities::where('user_id', Auth::id())->get();
         return view('user.daily_activitiy_index', compact('schedules'));
-    }
-
-    public function views_create_daily()
-    {
-        return view('user.daysactivity');
     }
 
     public function create_daily(Request $request)
@@ -140,8 +138,64 @@ class UserDashboardController extends Controller
     }
     public function days()
     {
-        return view('user.14days');
+        $user_id = auth()->id();
+        $user = User::find($user_id);
+
+        if ($user) {
+            $dailyCore = $user->Daily_core;
+            if ($dailyCore && $dailyCore->whereNull('tanggal_input')->count() > 0) {
+                return view('user.14days');
+            } else {
+                return view('user.activity');
+            }
+        } else {
+            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu.');
+        }
     }
+
+    public function first_daily(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string',
+            'bukti' => 'string',
+            'waktu_sikat_gigi_pagi' => 'required|date_format:H:i',
+            'waktu_sikat_gigi_malam' => 'required|date_format:H:i',
+            'deskripsi' => 'required|string',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $user = User::find($request->user_id);
+
+        // $daily = Daily_core::create([
+        //     'user_id' => $user->id,
+        //     'tanggal_input' => Carbon::now()->toDateString(),
+        //     'tanggal_daily' => Carbon::now()->toDateString(),
+        //     'deskripsi' => $request->deskripsi,
+        //     'bukti' => $request->bukti,
+        //     'waktu_sikat_gigi_pagi' => $request->waktu_sikat_gigi_pagi,
+        //     'waktu_sikat_gigi_malam' => $request->waktu_sikat_gigi_malam,
+        //     'nama' => $request->nama
+        // ]);
+
+        $schedule = new Daily_cores();
+        $schedule->user_id = Auth::id();
+        $schedule->nama = $request->nama;
+        $schedule->waktu_sikat_gigi_pagi = $request->waktu_sikat_gigi_pagi;
+        $schedule->waktu_sikat_gigi_malam = $request->waktu_sikat_gigi_malam;
+        $schedule->bukti = $request->bukti;
+        $schedule->deskripsi = $request->deskripsi;
+        $schedule->tanggal_input = Carbon::now()->toDateString();
+        $schedule->tanggal_daily = Carbon::now()->toDateString();
+        $schedule->save();
+
+        for ($i = 2; $i <= 15; $i++) {
+            Daily_cores::create([
+                'user_id' => $user->id,
+                'tanggal_daily' => Carbon::now()->addDays($i - 1)->toDateString()
+            ]);
+        }
+    }
+    
     public function daysactivity()
     {
         return view('user.daysactivity');

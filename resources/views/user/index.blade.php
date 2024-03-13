@@ -27,6 +27,10 @@
         </div>
 
         <div class="body-dashboard">
+            <div class="content-dashboard-student">
+                <div class="card-element bg-body-tertiary rounded shadow" id="calendar">
+                </div>
+            </div>
             <div class="leaderboard">
                 <table class="w-100">
                     <tr class="text-center">
@@ -60,5 +64,18 @@
             </div>
         </div>
     </div>
+    <!-- Include jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth'
+            });
+            calendar.render();
+        });
+    </script>
 @endsection
