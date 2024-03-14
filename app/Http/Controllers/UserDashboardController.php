@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\daily_activities;
-use App\Models\Daily_core;
 use App\Models\Daily_cores;
 use Illuminate\Support\Facades\Session;
 use App\Models\jawaban_sikaps;
@@ -22,6 +21,9 @@ use App\Models\User_quiz_pengetahuans;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Illuminate\Routing\Route;
 
 class UserDashboardController extends Controller
 {
@@ -69,6 +71,30 @@ class UserDashboardController extends Controller
         // Mengirim data username ke view
         return view('user.index', compact('username', 'tanggal_pretest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
     }
+
+    public function generatePDF()
+    {
+        // Ambil data dari model
+        $data = daily_activities::all();
+
+        // Buat objek Dompdf
+        $pdf = new Dompdf();
+
+        // Atur opsi Dompdf jika diperlukan
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
+
+        // Render tampilan PDF
+        $pdf->loadHtml(view('user.cetak_laporan', compact('data')));
+
+        // Render PDF
+        $pdf->render();
+
+        // Unduh PDF
+        return $pdf->stream('nama_file.pdf');
+    }
+
     public function edit_profile()
     {
         return view('user.edit_profile');
@@ -97,7 +123,16 @@ class UserDashboardController extends Controller
 
         $userId = Auth::id();
 
+        $user_id = auth()->id();
+        $user = User::find($user_id);
+
+        $nomorId = Route::input('nomor');
+
+        //Harusnya menambahkan nomor sebagai parameter untuk melakukan upload ke db
+        //nomor diambil dari params
+
         $existingActivitiesCount = daily_activities::where('user_id', $userId)->count();
+
 
         $newDayValue = ($existingActivitiesCount % 14) + 1;
 
@@ -142,9 +177,9 @@ class UserDashboardController extends Controller
         $user = User::find($user_id);
 
         if ($user) {
-            $dailyCore = $user->Daily_core;
-            if ($dailyCore && $dailyCore->whereNull('tanggal_input')->count() > 0) {
-                return view('user.14days');
+            $dailyCores = $user->Daily_cores;
+            if ($dailyCores && $dailyCores->whereNotNull('tanggal_input')->first()) {
+                return view('user.14days', compact('dailyCores'));
             } else {
                 return view('user.activity');
             }
@@ -157,49 +192,57 @@ class UserDashboardController extends Controller
     {
         $request->validate([
             'nama' => 'required|string',
-            'bukti' => 'string',
+            'bukti' => 'file',
             'waktu_sikat_gigi_pagi' => 'required|date_format:H:i',
             'waktu_sikat_gigi_malam' => 'required|date_format:H:i',
             'deskripsi' => 'required|string',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'exists:users,id',
         ]);
 
-        $user = User::find($request->user_id);
+        $user_id = auth()->id();
+        $user = User::find($user_id);
 
-        // $daily = Daily_core::create([
-        //     'user_id' => $user->id,
-        //     'tanggal_input' => Carbon::now()->toDateString(),
-        //     'tanggal_daily' => Carbon::now()->toDateString(),
-        //     'deskripsi' => $request->deskripsi,
-        //     'bukti' => $request->bukti,
-        //     'waktu_sikat_gigi_pagi' => $request->waktu_sikat_gigi_pagi,
-        //     'waktu_sikat_gigi_malam' => $request->waktu_sikat_gigi_malam,
-        //     'nama' => $request->nama
-        // ]);
+        $daily = Daily_cores::create([
+            'user_id' => $user->id,
+            'tanggal_input' => Carbon::now()->toDateString(),
+            'tanggal_daily' => Carbon::now()->toDateString(),
+            'deskripsi' => $request->deskripsi,
+            'nomor' => 1,
+            'bukti' => $request->bukti,
+            'waktu_sikat_gigi_pagi' => $request->waktu_sikat_gigi_pagi,
+            'waktu_sikat_gigi_malam' => $request->waktu_sikat_gigi_malam,
+            'nama' => $request->nama
+        ]);
 
-        $schedule = new Daily_cores();
-        $schedule->user_id = Auth::id();
-        $schedule->nama = $request->nama;
-        $schedule->waktu_sikat_gigi_pagi = $request->waktu_sikat_gigi_pagi;
-        $schedule->waktu_sikat_gigi_malam = $request->waktu_sikat_gigi_malam;
-        $schedule->bukti = $request->bukti;
-        $schedule->deskripsi = $request->deskripsi;
-        $schedule->tanggal_input = Carbon::now()->toDateString();
-        $schedule->tanggal_daily = Carbon::now()->toDateString();
-        $schedule->save();
+        $nomor = 1;
 
-        for ($i = 2; $i <= 15; $i++) {
+        for ($i = 2; $i <= 14; $i++) {
             Daily_cores::create([
                 'user_id' => $user->id,
-                'tanggal_daily' => Carbon::now()->addDays($i - 1)->toDateString()
+                'tanggal_daily' => Carbon::now()->addDays($i - 1)->toDateString(),
+                'nomor' => ++$nomor
             ]);
         }
+
+        return view('user.14days');
     }
-    
-    public function daysactivity()
+
+    public function daysactivity($nomor)
     {
-        return view('user.daysactivity');
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        $dailyCore = Daily_cores::where('nomor', $nomor)
+            ->whereNotNull('tanggal_input')
+            ->first();
+
+        if (!$dailyCore) {
+            return view('user.daysactivity', ['nomor' => $nomor], compact('dailyCore'));
+        } else {
+            return redirect()->route('user.14days');
+        }
     }
+
     public function quiz()
     {
         return view('user.quiz');

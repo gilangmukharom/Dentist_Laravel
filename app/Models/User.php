@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public function Daily_cores()
+    {
+        return $this->hasMany(Daily_cores::class);
+    }
     public function quiz_keterampilan()
     {
         return $this->hasMany(User_quiz_keterampilans::class);

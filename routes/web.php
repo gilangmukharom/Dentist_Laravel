@@ -37,7 +37,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/14days', [UserDashboardController::class, 'days'])->middleware('role:user')->name('user.14days');
     Route::post('/user/create_daily', [UserDashboardController::class, 'create_daily'])->middleware('role:user')->name('user.create_daily');
     Route::post('/user/first_daily', [UserDashboardController::class, 'first_daily'])->middleware('role:user')->name('user.first_daily');
-    Route::get('/user/daysactivity', [UserDashboardController::class, 'daysactivity'])->middleware('role:user')->name('user.daysactivity');
+    Route::get('/user/daysactivity/{nomor}', [UserDashboardController::class, 'daysactivity'])->middleware('role:user')->name('user.daysactivity');
+    Route::get('user/cetak_laporan', [UserDashboardController::class, 'generatePDF'])->middleware(('role:user'))->name('user.cetak_laporan');
 
     Route::get('/user/quiz', [UserDashboardController::class, 'quiz'])->middleware('role:user')->name('user.quiz');
     Route::get('/user/history-quiz', [UserDashboardController::class, 'history_quiz'])->middleware('role:user')->name('user.history_quiz');

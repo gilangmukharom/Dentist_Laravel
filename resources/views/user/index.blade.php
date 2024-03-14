@@ -62,6 +62,7 @@
                     </tr>
                 </table>
             </div>
+            <a href="{{ route('user.cetak_laporan')}}" class="btn btn-primary">Generate PDF</a>
         </div>
     </div>
     <!-- Include jQuery -->

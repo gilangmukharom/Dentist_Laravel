@@ -8,7 +8,7 @@
     <div class="title-activity">
       <h1>Day 1</h1>
     </div>
-    <form action="{{ route('user.first_daily') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-wrap flex-row gap-3 justify-between">
+    <form id="dailyForm" action="{{ route('user.first_daily') }}" method="POST" enctype="multipart/form-data" class="d-flex flex-wrap flex-row gap-3 justify-between">
       @csrf
       <div class="input-nama d-flex flex-column">
         <label for="nama">Nama</label>
@@ -38,4 +38,5 @@
     </form>
   </div>
 <script src="{{ asset('assets/js/components.js') }}"></script>
+
 @endsection

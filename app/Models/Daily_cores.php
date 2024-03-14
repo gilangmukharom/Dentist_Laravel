@@ -16,7 +16,9 @@ class Daily_cores extends Model
         'waktu_sikat_gigi_malam',
         'bukti',
         'deskripsi',
+        'tanggal_daily',
         'tanggal_input',
+        'nomor'
     ];
 
     public function user()

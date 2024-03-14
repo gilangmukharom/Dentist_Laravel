@@ -147,7 +147,7 @@
 
         // Load content based on the clicked link
         if (linkId === 'dashboard-link') {
-          loadContent('{{ route("user.index") }}');
+          window.location.href = '/user/index';
         } else if (linkId === 'video-link') {
           loadContent('{{ route("user.video") }}');
         } else if (linkId === 'teeth-link') {
@@ -155,13 +155,13 @@
         } else if (linkId === 'info-link') {
           loadContent('{{ route("user.info") }}');
         } else if (linkId === '14days') {
-          loadContent('{{ route("user.14days") }}');
+          window.location.href = '14days';
         } else if (linkId === 'quiz') {
           loadContent('{{ route("user.quiz") }}');
         } else if (linkId === 'panduan-link') {
           loadContent('{{ route("user.panduan") }}');
         } else if (linkId === 'pretest-link') {
-          window.location.href = '/user/panduan_pretest';;
+          window.location.href = '/user/panduan_pretest';
         }
 
         $('.nav-link').removeClass('active text-1');
