@@ -8,7 +8,7 @@
             });
         </script>
     @endif
-    <p>Kembali</p>
+    <p class="m-3 cursor-pointer" onclick="window.location='/user/14days'">Kembali</p>
 
     <div class="content-activity w-100 rounded p-5">
         <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
@@ -47,7 +47,7 @@
         </div>
         <div class="form-activity m-auto w-90 position-relative">
             <div class="title-activity">
-                <h1>Day {{ request()->input('day') }}</h1>
+                <h1>Day {{ $daily->nomor }}</h1>
             </div>
             @foreach ($doneDaily as $daily)
                 <form action="{{ route('user.create_daily') }}" method="POST" enctype="multipart/form-data"
@@ -65,12 +65,12 @@
                     <div class="input-time">
                         <div class="sikat-pagi d-flex mb-3 flex-row">
                             <label for="pagi" class="w-100">Sikat gigi pagi</label>
-                            <input type="text" name="waktu_sikat_gigi_pagi" class="pagi w-100 border-1 rounded" disabled
+                            <input type="text" name="waktu_sikat_gigi_pagi" class="pagi w-100 border-1 rounded p-1" disabled
                                 placeholder="{{ $daily->waktu_sikat_gigi_pagi }}">
                         </div>
                         <div class="sikat-malam d-flex mb-3 flex-row">
                             <label for="malam" class="w-100">Sikat gigi malam</label>
-                            <input type="text" name="waktu_sikat_gigi_malam" class="malam w-100 border-1 rounded"
+                            <input type="text" name="waktu_sikat_gigi_malam" class="malam w-100 border-1 rounded p-1"
                                 disabled placeholder="{{ $daily->waktu_sikat_gigi_malam }}">
                         </div>
                     </div>

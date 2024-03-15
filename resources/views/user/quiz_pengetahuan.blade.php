@@ -17,8 +17,8 @@
             <h1>Quiz</h1>
             <p class="text-0">Pengetahuan Gigi dan Mulut</p>
         </div>
-        <div class="timer-pengetahuan bg-light rounded-5 p-2">
-            <h2 id="time">30</h2>
+        <div class="timer-pengetahuan bg-light d-flex justify-content-center align-items-center">
+            <h2 id="timer">30</h2>
         </div>
     </div>
     <div class="box-pengetahuan d-flex flex-column justify-content-center align-items-center">
@@ -28,35 +28,38 @@
                 @foreach ($q_pengetahuans as $index => $question)
                     <div class="soal_jawab" data-question="{{ $index }}"
                         style="display: {{ $index === 0 ? 'block' : 'none' }}">
-                        <div class="soal-pengetahuan m-5 bg-light p-4 rounded-5">
+                        <div class="soal-pengetahuan m-5 bg-light p-4 rounded-5 text-center">
                             <h1>
                                 {{ $question->question }}
                             </h1>
                         </div>
-                        <div class="pilihan d-flex flex-rows d-flex justify-content-center gap-3">
+                        <div class="pilihan d-flex gap-4 w-75 m-auto">
                             <label
-                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_a) }}"
-                                    alt="Option Image" width="50"><br>
+                                    alt="Option Image" class="w-50"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="A">
                             </label>
                             <label
-                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_b) }}"
-                                    alt="Option Image" width="50"><br>
+                                    alt="Option Image" class="w-50"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="B">
                             </label>
                         </div>
                     </div>
                 @endforeach
-                <button type="button" onclick="nextQuestion()">Lanjutkan</button>
-                <button type="submit" style="display: none;" id="submitButton">Submit</button>
+                <div class="button-group d-flex justify-content-center align-items-center m-3">
+                    <button class="btn btn-light" type="button" onclick="nextQuestion()">Lanjutkan</button>
+                    <button class="btn btn-light" type="submit" style="display: none;"
+                        id="submitButton">Submit</button>
+                </div>
             </form>
         </div>
     </div>
 
     <script>
-        var timerDuration = 3;
+        var timerDuration = 30;
         var timerElement = document.getElementById('timer');
 
         function startTimer() {

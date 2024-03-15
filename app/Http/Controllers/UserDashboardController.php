@@ -23,18 +23,21 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Illuminate\Routing\Route;
 
 class UserDashboardController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
+        $user_id = Auth::id();
 
         // Mendapatkan nilai dari field username
         $username = $user->username;
         $tanggal_pretest = $user->tanggal_pretest;
         $skor_sikap = $user->total_jawaban_sikap;
+
+        $user_stat = User_quiz_keterampilans::with('nilai_quiz_keterampilan')->find($user_id);
+        $skor_sikap_stat = $user_stat->nilai_quiz_keterampilan;
         $skor_tindakan = $user->total_jawaban_tindakans;
         $skor_pengetahuan = $user->total_jawaban_pengetahuan;
 
@@ -69,7 +72,7 @@ class UserDashboardController extends Controller
         }
 
         // Mengirim data username ke view
-        return view('user.index', compact('username', 'tanggal_pretest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
+        return view('user.index', compact('skor_sikap_stat', 'skor_sikap_stat', 'username', 'tanggal_pretest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
     }
 
     public function generatePDF()
@@ -97,8 +100,38 @@ class UserDashboardController extends Controller
 
     public function edit_profile()
     {
+
         return view('user.edit_profile');
     }
+
+    public function update_profile(Request $request)
+    {
+
+        $user = auth()->user();
+
+        $request->validate([
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'tanggal_lahir' => 'required|date',
+            'tempat_lahir' => 'required|string|max:255',
+            'password' => 'required|string|min:8',
+            'alamat' => 'required|string|max:255',
+            'sekolah' => 'required|string|max:255',
+            'nama_ortu' => 'required|string|max:255',
+        ]);
+
+        $user->username = $request->username;
+        $user->tanggal_lahir = $request->tanggal_lahir;
+        $user->tempat_lahir = $request->tempat_lahir;
+        $user->password = bcrypt($request->password); // Encrypt password baru
+        $user->alamat = $request->alamat;
+        $user->sekolah = $request->sekolah;
+        $user->nama_ortu = $request->nama_ortu;
+
+        $user->save();
+
+        return view('user.edit_profile');
+    }
+
     public function activity()
     {
         $schedules = Daily_cores::where('user_id', Auth::id())->get();
@@ -175,10 +208,12 @@ class UserDashboardController extends Controller
         $user_id = auth()->id();
         $user = User::find($user_id);
 
+        $today = Carbon::now()->format('Y-m-d');
+
         if ($user) {
             $dailyCores = $user->Daily_cores;
             if ($dailyCores && $dailyCores->whereNotNull('tanggal_input')->first()) {
-                return view('user.14days', compact('dailyCores'));
+                return view('user.14days', compact('dailyCores', 'today'));
             } else {
                 return view('user.activity');
             }
@@ -223,7 +258,9 @@ class UserDashboardController extends Controller
             ]);
         }
 
-        return view('user.14days');
+        $today = Carbon::now()->format('Y-m-d');
+
+        return view('user.14days', compact('today'));
     }
 
     public function daysactivity($nomor)
@@ -379,6 +416,7 @@ class UserDashboardController extends Controller
 
         return view('user.finish_pengetahuan', compact('percentage'));
     }
+    
     public function finish_pengetahuan()
     {
         return view('user.finish_pengetahuan');

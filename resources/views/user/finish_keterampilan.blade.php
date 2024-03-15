@@ -24,10 +24,10 @@
         </div>
         <div class="body-finish-pengetahuan d-flex flex-column justify-content-center align-items-center">
             <img src="{{asset('assets/img/award.png')}}" class="w-75" alt="">
-            <p>Correct Answers: {{ $percentage }}</p>
-            <div class="button-finish">
-                <button>Dashboard</button>
-                <button>Lihat Skor</button>
+            {{-- <p>Correct Answers: {{ $percentage }}</p> --}}
+            <div class="button-finish d-flex gap-5">
+                <button class="btn btn-light" onclick="location.href='/user/index'">Dashboard</button>
+                <button class="btn btn-warning text-white" onclick="location.href='/user/skor_keterampilan'">Lihat Skor</button>
             </div>
         </div>
     </div>

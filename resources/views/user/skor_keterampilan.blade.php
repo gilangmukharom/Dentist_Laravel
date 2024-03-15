@@ -23,8 +23,8 @@
             <h1>Skor Kamu</h1>
         </div>
 
-        <div class="content-skor-keterampilan p-5 bg-white w-100 rounded-3">
-            <table class="w-50">
+        <div class="content-skor-keterampilan p-2 bg-white w-100 rounded-3">
+            <table class="p-5 w-50">
                 <tr>
                     <td>
                         <p>Tanggal</p>
@@ -96,7 +96,7 @@
         <div class="status-skor w-100 mt-2 p-3 rounded-3 d-flex flex-column justify-content-center align-items-center">
             <h1>Berhasil</h1>
             <p>Selamat kamu berhasil menyelesaikan quiz dengan baik!</p>
-            <button>Dashboard</button>
+            <button class="btn btn-light" onclick="location.href='/user/index'">Dashboard</button>
         </div>
     </div>
 </body>

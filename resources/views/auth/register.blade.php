@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <title>Dentist - Register</title>
+  <title>Dentist - Registrasi</title>
 </head>
 
 <body class="register-body">
@@ -55,9 +55,9 @@
     </div>
 
     <div class="register-form w-100 m-auto">
-      <form action="{{ url('/register_auth') }}" id="registerForm" method="post" class="form-control d-flex flex-column gap-2 m-auto p-3">
+      <form action="{{ url('/register_auth') }}" id="registerForm" method="post" class="form-control d-flex flex-column gap-2 m-auto p-4">
         @csrf
-        <h1 class="m-auto p-3">Register</h1>
+        <h1 class="m-auto p-3">Registrasi</h1>
         <div class="register-username d-flex flex-column form-group">
           <label for="username">Username / Nama<span class="text-danger">*</span></label>
           <input type="text" name="username" class="form-control" required>
@@ -101,9 +101,7 @@
             <div class="invalid-feedback"></div>
           </div>
         </div>
-
-        <input type="submit" id="submitBtn" class="bg-2 w-50 m-auto btn" data-bs-toggle="modal" data-bs-target="#successModal">
-
+        <input type="submit" id="submitBtn" class="bg-2 w-50 m-auto btn mt-3" data-bs-toggle="modal" data-bs-target="#successModal">
       </form>
     </div>
   </div>

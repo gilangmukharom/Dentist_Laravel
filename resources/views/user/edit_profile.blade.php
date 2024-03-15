@@ -8,7 +8,7 @@
         </div>
         <div class="box-edit-profile">
             <div class="title-editprofile">Edit Profile</div>
-            <form action="{{ route('user.index') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('user.profile-update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Upload Foto -->
                 <div class="mb-3">

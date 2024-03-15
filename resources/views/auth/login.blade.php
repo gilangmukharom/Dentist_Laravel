@@ -28,7 +28,7 @@
     </div>
 
     <div class="login-form w-100 m-auto">
-      <form action="{{ url('/login_auth') }}" method="post" class="form-control d-flex flex-column gap-3 m-auto">
+      <form action="{{ url('/login_auth') }}" method="post" class="form-control d-flex flex-column gap-3 p-4 m-auto">
         @csrf
 
         <h1 class="m-auto">Login</h1>

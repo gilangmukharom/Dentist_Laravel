@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    @vite(['resources/css/style.css', 'resources/js/app.js'])
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <title>Dentist - Quiz Keterampilan</title>
@@ -20,52 +20,54 @@
             <h1>Quiz</h1>
             <p class="text-0">Keterampilan Gigi dan Mulut</p>
         </div>
-        <div class="timer-keterampilan bg-light rounded-circle p-2">
-            <h2 id="time">30</h2>
+        <div class="timer-keterampilan bg-light d-flex justify-content-center align-items-center">
+            <h2 id="timer">30</h2>
         </div>
     </div>
     <div class="box-keterampilan d-flex flex-column justify-content-center align-items-center">
         <div
             class="jawaban-keterampilan d-flex flex-column flex-lg-row flex-md-row flex-sm-column gap-5 justify-content-center align-items-center">
-            <form action="{{ route('user.hasil_quiz_keterampilan') }}" method="POST" id="quizForm">
+            <form class="d-flex flex-column gap-5" action="{{ route('user.hasil_quiz_keterampilan') }}" method="POST"
+                id="quizForm">
                 @csrf
                 @foreach ($q_keterampilans as $index => $question)
                     <div class="soal_jawab" data-question="{{ $index }}"
                         style="display: {{ $index === 0 ? 'block' : 'none' }}">
-                        <div class="soal-keterampilan m-5 bg-light p-4 rounded-5">
+
+                        <div class="soal-keterampilan bg-light m-5 p-4 text-center rounded-5">
                             <h1>
                                 {{ $question->question }}
                             </h1>
                         </div>
-                        <div class="pilihan d-flex flex-rows d-flex justify-content-center gap-3">
-                            <label
-                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                        <div class="pilihan d-flex gap-4 w-75 m-auto">
+                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_a) }}"
-                                    alt="Option Image" width="50"><br>
+                                    alt="Option Image" class="w-50"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="A">
                             </label>
-                            <label
-                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_b) }}"
-                                    alt="Option Image" width="50"><br>
+                                    alt="Option Image" class="w-50"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="B">
                             </label>
-                            <label
-                                class="image-radio-label d-flex flex-column justify-content-center align-items-center">
+                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_c) }}"
-                                    alt="Option Image" width="50"><br>
+                                    alt="Option Image" class="w-50"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="C">
                             </label>
                         </div>
                     </div>
                 @endforeach
-                <button type="button" onclick="nextQuestion()">Lanjutkan</button>
-                <button type="submit" style="display: none;" id="submitButton">Submit</button>
+                <div class="button-group d-flex justify-content-center align-items-center">
+                    <button class="btn btn-light" type="button" onclick="nextQuestion()">Lanjutkan</button>
+                    <button class="btn btn-light" type="submit" style="display: none;"
+                        id="submitButton">Submit</button>
+                </div>
             </form>
         </div>
 
         <script>
-            var timerDuration = 3;
+            var timerDuration = 30;
             var timerElement = document.getElementById('timer');
 
             function startTimer() {

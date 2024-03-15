@@ -39,13 +39,14 @@
         </div>
         @if ($dailyCores->count() > 0)
             @foreach ($dailyCores as $dailyCore)
-                <div class="card card-14days" {{ $today = \Carbon\Carbon::now()->format('Y-m-d') }}
-                    style="background-color: {{ $dailyCore->tanggal_input || $today == $dailyCore->tanggal_daily ? 'green' : 'red' }}"
+                <div class="card card-14days" 
+                {{ $todays = \Carbon\Carbon::now()->format('Y-m-d') }}
+                    style="background-color: {{ $dailyCore->tanggal_input || $todays == $dailyCore->tanggal_daily ? 'green' : '#D9D9D9' }}"
                     data-nomor="{{ $dailyCore->nomor }}">
 
                     <div class="card-body text-center">
-                        <h1 class="card-title">{{ $dailyCore->nomor }}</h1>
-                        <p class="card-title">{{ $dailyCore->tanggal_daily }}</p>
+                        <h1 class="card-title text-white">{{ $dailyCore->nomor }}</h1>
+                        <p class="card-title text-white">{{ $dailyCore->tanggal_daily }}</p>
                     </div>
                 </div>
             @endforeach
@@ -54,9 +55,15 @@
         @endif
     </div>
 
+    @if ($today)
+    <script>
+        var today = "{{ $today }}";
+        alert("Hari ini adalah: " + today);
+    </script>
+@endif
+
     <script>
         document.querySelectorAll('.card-14days').forEach(function(card) {
-            var day = card.dataset.day;
 
             card.addEventListener('click', function() {
                 var nomor = this.dataset.nomor;

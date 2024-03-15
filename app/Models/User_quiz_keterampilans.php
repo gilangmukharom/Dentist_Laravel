@@ -13,4 +13,9 @@ class User_quiz_keterampilans extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function nilai_quiz_keterampilan()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
