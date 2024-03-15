@@ -121,34 +121,33 @@ class UserDashboardController extends Controller
             'deskripsi' => 'nullable|string',
         ]);
 
-        $userId = Auth::id();
+        $nomor = session('nomor');
 
         $user_id = auth()->id();
-        $user = User::find($user_id);
 
-        $nomorId = Route::input('nomor');
+        $tanggal_daily = Carbon::today(); // Ambil tanggal hari ini
 
-        //Harusnya menambahkan nomor sebagai parameter untuk melakukan upload ke db
-        //nomor diambil dari params
+        $dailyCore = Daily_cores::where('nomor', $nomor)
+        ->where('tanggal_daily', $tanggal_daily)
+        ->first();
 
-        $existingActivitiesCount = daily_activities::where('user_id', $userId)->count();
+        if ($dailyCore) {
+            $bukti = $request->file('bukti')->store('img', 'public');
 
+            // Update kolom-kolom yang diperlukan
+            $dailyCore->user_id = $user_id;
+            $dailyCore->bukti = $bukti;
+            $dailyCore->waktu_sikat_gigi_pagi = $request->waktu_sikat_gigi_pagi;
+            $dailyCore->waktu_sikat_gigi_malam = $request->waktu_sikat_gigi_malam;
+            $dailyCore->nama = $request->nama;
+            $dailyCore->tanggal_input = Carbon::now();
+            $dailyCore->deskripsi = $request->deskripsi;
+            $dailyCore->save();
 
-        $newDayValue = ($existingActivitiesCount % 14) + 1;
-
-        $bukti = $request->file('bukti')->store('bukti_sikat_gigi');
-
-        $schedule = new daily_activities();
-        $schedule->user_id = Auth::id();
-        $schedule->nama = $request->nama;
-        $schedule->waktu_sikat_gigi_pagi = $request->waktu_sikat_gigi_pagi;
-        $schedule->waktu_sikat_gigi_malam = $request->waktu_sikat_gigi_malam;
-        $schedule->bukti = $bukti;
-        $schedule->deskripsi = $request->deskripsi;
-        $schedule->day = $newDayValue;
-        $schedule->save();
-
-        return redirect()->route('user.14days')->with('success', 'Jadwal berhasil dibuat.');
+            return redirect()->back()->with('success', 'Data Berhasil disimpan.');
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+        }
     }
 
     public function teethq()
@@ -236,11 +235,30 @@ class UserDashboardController extends Controller
             ->whereNotNull('tanggal_input')
             ->first();
 
+        $doneDaily = Daily_cores::where('nomor', $nomor)
+            ->where('user_id', Auth::id())
+            ->get();
+            
         if (!$dailyCore) {
+            session()->put('nomor', $nomor);
             return view('user.daysactivity', ['nomor' => $nomor], compact('dailyCore'));
         } else {
-            return redirect()->route('user.14days');
+            session()->flash('error', 'Anda sudah mengisi daily activity.');
+            return view('user.daily_activity_history', ['nomor' => $nomor], compact('doneDaily'));
         }
+    }
+
+    public function daily_activity_history($nomor, Request $request)
+    {
+
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        $doneDaily = Daily_cores::where('nomor', $nomor)
+            ->where('user_id', Auth::id())
+            ->get();
+
+        return view('user.daily_activity_history', compact('user'));
     }
 
     public function quiz()

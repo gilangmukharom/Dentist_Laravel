@@ -1,6 +1,13 @@
 @extends('include.sidebar')
 
 @section('content')
+    @if (session('error'))
+        <script>
+            $(document).ready(function() {
+                $('#errorModal').modal('show');
+            });
+        </script>
+    @endif
     <p>Kembali</p>
 
     <div class="content-activity w-100 rounded p-5">
@@ -38,32 +45,15 @@
                 </button>
             </form>
         </div>
-        @if ($dailyCore)
-            <script>
-                console.log("ada nilai : ", {!! json_encode($dailyCore->toArray()) !!} );
-            </script>
+
+        {{-- @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
         @else
-            <script>
-                console.log("tidak ada nilai");
-            </script>
-        @endif
-        {{-- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          ...
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> --}}
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif --}}
         <script src="{{ asset('assets/js/components.js') }}"></script>
     @endsection
