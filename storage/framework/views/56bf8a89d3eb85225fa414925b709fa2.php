@@ -1,0 +1,1 @@
+<?php /**PATH C:\xampp\htdocs\LARAVEL\tens-dentist\resources\views/user/postest.blade.php ENDPATH**/ ?>
