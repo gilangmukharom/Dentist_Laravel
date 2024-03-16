@@ -1,7 +1,7 @@
 @extends('include.sidebar')
 
 @section('content')
-@vite(['resources/css/style.css', 'resources/js/app.js']);
+@vite(['resources/css/style.css', 'resources/js/app.js'])
     <h1 class="h2">Informasi Detail</h1>
     <div class="box-info-detail mb-4 rounded p-3">
         <div class="navigasi-info-detail">
@@ -21,4 +21,6 @@
             </div>
         </div>
     </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 @endsection

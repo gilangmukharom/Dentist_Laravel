@@ -5,7 +5,7 @@
     <div class="container-dashboard p-5">
         <div class="header-dashboard d-flex justify-content-between">
             <div class="title-dashboard">
-                <h1>Dashboard</h1>
+                <h1><b>Dashboard</b></h1>
             </div>
             <div class="profile-dashboard">
                 <div class="dropdown">
@@ -33,13 +33,13 @@
                 <div class="opening-dashboard w-75">
                     <div class="card w-100 h-100 d-flex flex-column justify-content-evenly align-items-start p-5">
                         <div class="title-card">
-                            <p>Daily Activity</p>
+                            <p>Daily Activity 14 Days</p>
                         </div>
-                        <div class="body-card">
-                            <h3>Selamat datang {{ $username }}! Yuk mulai aktifitas hari ini</h3>
+                        <div class="body-card w-50">
+                            <h3 class="text-white">Selamat datang {{ $username }}! Yuk mulai aktifitas hari ini</h3>
                         </div>
                         <div class="footer-card">
-                            <button type="btn" class="btn btn-primary p-2">Mulai</button>
+                            <button type="btn" style="background-color: #FFBD13; color:white; width: 150px" class="btn p-2">Mulai</button>
                         </div>
                     </div>
                 </div>

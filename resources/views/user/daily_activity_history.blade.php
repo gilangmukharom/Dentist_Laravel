@@ -16,7 +16,8 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title m-auto" id="errorModalLabel"><b>Selamat, kamu sudah mengisi daily activity!</b></h5>
+                        <h5 class="modal-title m-auto" id="errorModalLabel"><b>Selamat, kamu sudah mengisi daily
+                                activity!</b></h5>
                         {{-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button> --}}
@@ -65,8 +66,8 @@
                     <div class="input-time">
                         <div class="sikat-pagi d-flex mb-3 flex-row">
                             <label for="pagi" class="w-100">Sikat gigi pagi</label>
-                            <input type="text" name="waktu_sikat_gigi_pagi" class="pagi w-100 border-1 rounded p-1" disabled
-                                placeholder="{{ $daily->waktu_sikat_gigi_pagi }}">
+                            <input type="text" name="waktu_sikat_gigi_pagi" class="pagi w-100 border-1 rounded p-1"
+                                disabled placeholder="{{ $daily->waktu_sikat_gigi_pagi }}">
                         </div>
                         <div class="sikat-malam d-flex mb-3 flex-row">
                             <label for="malam" class="w-100">Sikat gigi malam</label>
@@ -76,8 +77,8 @@
                     </div>
                     <div class="input-deskripsi">
                         <label for="deskripsi">Deskripsi makanan dan minuman yang dikonsumsi</label>
-                        <input type="text" name="deskripsi" class="deskripsi border-1 rounded w-100 p-5" disabled
-                            placeholder="{{ $daily->deskripsi }}">
+                        <textarea name="deskripsi" class="deskripsi border-1 rounded h-100 w-100" disabled
+                            placeholder="{{ $daily->deskripsi }}"></textarea>
                     </div>
                     <button type="submit" class="btn btn-danger rounded border-0">
                         Submit

@@ -39,8 +39,7 @@
         </div>
         @if ($dailyCores->count() > 0)
             @foreach ($dailyCores as $dailyCore)
-                <div class="card card-14days" 
-                {{ $todays = \Carbon\Carbon::now()->format('Y-m-d') }}
+                <div class="card card-14days" {{ $todays = \Carbon\Carbon::now()->format('Y-m-d') }}
                     style="background-color: {{ $dailyCore->tanggal_input || $todays == $dailyCore->tanggal_daily ? 'green' : '#D9D9D9' }}"
                     data-nomor="{{ $dailyCore->nomor }}">
 
@@ -55,13 +54,7 @@
         @endif
     </div>
 
-    @if ($today)
-    <script>
-        var today = "{{ $today }}";
-        alert("Hari ini adalah: " + today);
-    </script>
-@endif
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         document.querySelectorAll('.card-14days').forEach(function(card) {
 

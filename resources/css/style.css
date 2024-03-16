@@ -237,10 +237,13 @@
 
 .form-activity form .input-nama,
 .input-file,
-.input-time,
-.input-deskripsi {
+.input-time {
     width: 48%;
 }
+/* 
+.form-activity form .input-deskripsi{
+    width: 100%;
+} */
 
 .form-activity form .input-file input {
     border: 1px solid #a5a5a5;

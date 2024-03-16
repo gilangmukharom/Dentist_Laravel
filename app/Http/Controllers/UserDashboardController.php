@@ -208,12 +208,10 @@ class UserDashboardController extends Controller
         $user_id = auth()->id();
         $user = User::find($user_id);
 
-        $today = Carbon::now()->format('Y-m-d');
-
         if ($user) {
             $dailyCores = $user->Daily_cores;
             if ($dailyCores && $dailyCores->whereNotNull('tanggal_input')->first()) {
-                return view('user.14days', compact('dailyCores', 'today'));
+                return view('user.14days', compact('dailyCores'));
             } else {
                 return view('user.activity');
             }
@@ -258,9 +256,7 @@ class UserDashboardController extends Controller
             ]);
         }
 
-        $today = Carbon::now()->format('Y-m-d');
-
-        return view('user.14days', compact('today'));
+        return view('user.14days');
     }
 
     public function daysactivity($nomor)
