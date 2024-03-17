@@ -20,7 +20,7 @@
             </li>
         </ul>
         <div class="navbar-collapse justify-content-end">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('login') }}">
                 <i class="fa fa-user"></i>
             </a>
         </div>

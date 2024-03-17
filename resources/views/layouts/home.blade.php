@@ -51,7 +51,7 @@
         yang lembut dan pasta gigi berflouride, berkumur dengan obat kumur, membersihkan gigi menggunakan benang
         gigi, memeriksakan secara teratur ke dokter gigi, membatasi konsumsi gula, tidak merokok dan menghindari
         minuman bersoda.</p>
-      <h2>Dr.drg. Endah Aryati Eko Ningtyas,MDSc</h2>
+      <h5>WHO (World Health Organization)</h5>
     </div>
     <div class="text-image">
       <img src="{{ asset('assets/img/content1.png') }}" alt="" class="w-80">
@@ -71,9 +71,9 @@
   </div>
 
   <div class="container-testi">
-    <h1 class="text-center">Testimonial</h1>
+    <h1 class="text-center text-1 p-5"><b>Testimonial</b></h1>
     <div class="content-testi d-flex">
-      <div class="card-testi w-50 d-none d-lg-block">
+      <div class="card-testi w-50 d-none d-lg-block p-0">
         <img src="{{ asset('assets/img/home-testi.png') }}" alt="" class="w-80 h-auto">
       </div>
       <div class="container-slider">
