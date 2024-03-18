@@ -36,10 +36,11 @@
                             <p>Daily Activity 14 Days</p>
                         </div>
                         <div class="body-card w-50">
-                            <h3 class="text-white">Selamat datang {{ $username }}! Yuk mulai aktifitas hari ini</h3>
+                            <h3 class="text-white">Selamat datang Izzul! Yuk mulai aktifitas hari ini</h3>
                         </div>
                         <div class="footer-card">
-                            <button type="btn" style="background-color: #FFBD13; color:white; width: 150px" class="btn p-2">Mulai</button>
+                            <button onclick="location.href='/user/14days'" type="btn"
+                                style="background-color: #FFBD13; color:white; width: 150px" class="btn p-2">Mulai</button>
                         </div>
                     </div>
                 </div>
@@ -47,7 +48,14 @@
             </div>
             <div class="dashboard-performance">
                 <p><b>Performance</b></p>
-                <canvas id="myChart" class="h-25 w-100"></canvas>
+                <div class="stat_performance d-flex flex-columns gap-2">
+                    <div class="m-5 w-50 bg-white rounded shadow">
+                        {!! $chart2->container() !!}
+                    </div>
+                    <div class="p-6 m-5 w-25 bg-white rounded shadow d-flex justify-content-center align-items-center">
+                        {!! $chart->container() !!}
+                    </div>
+                </div>
             </div>
             <div class="leaderboard">
                 <p><b>Leaderboard Score</b></p>
@@ -72,14 +80,20 @@
                             <p>Skor Daily</p>
                         </td>
                     </tr>
+                    @foreach ($userData as $index => $data)
                     <tr class="rounded border shadow text-center">
-                        <td class="pt-4 pb-4">1</td>
-                        <td class="pt-4 pb-4">{{ $username }}</td>
-                        <td>{{ $kategori_sikap }}</td>
-                        <td>{{ $kategori_tindakan }}</td>
-                        <td>{{ $kategori_pengetahuan }}</td>
+                        <td class="pt-4 pb-4">{{ $index + 1 }}</td>
+                        <td class="pt-4 pb-4">{{ $data['username'] }}</td>
+                        <td>{{ $data['kategori_sikap'] }}</td>
+                        <td>{{ $data['kategori_tindakan'] }}</td>
+                        <td>{{ $data['kategori_pengetahuan'] }}</td>
+                        <td>{{ $data['kategori_daily'] }}</td>
                     </tr>
+                    @endforeach
                 </table>
+                <div class="d-flex justify-content-center">
+                    {{ $users->links() }}
+                </div>
             </div>
             <a href="{{ route('user.cetak_laporan') }}" class="btn btn-primary">Generate PDF</a>
         </div>
@@ -89,32 +103,11 @@
 
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js'></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Label 1', 'Label 2', 'Label 3'], // Labels untuk sumbu X
-                datasets: [{
-                    label: 'Total Jawaban',
-                    data: {!! json_encode($skor_sikap_stat) !!}, // Data dari controller
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Warna untuk setiap bar
-                    borderColor: 'rgba(255, 99, 132, 1)', // Warna garis tepi
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    </script>
+    <script src="{{ $chart->cdn() }}"></script>
+    <script src="{{ $chart2->cdn() }}"></script>
+
+    {{ $chart->script() }}
+    {{ $chart2->script() }}
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

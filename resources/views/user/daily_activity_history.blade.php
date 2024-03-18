@@ -1,6 +1,7 @@
 @extends('include.sidebar')
 
 @section('content')
+@vite(['resources/css/style.css', 'resources/js/app.js'])
     @if (session('error'))
         <script>
             $(document).ready(function() {
@@ -35,7 +36,7 @@
                                 <p>Status : <b>Done</b></p>
                             </div>
                             <div class="bukti_daily d-flex flex-row justify-content-between">
-                                <img src="{{ asset('storage/' . $daily->bukti) }}" alt="Gambar" width="40%">
+                                <img src="{{ asset('storage/img/' . $daily->bukti) }}" alt="Gambar" width="40%">
                                 <textarea name="deskripsi" id="" disabled>{{ $daily->deskripsi }}</textarea>
                             </div>
                         @endforeach
@@ -86,5 +87,5 @@
                 </form>
             @endforeach
         </div>
-        <script src="{{ asset('assets/js/components.js') }}"></script>
+        {{-- <script src="{{ asset('assets/js/components.js') }}"></script> --}}
     @endsection

@@ -21,7 +21,7 @@
                 @csrf
                 <div class="input-nama d-flex flex-column">
                     <label for="nama">Nama</label>
-                    <input type="text" name="nama" class="nama rounded border-1 p-2" required>
+                    <input type="text" name="nama" class="nama rounded border-1 p-2" disabled>
                 </div>
                 <div class="input-file">
                     <label for="bukti">Bukti</label>

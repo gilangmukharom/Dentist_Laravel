@@ -11,32 +11,6 @@
         </div>
 
         <hr class="w-100">
-        {{-- <table class="w-100">
-            <tr class="text-center">
-                <td class="p-3">
-                    <p>Jenis Quiz</p>
-                </td>
-                <td>
-                    <p>Tanggal</p>
-                </td>
-                <td>
-                    <p>Jumlah Soal</p>
-                </td>
-                <td>
-                    <p>Skor Quiz</p>
-                </td>
-                <td>
-                    <p>Status</p>
-                </td>
-            </tr>
-            <tr class="rounded border shadow text-center">
-                <td class="pt-4 pb-4">Keterampilan</td>
-                <td class="pt-4 pb-4">{{ $quizKeterampilan->tanggal_quiz_keterampilan }}</td>
-                <td class="pt-4 pb-4">5</td>
-                <td class="pt-4 pb-4">{{ $quizKeterampilan->nilai_quiz_keterampilan }}</td>
-                <td>Completed</td>
-            </tr>
-        </table> --}}
 
         @if ($user->quiz_keterampilan && $user->quiz_keterampilan->count() > 0)
             <table class="table">

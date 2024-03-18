@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\dailyChart;
+use App\Charts\teethqChart;
 use App\Models\daily_activities;
 use App\Models\Daily_cores;
 use Illuminate\Support\Facades\Session;
@@ -23,62 +25,113 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
+use Illuminate\Support\Collection;
 
 class UserDashboardController extends Controller
 {
-    public function index()
+    public function index(teethqChart $chart, dailyChart $chart2)
     {
-        $user = Auth::user();
-        $user_id = Auth::id();
+        // Ambil semua data pengguna
+        $users = User::paginate(10);
 
-        // Mendapatkan nilai dari field username
-        $username = $user->username;
-        $tanggal_pretest = $user->tanggal_pretest;
-        $skor_sikap = $user->total_jawaban_sikap;
+        // Cek apakah ada data pengguna
+        if ($users->isEmpty()) {
+            return redirect('/login')->with('error', 'Anda harus login terlebih dahulu.');
+        }
 
-        $user_stat = User_quiz_keterampilans::with('nilai_quiz_keterampilan')->find($user_id);
-        $skor_sikap_stat = $user_stat->nilai_quiz_keterampilan;
-        $skor_tindakan = $user->total_jawaban_tindakans;
-        $skor_pengetahuan = $user->total_jawaban_pengetahuan;
+        // Iterasi melalui setiap pengguna untuk mendapatkan data dan kategorinya
+        $userData = [];
+        foreach ($users as $user) {
+            $skor_daily = Daily_cores::where('user_id', $user->id)->count('tanggal_input');
+            $skor_daily_total = $skor_daily / 14 * 100;
 
-        if ($skor_sikap >= 80) {
+            $skor_sikap = $user->total_jawaban_sikap;
+            $skor_tindakan = $user->total_jawaban_tindakans;
+            $skor_pengetahuan = $user->total_jawaban_pengetahuan;
+
+            if ($skor_sikap >= 80) {
             $kategori_sikap = 'Sangat Baik';
-        } elseif ($skor_sikap >= 60) {
+            } elseif ($skor_sikap >= 60) {
             $kategori_sikap = 'Baik';
-        } elseif ($skor_sikap >= 50) {
+            } elseif ($skor_sikap >= 50) {
             $kategori_sikap = 'Cukup';
         } else {
             $kategori_sikap = 'Kurang';
         }
 
-        if ($skor_tindakan >= 80) {
+            if ($skor_tindakan >= 80) {
             $kategori_tindakan = 'Sangat Baik';
-        } elseif ($skor_tindakan >= 60) {
+            } elseif ($skor_tindakan >= 60) {
             $kategori_tindakan = 'Baik';
-        } elseif ($skor_tindakan >= 50) {
+            } elseif ($skor_tindakan >= 50) {
             $kategori_tindakan = 'Cukup';
         } else {
             $kategori_tindakan = 'Kurang';
         }
 
-        if ($skor_pengetahuan >= 80) {
+            if ($skor_pengetahuan >= 80) {
             $kategori_pengetahuan = 'Sangat Baik';
-        } elseif ($skor_pengetahuan >= 60) {
+            } elseif ($skor_pengetahuan >= 60) {
             $kategori_pengetahuan = 'Baik';
-        } elseif ($skor_pengetahuan >= 50) {
+            } elseif ($skor_pengetahuan >= 50) {
             $kategori_pengetahuan = 'Cukup';
         } else {
             $kategori_pengetahuan = 'Kurang';
         }
 
-        // Mengirim data username ke view
-        return view('user.index', compact('skor_sikap_stat', 'skor_sikap_stat', 'username', 'tanggal_pretest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
+            if ($skor_daily_total >= 80) {
+                $kategori_daily = 'Sangat Baik';
+            } elseif ($skor_daily_total >= 60) {
+                $kategori_daily = 'Baik';
+            } elseif ($skor_daily_total >= 50) {
+                $kategori_daily = 'Cukup';
+            } else {
+                $kategori_daily = 'Kurang';
+            }
+
+            $rata_rata_kategori = ($skor_sikap + $skor_tindakan + $skor_pengetahuan + $skor_daily_total) / 4;
+
+            // Menyimpan data pengguna dan kategorinya dalam bentuk array
+            $userData[] = [
+                'username' => $user->username,
+                'user' => $user,
+                'rata_rata_kategori' => $rata_rata_kategori,
+                'kategori_daily' => $kategori_daily,
+                'kategori_sikap' => $kategori_sikap,
+                'kategori_tindakan' => $kategori_tindakan,
+                'kategori_pengetahuan' => $kategori_pengetahuan,
+            ];
+        }
+
+        $userDataCollection = new Collection($userData);
+        $sortedUserData = $userDataCollection->sortByDesc('rata_rata_kategori')->values()->all();
+
+        $cek_pretest = User::where('id', Auth::id())->first()->tanggal_pretest;
+        if ($cek_pretest == null) {
+            return view('user.panduan_pretest', compact('users'));
+        } else {
+            return view('user.index', [
+                'chart' => $chart->build(),
+                'chart2' => $chart2->build(),
+                'userData' => $sortedUserData,
+                'users' => $users,
+            ]);
+        }
+
+        // Mengirim data pengguna ke view
+        return view('user.index', [
+            'chart' => $chart->build(),
+            'chart2' => $chart2->build(),
+            'userData' => $sortedUserData,
+            'users' => $users,
+        ]);
     }
+
 
     public function generatePDF()
     {
         // Ambil data dari model
-        $data = daily_activities::all();
+        $data = Daily_cores::all();
 
         // Buat objek Dompdf
         $pdf = new Dompdf();
@@ -147,7 +200,6 @@ class UserDashboardController extends Controller
     public function create_daily(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string|max:255',
             'waktu_sikat_gigi_pagi' => 'required|date_format:H:i',
             'waktu_sikat_gigi_malam' => 'required|date_format:H:i',
             'bukti' => 'required|image|max:2048', // maksimal ukuran 2MB
@@ -157,6 +209,7 @@ class UserDashboardController extends Controller
         $nomor = session('nomor');
 
         $user_id = auth()->id();
+        $username = auth()->user()->username;
 
         $tanggal_daily = Carbon::today(); // Ambil tanggal hari ini
 
@@ -164,15 +217,19 @@ class UserDashboardController extends Controller
         ->where('tanggal_daily', $tanggal_daily)
         ->first();
 
+        $doneDaily = Daily_cores::where('nomor', $nomor)
+        ->where('user_id', Auth::id())
+        ->get();
+
         if ($dailyCore) {
             $bukti = $request->file('bukti')->store('img', 'public');
 
             // Update kolom-kolom yang diperlukan
             $dailyCore->user_id = $user_id;
+            $dailyCore->nama = $username;
             $dailyCore->bukti = $bukti;
             $dailyCore->waktu_sikat_gigi_pagi = $request->waktu_sikat_gigi_pagi;
             $dailyCore->waktu_sikat_gigi_malam = $request->waktu_sikat_gigi_malam;
-            $dailyCore->nama = $request->nama;
             $dailyCore->tanggal_input = Carbon::now();
             $dailyCore->deskripsi = $request->deskripsi;
             $dailyCore->save();
@@ -274,7 +331,7 @@ class UserDashboardController extends Controller
             
         if (!$dailyCore) {
             session()->put('nomor', $nomor);
-            return view('user.daysactivity', ['nomor' => $nomor], compact('dailyCore'));
+            return view('user.daysactivity', ['nomor' => $nomor], compact('dailyCore', 'doneDaily'));
         } else {
             session()->flash('error', 'Anda sudah mengisi daily activity.');
             return view('user.daily_activity_history', ['nomor' => $nomor], compact('doneDaily'));
