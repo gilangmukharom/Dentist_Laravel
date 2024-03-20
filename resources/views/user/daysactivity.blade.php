@@ -46,14 +46,8 @@
                 </button>
             </form>
         </div>
-
-        {{-- @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @else
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif --}}
+        <script>
+            var cek_input_daily_value = @json($dailyCore);
+            console.log(cek_input_daily_value);
+        </script>
     @endsection

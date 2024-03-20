@@ -67,16 +67,6 @@
                   @csrf
                 </form>
             </ul>
-
-            {{-- <div class="footer">
-                <p>
-                    Copyright &copy;
-                    <script>
-                        document.write(new Date().getFullYear());
-                    </script> All rights reserved | This template is made with <i class="icon-heart"
-                        aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-                </p>
-            </div> --}}
         </nav>
 
         <!-- Page Content  -->
@@ -85,11 +75,6 @@
                 <i class="fa fa-bars"></i>
                 <span class="sr-only">Toggle Menu</span>
             </button>
-            {{-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <i class="fa fa-bars"></i>
-            </button> --}}
 
             <div class="content">
                 @yield('content')

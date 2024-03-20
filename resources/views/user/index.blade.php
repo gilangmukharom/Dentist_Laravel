@@ -2,7 +2,32 @@
 
 @section('content')
     @vite(['resources/css/style.css', 'resources/js/app.js'])
-    <div class="container-dashboard p-5">
+    @if ($cek_input_daily == false)
+        <script>
+            $(document).ready(function() {
+                $('#errorModal').modal('show');
+            });
+        </script>
+    @endif
+    <div class="container-dashboard">
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title m-auto" id="errorModalLabel"><b>Daily activity hari ini</b></h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>Yahhh... kamu belum mengisi daily activity pada hari ini, Yuk isi!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary m-auto" onclick="location.href='/user/14days'">Isi
+                            sekarang</button>
+                        <button type="button" class="btn btn-secondary m-auto" data-bs-dismiss="modal">Kembali</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="header-dashboard d-flex justify-content-between">
             <div class="title-dashboard">
                 <h1><b>Dashboard</b></h1>
@@ -15,7 +40,7 @@
                             <img src="{{ asset('assets/img/profile.png') }}" alt="profile">
                         </div>
                         <div class="profile-name">
-                            <p>Gilang Mukharom</p>
+                            <p>{{$username}}</p>
                         </div>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -28,36 +53,39 @@
             </div>
         </div>
 
-        <div class="body-dashboard">
-            <div class="content-dashboard-student d-flex flex-rows gap-2">
-                <div class="opening-dashboard w-75">
+        <div class="body-dashboard d-flex flex-wrap flex-column flex-lg-rows w-100">
+            <div class="content-dashboard-student d-flex flex-lg-row flex-column gap-2 w-100">
+                <div class="opening-dashboard w-100">
                     <div class="card w-100 h-100 d-flex flex-column justify-content-evenly align-items-start p-5">
                         <div class="title-card">
-                            <p>Daily Activity 14 Days</p>
+                            <p style="font-size: 1.5em;">Daily Activity 14 Days</p>
                         </div>
-                        <div class="body-card w-50">
-                            <h3 class="text-white">Selamat datang Izzul! Yuk mulai aktifitas hari ini</h3>
+                        <div class="body-card w-100">
+                            <h3 class="text-white" style="font-size: 2em;">Selamat datang {{$username}}</h3>
+                            <h3 class="text-white" style="font-size: 2em;">Yuk mulai aktifitas hari ini!</h3>
                         </div>
+                        <img class="index-header-img h-100 w-auto position-absolute" src="{{ asset('assets/img/index-header.png') }}" alt="">
                         <div class="footer-card">
-                            <button onclick="location.href='/user/14days'" type="btn"
-                                style="background-color: #FFBD13; color:white; width: 150px" class="btn p-2">Mulai</button>
+                            <button onclick="location.href='/user/14days'" type="btn" style="background-color: #FFBD13; color:white; width: 20vw" class="btn p-2 rounded-3">Mulai</button>
                         </div>
                     </div>
+                    
                 </div>
-                <div class="card-element bg-body-tertiary rounded shadow w-25" id="calendar"> </div>
+                <div class="card-element calendar bg-body-tertiary rounded shadow" id="calendar"> </div>
             </div>
-            <div class="dashboard-performance">
+
+            <div class="dashboard-performance mt-5">
                 <p><b>Performance</b></p>
-                <div class="stat_performance d-flex flex-columns gap-2">
-                    <div class="m-5 w-50 bg-white rounded shadow">
+                <div class="stat_performance d-flex flex-columns gap-5 flex-wrap">
+                    <div class="chart_daily bg-white rounded shadow">
                         {!! $chart2->container() !!}
                     </div>
-                    <div class="p-6 m-5 w-25 bg-white rounded shadow d-flex justify-content-center align-items-center">
+                    <div class="chart_teethq bg-white rounded shadow d-flex justify-content-center align-items-center">
                         {!! $chart->container() !!}
                     </div>
                 </div>
             </div>
-            <div class="leaderboard">
+            <div class="leaderboard w-100 mt-5">
                 <p><b>Leaderboard Score</b></p>
                 <table class="w-100">
                     <tr class="text-center header-table">
@@ -81,14 +109,14 @@
                         </td>
                     </tr>
                     @foreach ($userData as $index => $data)
-                    <tr class="rounded border shadow text-center">
-                        <td class="pt-4 pb-4">{{ $index + 1 }}</td>
-                        <td class="pt-4 pb-4">{{ $data['username'] }}</td>
-                        <td>{{ $data['kategori_sikap'] }}</td>
-                        <td>{{ $data['kategori_tindakan'] }}</td>
-                        <td>{{ $data['kategori_pengetahuan'] }}</td>
-                        <td>{{ $data['kategori_daily'] }}</td>
-                    </tr>
+                        <tr class="rounded border shadow text-center">
+                            <td class="pt-4 pb-4">{{ $index + 1 }}</td>
+                            <td class="pt-4 pb-4">{{ $data['username'] }}</td>
+                            <td>{{ $data['kategori_sikap'] }}</td>
+                            <td>{{ $data['kategori_tindakan'] }}</td>
+                            <td>{{ $data['kategori_pengetahuan'] }}</td>
+                            <td>{{ $data['kategori_daily'] }}</td>
+                        </tr>
                     @endforeach
                 </table>
                 <div class="d-flex justify-content-center">
@@ -117,5 +145,10 @@
             });
             calendar.render();
         });
+    </script>
+
+    <script>
+        var cek_input_daily_value = @json($cek_input_daily);
+        console.log(cek_input_daily_value);
     </script>
 @endsection

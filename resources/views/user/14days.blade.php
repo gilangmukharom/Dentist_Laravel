@@ -2,20 +2,7 @@
 
 @section('content')
     @vite(['resources/css/style.css', 'resources/js/app.js'])
-    <h1 class="h2">Aktivitas Harian</h1>
-    {{-- @if (session('error'))
-        <div class="alert alert-danger" role="alert">
-            {{ session('error') }}
-        </div>
-    @endif --}}
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var error = "{{ session('error') }}";
-            if (error) {
-                alert(error);
-            }
-        });
-    </script> --}}
+    <h1 class="title-14days"><b>Aktivitas Harian</b></h1>
 
     <div class="content-14days">
         <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"

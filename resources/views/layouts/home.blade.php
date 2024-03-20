@@ -17,18 +17,18 @@
   </nav>
 
   <div class="header position-relative w-100">
-    <div class="img-wrapper w-100">
+    <div class="img-wrapper w-100 h-auto">
       <img src="{{ asset('assets/img/coverlp.jpg') }}" alt="Dentist Trans" class="img-fluid w-100 h-100">
     </div>
     <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
       <h1>Selamat Datang di Tans’ Dent </h1>
       <p>Tan’s Dent-Card QR Model Berbasis Website merupakan website edukasi menggosok gigi dengan media
         interaktif untuk memfasilitasi keterampilan menggosok gigi anak usia dini</p>
-      <button value="Masuk" class="btn bg-2 w-50" onclick="window.location='{{ url("/login") }}'">Masuk</button>
+      <button value="Masuk" class="btn bg-2 w-50" onclick="window.location="{{ url('/login') }}">Masuk</button>
     </div>
   </div>
 
-  <div class="container-card mt-5 ">
+  <div class="container-card mt-5 p-3">
     <div class="card-content d-flex flex-wrap flex-lg-nowrap gap-3 justify-content-between w-90 m-auto">
       <div class="card w-70 m-auto">
         <img src="{{ asset('assets/img/card.png') }}" alt="" srcset="">
@@ -45,7 +45,7 @@
   <div class="container-text d-flex flex-row justify-content-between w-90 m-auto mt-5 pb-5">
     <div class="text-content d-flex flex-column justify-content-center">
       <h2>Mari Jaga Kesehatan Gigimu!</h2>
-      <p class="w-80">Menjaga kesehatan gigi dan mulut sebenarnya tidak sulit karena dapat dilakukan sendiri di rumah. Yang
+      <p class="w-80 text-start">Menjaga kesehatan gigi dan mulut sebenarnya tidak sulit karena dapat dilakukan sendiri di rumah. Yang
         terpenting adalah sikap konsisten dan menjadikannya sebagai bagian dari rutinitas. Kebiasaan yang harus
         dilakukan untuk menjaga mesehatan gigi dan mulut adalah rutin menggosok gigi, menggunakan sikat gigi
         yang lembut dan pasta gigi berflouride, berkumur dengan obat kumur, membersihkan gigi menggunakan benang
@@ -53,7 +53,7 @@
         minuman bersoda.</p>
       <h5>WHO (World Health Organization)</h5>
     </div>
-    <div class="text-image">
+    <div class="text-image d-none d-lg-block">
       <img src="{{ asset('assets/img/content1.png') }}" alt="" class="w-80">
     </div>
   </div>

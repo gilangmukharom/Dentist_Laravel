@@ -31,8 +31,9 @@ class UserDashboardController extends Controller
 {
     public function index(teethqChart $chart, dailyChart $chart2)
     {
-        // Ambil semua data pengguna
         $users = User::paginate(10);
+        $user_id = Auth::user();
+        $username = $user_id->username;
 
         // Cek apakah ada data pengguna
         if ($users->isEmpty()) {
@@ -43,17 +44,21 @@ class UserDashboardController extends Controller
         $userData = [];
         foreach ($users as $user) {
             $skor_daily = Daily_cores::where('user_id', $user->id)->count('tanggal_input');
-            $skor_daily_total = $skor_daily / 14 * 100;
+            $skor_daily_total = $skor_daily / 16 * 100;
 
-            $skor_sikap = $user->total_jawaban_sikap;
+            // $jumlah_jawaban_id = $user->total_jawaban_sikap;
+            $skor_sikap = jawaban_sikaps::where('user_id', $user->id)->sum('jawaban');
+            $jumlah_jawaban_id = jawaban_sikaps::where('user_id', $user->id)->count('jawaban');
+            $skor_sikap_total = ($jumlah_jawaban_id != 0) ? ($skor_sikap / $jumlah_jawaban_id * 100 / 4) : 0;
+
             $skor_tindakan = $user->total_jawaban_tindakans;
             $skor_pengetahuan = $user->total_jawaban_pengetahuan;
 
-            if ($skor_sikap >= 80) {
+            if ($skor_sikap_total >= 80) {
             $kategori_sikap = 'Sangat Baik';
-            } elseif ($skor_sikap >= 60) {
+            } elseif ($skor_sikap_total >= 60) {
             $kategori_sikap = 'Baik';
-            } elseif ($skor_sikap >= 50) {
+            } elseif ($skor_sikap_total >= 50) {
             $kategori_sikap = 'Cukup';
         } else {
             $kategori_sikap = 'Kurang';
@@ -89,7 +94,7 @@ class UserDashboardController extends Controller
                 $kategori_daily = 'Kurang';
             }
 
-            $rata_rata_kategori = ($skor_sikap + $skor_tindakan + $skor_pengetahuan + $skor_daily_total) / 4;
+            $rata_rata_kategori = ($skor_sikap_total + $skor_tindakan + $skor_pengetahuan + $skor_daily_total) / 4;
 
             // Menyimpan data pengguna dan kategorinya dalam bentuk array
             $userData[] = [
@@ -98,6 +103,7 @@ class UserDashboardController extends Controller
                 'rata_rata_kategori' => $rata_rata_kategori,
                 'kategori_daily' => $kategori_daily,
                 'kategori_sikap' => $kategori_sikap,
+                'skor_sikap_total' => $skor_sikap_total,
                 'kategori_tindakan' => $kategori_tindakan,
                 'kategori_pengetahuan' => $kategori_pengetahuan,
             ];
@@ -110,21 +116,37 @@ class UserDashboardController extends Controller
         if ($cek_pretest == null) {
             return view('user.panduan_pretest', compact('users'));
         } else {
+            $user_id = Auth::id();
+
+            $todays = \Carbon\Carbon::now()->format('Y-m-d');
+            $cek_input_daily = Daily_cores::where('user_id', $user_id)
+                ->whereDate('tanggal_input', $todays)
+                ->exists();
+
+            if ($cek_input_daily) {
+                session()->flash('success', 'Anda sudah mengisi daily activity.');
+            } else {
+                session()->flash('error', 'Anda belum mengisi daily activity.');
+            }
+
             return view('user.index', [
                 'chart' => $chart->build(),
                 'chart2' => $chart2->build(),
                 'userData' => $sortedUserData,
                 'users' => $users,
+                'cek_input_daily' => $cek_input_daily,
+                'username' => $username,
             ]);
         }
 
         // Mengirim data pengguna ke view
-        return view('user.index', [
-            'chart' => $chart->build(),
-            'chart2' => $chart2->build(),
-            'userData' => $sortedUserData,
-            'users' => $users,
-        ]);
+        // return view('user.index', [
+        //     'chart' => $chart->build(),
+        //     'chart2' => $chart2->build(),
+        //     'userData' => $sortedUserData,
+        //     'users' => $users,
+        //     'cek_input_daily' => $cek_input_daily,
+        // ]);
     }
 
 
@@ -313,7 +335,7 @@ class UserDashboardController extends Controller
             ]);
         }
 
-        return view('user.14days');
+        return redirect()->route('user.14days');
     }
 
     public function daysactivity($nomor)
@@ -328,27 +350,14 @@ class UserDashboardController extends Controller
         $doneDaily = Daily_cores::where('nomor', $nomor)
             ->where('user_id', Auth::id())
             ->get();
-            
-        if (!$dailyCore) {
-            session()->put('nomor', $nomor);
-            return view('user.daysactivity', ['nomor' => $nomor], compact('dailyCore', 'doneDaily'));
+
+        if ($dailyCore == NULL) {
+            // session()->put('nomor', $nomor);
+            return view('user.daysactivity', ['nomor' => $nomor], compact('dailyCore'));
         } else {
             session()->flash('error', 'Anda sudah mengisi daily activity.');
             return view('user.daily_activity_history', ['nomor' => $nomor], compact('doneDaily'));
         }
-    }
-
-    public function daily_activity_history($nomor, Request $request)
-    {
-
-        $user_id = Auth::id();
-        $user = User::find($user_id);
-
-        $doneDaily = Daily_cores::where('nomor', $nomor)
-            ->where('user_id', Auth::id())
-            ->get();
-
-        return view('user.daily_activity_history', compact('user'));
     }
 
     public function quiz()

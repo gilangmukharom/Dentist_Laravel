@@ -1,7 +1,7 @@
 @extends('include.sidebar')
 
 @section('content')
-@vite(['resources/css/style.css', 'resources/js/app.js'])
+    @vite(['resources/css/style.css', 'resources/js/app.js'])
     @if (session('error'))
         <script>
             $(document).ready(function() {
@@ -19,9 +19,6 @@
                     <div class="modal-header">
                         <h5 class="modal-title m-auto" id="errorModalLabel"><b>Selamat, kamu sudah mengisi daily
                                 activity!</b></h5>
-                        {{-- <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button> --}}
                     </div>
                     <div class="modal-body">
 
@@ -87,5 +84,4 @@
                 </form>
             @endforeach
         </div>
-        {{-- <script src="{{ asset('assets/js/components.js') }}"></script> --}}
     @endsection

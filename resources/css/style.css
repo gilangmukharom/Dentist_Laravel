@@ -15,6 +15,10 @@
     width: 70%;
 }
 
+.text-justify{
+    text-align: justify;
+}
+
 .youtube_frame {
     min-width: 30%;
     min-height: 40vh;
@@ -23,7 +27,7 @@
 .header .img-wrapper img,
 .img-about img {
     background-size: cover;
-    object-fit: cover;
+    object-fit: contain;
     background-position: center;
 }
 
@@ -105,19 +109,72 @@
     z-index: -1;
 }
 
-.container-about {
-    position: relative;
-}
-
-.about-image {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-}
-
 .about-wave {
     width: 50%;
     height: auto;
+    right: 0;
+}
+
+.about-text{
+    z-index: 4;
+    width: 50%;
+}
+
+.index-header-img{
+    right: 0;
+}
+
+.calendar{
+    width: 25%;
+}
+
+/* .stat_performance .chart_daily, .stat_performance .chart_teethq{
+    width: 40%;
+} */
+
+@media (max-width: 767px) {
+
+    .profile-dashboard .profile-name{
+        display: none;
+    }
+
+    .calendar{
+        width: 100%;
+    }
+
+    .stat_performance{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-text{
+        width: 100%;
+    }
+
+    .about-text h1{
+        text-align: center;
+    }
+
+    .about-text p{
+        padding: 20px;
+        text-align: justify;
+    }
+
+    .about-image{
+        display: none;
+    }
+
+    .title-14days{
+        text-align: center;
+    }
+
+    .content-14days{
+        justify-content: center;
+    }
+}
+
+.about-image .img-about1{
+    right: 10%;
 }
 
 .container-slider {
