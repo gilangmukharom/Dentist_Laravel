@@ -29,17 +29,21 @@
 
         <div class="about-box w-100">
             <div class="about-content w-100 position-relative">
-                <div class="about-text position-absolute">
+                <div class="about-text position-absolute p-4 text-justify">
                     <h1>About Us</h1>
-                    <p>GIO Dental Care are located in Strategic Locations in Yogyakarta (Babarsari, Ambarukmo, Seturan,
-                        Gejayan, Kaliurang, Godean), Magelang, Semarang, Jember, and Bali (Denpasar), Indonesia.
-                        GiO has a team of dentists and specialist dentists who are ready to provide the best service for
-                        you, with the typical hospitality of the Indonesian people, known for their honesty, always
-                        giving their best, providing extraordinary care for your dental needs.
-                        Find Quality, Excellence, and comfortable personal care at each of our clinics.
-                        GiO Restores, Beautifies, and Enhances the natural beauty of your smile with the latest
-                        technology, resulting in a healthy and beautiful smile. We treat yours wholeheartedly.
-                        Sayang GiO, Ingat Gigi, Ingat GiO!</p>
+                    </h1>
+                    <p>Tan’s Dent-Card QR Model Berbasis Website ” merupakan suatu model yang dirancang untuk
+                        meningkatkan perilaku menggosok gigi pada anak sekolah dasar dengan menggunakan Dent-Card QR
+                        Model sebagai sarana pendukungnya selama 14 hari. Dent-Card ini dilengkapi dengan QR sebagai
+                        kode barcode utuk mengakses laman website aktifitas harian menggosok gigi.</p>
+                        
+                        <p>Dent-Card ini didesain dengan menarik sebagai model yang dirancang sebagai upaya meningkatkan
+                        perilaku menggosok gigi yang berbasis website meliputi monitoring toothbrush daily activity,
+                        intruksi menggosok gigi, dan feedback sebagai daily activty anak dalam menggosok gigi serta
+                        video edukasi.</p>
+                        
+                        <p>Hasil output Tan’s Dent Card dapat dilihat oleh tenaga kesehatan gigi sebagai track record
+                        informasi tentang kesehatan gigi khususnya menggosok gigi pada anak sekolah dasar.</p>
                 </div>
                 <div class="about-image w-100 z-3">
                     <img src="{{ asset('assets/img/login-animation.png') }}" alt=""
@@ -51,7 +55,8 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 </body>
 

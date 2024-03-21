@@ -31,9 +31,12 @@ class UserDashboardController extends Controller
 {
     public function index(teethqChart $chart, dailyChart $chart2)
     {
-        $users = User::paginate(10);
+        $users = User::paginate(5);
         $user_id = Auth::user();
+
         $username = $user_id->username;
+        $today = Carbon::today()->translatedFormat('l, d F Y');
+        $time = Carbon::now()->format('H : i');
 
         // Cek apakah ada data pengguna
         if ($users->isEmpty()) {
@@ -55,34 +58,34 @@ class UserDashboardController extends Controller
             $skor_pengetahuan = $user->total_jawaban_pengetahuan;
 
             if ($skor_sikap_total >= 80) {
-            $kategori_sikap = 'Sangat Baik';
+                $kategori_sikap = 'Sangat Baik';
             } elseif ($skor_sikap_total >= 60) {
-            $kategori_sikap = 'Baik';
+                $kategori_sikap = 'Baik';
             } elseif ($skor_sikap_total >= 50) {
-            $kategori_sikap = 'Cukup';
-        } else {
-            $kategori_sikap = 'Kurang';
-        }
+                $kategori_sikap = 'Cukup';
+            } else {
+                $kategori_sikap = 'Kurang';
+            }
 
             if ($skor_tindakan >= 80) {
-            $kategori_tindakan = 'Sangat Baik';
+                $kategori_tindakan = 'Sangat Baik';
             } elseif ($skor_tindakan >= 60) {
-            $kategori_tindakan = 'Baik';
+                $kategori_tindakan = 'Baik';
             } elseif ($skor_tindakan >= 50) {
-            $kategori_tindakan = 'Cukup';
-        } else {
-            $kategori_tindakan = 'Kurang';
-        }
+                $kategori_tindakan = 'Cukup';
+            } else {
+                $kategori_tindakan = 'Kurang';
+            }
 
             if ($skor_pengetahuan >= 80) {
-            $kategori_pengetahuan = 'Sangat Baik';
+                $kategori_pengetahuan = 'Sangat Baik';
             } elseif ($skor_pengetahuan >= 60) {
-            $kategori_pengetahuan = 'Baik';
+                $kategori_pengetahuan = 'Baik';
             } elseif ($skor_pengetahuan >= 50) {
-            $kategori_pengetahuan = 'Cukup';
-        } else {
-            $kategori_pengetahuan = 'Kurang';
-        }
+                $kategori_pengetahuan = 'Cukup';
+            } else {
+                $kategori_pengetahuan = 'Kurang';
+            }
 
             if ($skor_daily_total >= 80) {
                 $kategori_daily = 'Sangat Baik';
@@ -113,9 +116,16 @@ class UserDashboardController extends Controller
         $sortedUserData = $userDataCollection->sortByDesc('rata_rata_kategori')->values()->all();
 
         $cek_pretest = User::where('id', Auth::id())->first()->tanggal_pretest;
+
+        $cek_daily_full = Daily_cores::where('user_id', Auth::id())->whereNull('tanggal_input')->count();
+
         if ($cek_pretest == null) {
-            return view('user.panduan_pretest', compact('users'));
-        } else {
+            return view('user.panduan_pretest', compact('users', 'today', 'time'));
+        }
+        // elseif ($cek_daily_full == 0) {
+        //     return view('user.panduan_postest', compact('users', 'today', 'time'));
+        // } 
+        else {
             $user_id = Auth::id();
 
             $todays = \Carbon\Carbon::now()->format('Y-m-d');
@@ -138,15 +148,6 @@ class UserDashboardController extends Controller
                 'username' => $username,
             ]);
         }
-
-        // Mengirim data pengguna ke view
-        // return view('user.index', [
-        //     'chart' => $chart->build(),
-        //     'chart2' => $chart2->build(),
-        //     'userData' => $sortedUserData,
-        //     'users' => $users,
-        //     'cek_input_daily' => $cek_input_daily,
-        // ]);
     }
 
 
@@ -165,6 +166,83 @@ class UserDashboardController extends Controller
 
         // Render tampilan PDF
         $pdf->loadHtml(view('user.cetak_laporan', compact('data')));
+
+        // Render PDF
+        $pdf->render();
+
+        // Unduh PDF
+        return $pdf->stream('nama_file.pdf');
+    }
+
+    public function generatePretest()
+    {
+
+        $user = Auth::user();
+
+        // Mendapatkan nilai dari field username
+        $username = $user->username;
+        $alamat = $user->alamat;
+        $sekolah = $user->sekolah;
+
+        $tanggal_pretest = $user->tanggal_pretest;
+        $skor_sikap = $user->total_jawaban_sikap;
+        $skor_tindakan = $user->total_jawaban_tindakans;
+        $skor_pengetahuan = $user->total_jawaban_pengetahuan;
+
+        if ($skor_sikap >= 40) {
+            $kategori_sikap = 'Sangat Baik';
+        } elseif ($skor_sikap >= 30) {
+            $kategori_sikap = 'Baik';
+        } elseif ($skor_sikap >= 20) {
+            $kategori_sikap = 'Cukup';
+        } else {
+            $kategori_sikap = 'Kurang';
+        }
+
+        if ($skor_tindakan >= 80) {
+            $kategori_tindakan = 'Sangat Baik';
+        } elseif ($skor_tindakan >= 60) {
+            $kategori_tindakan = 'Baik';
+        } elseif ($skor_tindakan >= 50) {
+            $kategori_tindakan = 'Cukup';
+        } else {
+            $kategori_tindakan = 'Kurang';
+        }
+
+        if ($skor_pengetahuan >= 80) {
+            $kategori_pengetahuan = 'Sangat Baik';
+        } elseif ($skor_pengetahuan >= 60) {
+            $kategori_pengetahuan = 'Baik';
+        } elseif ($skor_pengetahuan >= 50) {
+            $kategori_pengetahuan = 'Cukup';
+        } else {
+            $kategori_pengetahuan = 'Kurang';
+        }
+
+
+        $data = [
+            'username' => $username,
+            'alamat' => $alamat,
+            'sekolah' => $sekolah,
+            'tanggal_pretest' => $tanggal_pretest,
+            'skor_sikap' => $skor_sikap,
+            'skor_tindakan' => $skor_tindakan,
+            'skor_pengetahuan' => $skor_pengetahuan,
+            'kategori_sikap' => $kategori_sikap,
+            'kategori_tindakan' => $kategori_tindakan,
+            'kategori_pengetahuan' => $kategori_pengetahuan,
+        ];
+
+        // Buat objek Dompdf
+        $pdf = new Dompdf();
+
+        // Atur opsi Dompdf jika diperlukan
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
+
+        // Render tampilan PDF
+        $pdf->loadHtml(view('user.cetak_pretest', compact('data')));
 
         // Render PDF
         $pdf->render();
@@ -236,7 +314,7 @@ class UserDashboardController extends Controller
 
         $dailyCore = Daily_cores::where('nomor', $nomor)
         ->where('tanggal_daily', $tanggal_daily)
-        ->first();
+            ->first();
 
         if ($dailyCore) {
             // Update kolom-kolom yang diperlukan
@@ -362,7 +440,7 @@ class UserDashboardController extends Controller
         $user_id = auth()->id();
         $user = User::find($user_id);
 
-        $quizKeterampilan = $user->quiz_keterampilan;
+        $quizKeterampilan = $user->quiz_keterampilan()->latest()->paginate(5);
         return view('user.history_quiz', compact('user', 'quizKeterampilan'));
     }
 
@@ -415,7 +493,6 @@ class UserDashboardController extends Controller
             // Menampilkan alert jika user tidak ditemukan
             Session::flash('error', 'User tidak ditemukan.');
         }
-
         return view('user.finish_keterampilan', compact('percentage'));
     }
 
@@ -471,7 +548,7 @@ class UserDashboardController extends Controller
 
         return view('user.finish_pengetahuan', compact('percentage'));
     }
-    
+
     public function finish_pengetahuan()
     {
         return view('user.finish_pengetahuan');
@@ -482,11 +559,27 @@ class UserDashboardController extends Controller
     }
     public function skor_keterampilan()
     {
-        return view('user.skor_keterampilan');
+        $user_id = auth()->id();
+        $user = User::find($user_id);
+
+        // Jika user ditemukan, ambil data quiz_keterampilan terbaru
+        if ($user) {
+            $quizKeterampilan = $user->quiz_keterampilan()->latest()->first();
+            return view('user.skor_keterampilan', compact('quizKeterampilan'));
+        } else {
+            // Jika user tidak ditemukan, kembalikan response dengan pesan error atau tindakan yang sesuai
+            return response()->json(['error' => 'User tidak ditemukan'], 404);
+        }
     }
+
     public function skor_pengetahuan()
     {
-        return view('user.skor_pengetahuan');
+        $user_id = auth()->id();
+        $user = User::find($user_id);
+
+        $quizKeterampilan = $user->quiz_keterampilan;
+
+        return view('user.skor_pengetahuan', compact('quizKeterampilan'));
     }
 
     public function panduan_pretest()
@@ -547,6 +640,51 @@ class UserDashboardController extends Controller
         return view('user.hasil_pretest', compact('username', 'tanggal_pretest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
     }
 
+    public function pretest()
+    {
+        $user = Auth::user();
+
+        // Mendapatkan nilai dari field username
+        $username = $user->username;
+        $tanggal_pretest = $user->tanggal_pretest;
+        $skor_sikap = $user->total_jawaban_sikap;
+        $skor_tindakan = $user->total_jawaban_tindakans;
+        $skor_pengetahuan = $user->total_jawaban_pengetahuan;
+
+        if ($skor_sikap >= 80) {
+            $kategori_sikap = 'Sangat Baik';
+        } elseif ($skor_sikap >= 60) {
+            $kategori_sikap = 'Baik';
+        } elseif ($skor_sikap >= 50) {
+            $kategori_sikap = 'Cukup';
+        } else {
+            $kategori_sikap = 'Kurang';
+        }
+
+        if ($skor_tindakan >= 80) {
+            $kategori_tindakan = 'Sangat Baik';
+        } elseif ($skor_tindakan >= 60) {
+            $kategori_tindakan = 'Baik';
+        } elseif ($skor_tindakan >= 50) {
+            $kategori_tindakan = 'Cukup';
+        } else {
+            $kategori_tindakan = 'Kurang';
+        }
+
+        if ($skor_pengetahuan >= 80) {
+            $kategori_pengetahuan = 'Sangat Baik';
+        } elseif ($skor_pengetahuan >= 60) {
+            $kategori_pengetahuan = 'Baik';
+        } elseif ($skor_pengetahuan >= 50) {
+            $kategori_pengetahuan = 'Cukup';
+        } else {
+            $kategori_pengetahuan = 'Kurang';
+        }
+
+        // Mengirim data username ke view
+        return view('user.pretest', compact('username', 'tanggal_pretest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
+    }
+
     public function test_pengetahuan()
     {
         $pertanyaans = qpengetahuans::all();
@@ -587,7 +725,7 @@ class UserDashboardController extends Controller
             Session::flash('error', 'User tidak ditemukan.');
         }
 
-        return redirect('user/test_pengetahuan');
+        return redirect('user/panduan_sikap');
     }
 
     public function postest_pengetahuan()
@@ -663,7 +801,7 @@ class UserDashboardController extends Controller
         $user->total_jawaban_sikap = $total_jawaban;
         $user->save();
 
-        return redirect('user/test_sikap');
+        return redirect('user/panduan_tindakan');
     }
 
     public function total_sikap()
@@ -760,7 +898,7 @@ class UserDashboardController extends Controller
             Session::flash('error', 'User tidak ditemukan.');
         }
 
-        return redirect('user/test_tindakan');
+        return redirect('user/pretest');
     }
     public function postest_tindakan()
     {
@@ -806,7 +944,17 @@ class UserDashboardController extends Controller
 
     public function panduan_postest()
     {
-        return view('user.panduan_postest');
+        $today = Carbon::today()->translatedFormat('l, d F Y');
+        $time = Carbon::now()->format('H : i');
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+
+        // Periksa apakah pengguna sudah mengisi tes pengetahuan
+        // if ($user && $user->total_jawaban_pengetahuan > 0) {
+        //     // Pengguna sudah mengisi tes, maka arahkan ke halaman lain atau tampilkan pesan
+        //     return redirect()->route('user.hasil_pretest')->with('warning', 'Anda sudah mengisi tes pengetahuan.');
+        // }
+        return view('user.panduan_postest', compact('today', 'time'));
     }
 
     public function postest()

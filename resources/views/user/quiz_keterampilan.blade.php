@@ -17,11 +17,11 @@
 <body class="login-body">
     <div class="navigasi-keterampilan d-flex justify-content-between align-items-center p-2">
         <div class="title-keterampilan">
-            <h1>Quiz</h1>
+            <h1 class=" text-0">Quiz</h1>
             <p class="text-0">Keterampilan Gigi dan Mulut</p>
         </div>
         <div class="timer-keterampilan bg-light d-flex justify-content-center align-items-center">
-            <h2 id="timer">30</h2>
+            <h2 id="time">60</h2>
         </div>
     </div>
     <div class="box-keterampilan d-flex flex-column justify-content-center align-items-center">
@@ -40,19 +40,22 @@
                             </h1>
                         </div>
                         <div class="pilihan d-flex gap-4 w-75 m-auto">
-                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_a) }}"
-                                    alt="Option Image" class="w-50"><br>
+                                    alt="Option Image" class="w-75"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="A">
                             </label>
-                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_b) }}"
-                                    alt="Option Image" class="w-50"><br>
+                                    alt="Option Image" class="w-75"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="B">
                             </label>
-                            <label class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
+                            <label
+                                class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_c) }}"
-                                    alt="Option Image" class="w-50"><br>
+                                    alt="Option Image" class="w-75"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="C">
                             </label>
                         </div>
@@ -67,7 +70,7 @@
         </div>
 
         <script>
-            var timerDuration = 30;
+            var timerDuration = 60;
             var timerElement = document.getElementById('timer');
 
             function startTimer() {
@@ -97,7 +100,7 @@
                     }
 
                     // Restart timer for the next question
-                    timerDuration = 3;
+                    timerDuration = 60;
                     timerElement.innerText = timerDuration;
                     startTimer();
                 } else {

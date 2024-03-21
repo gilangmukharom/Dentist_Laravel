@@ -37,13 +37,13 @@
                             <label
                                 class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_a) }}"
-                                    alt="Option Image" class="w-50"><br>
+                                    alt="Option Image" class="w-75"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="A">
                             </label>
                             <label
                                 class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
                                 <img src="{{ asset('assets/img/Keterampilan/' . $question->image_b) }}"
-                                    alt="Option Image" class="w-50"><br>
+                                    alt="Option Image" class="w-75"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="B">
                             </label>
                         </div>

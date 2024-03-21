@@ -31,8 +31,10 @@ class dailyChart
             // Ubah item menjadi objek Carbon
             $carbonDate = Carbon::parse($item);
             // Format tanggal menjadi 'Hari-Tanggal'
-            return $carbonDate->translatedFormat('d, M');
+            return $carbonDate->translatedFormat('d');
         })->toArray();
+
+        // $data14days = Daily_cores::where('user_id', $user_id)->pluck('tanggal_input', $dataDaily)->toArray();
 
         $dataQuizKeterampilan = User_quiz_keterampilans::whereIn('tanggal_quiz_keterampilan', $dataDaily)
         ->pluck('nilai_quiz_keterampilan')
@@ -43,6 +45,7 @@ class dailyChart
         ->toArray();
         
         return $this->chart->barChart()
+            // ->setWidth(700)
             ->setTitle('Statistics')
             ->setSubtitle('Daily Activity')
         ->addData(

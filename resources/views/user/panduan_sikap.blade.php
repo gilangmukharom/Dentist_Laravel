@@ -23,19 +23,18 @@
       </div>
     </div>
     <div class="content-panduan-pretest w-90 z-1 bg-light rounded position-absolute align-self-center">
-      <div class="title-panduan">
-        <div class="time-panduan p-3 w-50">
-          <h1>Selamat kamu berhasil melanjutkan ke soal bagian 2</h1>
-        </div>
+      <div class="title-panduan p-4">
+          <h3><b>Selamat kamu berhasil melanjutkan ke soal bagian 2</b></h3>
+      </div>
         <div class="panduan-pretest d-flex flex-column align-items-center m-auto w-90">
-          <div class="title-panduan-pretest">
-            <h2>Panduan mengisi test sikap</h2>
+          <div class="title-panduan-pretest p-3">
+            <h3>Panduan mengisi test sikap</h3>
           </div>
-          <div class="box-panduan">
+          <div class="box-panduan w-80">
             <p>Pada bagian test sikap ini kamu di tugaskan memilih yang paling setuju atau tidak setuju dalam jawabanmu.
                 Setiap jawaban yang benar akan memperoleh poin 4.
             </p>
-            <p>Dengan keterangan sebagai berikut:</p>
+            <p class="pb-2">Dengan keterangan sebagai berikut:</p>
             <table class="border border-2 border-black">
                 <tr>
                     <td>SS</td>
@@ -58,11 +57,11 @@
                     <td>Sangat Tidak Setuju</td>
                 </tr>
             </table>
-            <p>Semangat dan selamat mengerjakan!</p>
+            <p class="pt-3"><b>Semangat dan selamat mengerjakan!</b></p>
           </div>
           <div class="button-panduan p-3">
-            <button class="rounded" onclick="window.location='/user/index'">Kembali</button>
-            <button class="rounded" onclick="window.location='/user/test_sikap'">Mulai kerjakan</button>
+            <button class="btn btn-danger" onclick="window.location='/user/index'">Kembali</button>
+            <button class="btn bg-1 text-0" onclick="window.location='/user/test_sikap'">Mulai kerjakan</button>
           </div>
         </div>
       </div>

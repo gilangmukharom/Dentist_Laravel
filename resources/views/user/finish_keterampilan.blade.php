@@ -14,7 +14,7 @@
 <body class="login-body">
     <div class="navigasi-pengetahuan d-flex justify-content-between align-items-center p-2">
         <div class="title-pengetahuan">
-            <h1>Quiz</h1>
+            <h1 class="text-0">Quiz</h1>
             <p class="text-0">Keterampilan Gigi dan Mulut</p>
         </div>
     </div>

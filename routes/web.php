@@ -57,6 +57,8 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/user/panduan_pretest', [UserDashboardController::class, 'panduan_pretest'])->middleware('role:user')->name('user.panduan_pretest');
     Route::get('/user/hasil_pretest', [UserDashboardController::class, 'hasil_pretest'])->middleware('role:user')->name('user.hasil_pretest');
+    Route::get('/user/pretest', [UserDashboardController::class, 'pretest'])->middleware('role:user')->name('user.pretest');
+    Route::get('user/cetak_pretest', [UserDashboardController::class, 'generatePretest'])->middleware(('role:user'))->name('user.cetak_pretest');
     
     Route::get('/user/panduan_postest', [UserDashboardController::class, 'panduan_postest'])->middleware('role:user')->name('user.panduan_postest');
     Route::get('/user/postest', [UserDashboardController::class, 'postest'])->middleware('role:user')->name('user.postest');

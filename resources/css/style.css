@@ -55,6 +55,7 @@
 .register-body {
     background: url("../img/Internet-Website-PNG-Photos.png") center/cover
         no-repeat;
+        /* opacity: ; */
     position: relative;
     overflow: hidden;
     background-color: #34baf7;
@@ -128,11 +129,30 @@
     width: 25%;
 }
 
+.page-item.active .page-link{
+    background-color: #34BAF7 !important;
+    border: #34baf7 !important;
+    color: #E8E8E8 !important;
+}
+
+.page-link{
+    color: #34BAF7 !important;
+}
+
+
 /* .stat_performance .chart_daily, .stat_performance .chart_teethq{
     width: 40%;
 } */
 
+.opening-dashboard .card{
+    width: 98%;
+}
+
 @media (max-width: 767px) {
+
+    .title-finish-pengetahuan{
+        text-align: center;
+    }
 
     .profile-dashboard .profile-name{
         display: none;
@@ -170,6 +190,20 @@
 
     .content-14days{
         justify-content: center;
+    }
+
+    .container-panduan{
+        min-height: 150vh !important;
+    }
+
+    .content-panduan-pretest{
+        text-align: justify;
+        margin-top: 10vh;
+        width: 90%;
+    }
+
+    .body-quiz{
+        flex-direction: column !important;
     }
 }
 
@@ -397,7 +431,7 @@
 }
 
 .content-panduan-pretest{
-    margin-top: 20vh;
+    margin-top: 10vh;
     border: 1px solid #A5A5A5;
 }
 

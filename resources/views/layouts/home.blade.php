@@ -23,7 +23,7 @@
     <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
       <h1>Selamat Datang di Tans’ Dent </h1>
       <p>Tan’s Dent-Card QR Model Berbasis Website merupakan website edukasi menggosok gigi dengan media
-        interaktif untuk memfasilitasi keterampilan menggosok gigi anak usia dini</p>
+        interaktif untuk memfasilitasi keterampilan menggosok gigi anak sekolah dasar</p>
       <button value="Masuk" class="btn bg-2 w-50" onclick="location.href='/login'">Masuk</button>
     </div>
   </div>

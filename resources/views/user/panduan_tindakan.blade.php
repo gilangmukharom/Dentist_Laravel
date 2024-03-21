@@ -23,32 +23,21 @@
       </div>
     </div>
     <div class="content-panduan-pretest w-90 z-1 bg-light rounded position-absolute align-self-center">
-      <div class="title-panduan">
-        <div class="time-panduan p-3">
-          <h1>Test Tindakan Tans Dent</h1>
-          <p>Tangaal : 2 Februari 2024</p>
-          <p>Jam : 07.00</p>
-        </div>
+      <div class="title-panduan p-4 w-50">
+          <h3><b>Selamat kamu berhasil melanjutkan ke soal bagian 3</b></h3>
+      </div>
         <div class="panduan-pretest d-flex flex-column align-items-center m-auto w-90">
-          <div class="title-panduan-pretest">
-            <h1>Panduan mengisi test tindakan</h1>
+          <div class="title-panduan-pretest p-3">
+            <h3>Panduan mengisi test sikap</h3>
           </div>
-          <div class="box-panduan">
-            <p>Pre-test dentist digunakan untuk mengetahui pengetahuan, sikap, tindakan serta debris indikator pada anak.
-              Dalam hal ini pre test akan di bagi dalam empat sesi pengisian:
-            </p>
-            <p>1.Test pengetahuan</p>
-            <p>1.Test sikap</p>
-            <p>1.Test tindakan</p>
-            <p>1.Test debris index</p>
-            <p>Selama proses menjalankan test anak diharapkan untuk menyelesaikan seluruh test yang ada.
-              Apabila sudah berhasil mengisi pre test anak dapat mengakses menu lain yang tersedia di tans dent ini.
-            </p>
-            <p>Semangat dan selamat mengerjakan!</p>
+          <div class="box-panduan w-80 pb-5">
+            <p>Pada bagian test tindakan ini kamu di tugaskan memilih yang paling benar atau salah dalam jawabanmu.
+              Setiap jawaban yang benar akan memperoleh poin 1 dan salah 0.
+              Jawaban hanya perlu di centang saja.</p>
+            <p><b>Semangat dan selamat mengerjakan!</b></p>
           </div>
-          <div class="button-panduan p-3">
-            <button class="rounded" onclick="window.location='/user/index'">Kembali</button>
-            <button class="rounded" onclick="window.location='/user/test_tindakan'">Mulai kerjakan</button>
+          <div class="button-panduan p-5">
+            <button class="btn bg-1 text-0" onclick="window.location='/user/test_tindakan'">Mulai kerjakan</button>
           </div>
         </div>
       </div>

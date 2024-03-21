@@ -8,13 +8,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-  <title>Dentist - Skor Pengetahuan</title>
+  <title>Dentist - Skor Keterampilan</title>
 </head>
 
 <body class="login-body">
     <div class="navigasi-pengetahuan d-flex justify-content-between align-items-center p-2">
         <div class="title-pengetahuan">
-            <h1>Quiz</h1>
+            <h1 class="text-0">Quiz</h1>
             <p class="text-0">Keterampilan Gigi dan Mulut</p>
         </div>
     </div>
@@ -33,7 +33,7 @@
                         <p>:</p>
                     </td>
                     <td>
-                        <p>21-12-2023</p>
+                        <p>{{ $quizKeterampilan->tanggal_quiz_keterampilan }}</p>
                     </td>
                 </tr>
                 <tr>
@@ -88,7 +88,7 @@
                         <p>:</p>
                     </td>
                     <td>
-                        <p>85.00%</p>
+                        <p>{{ $quizKeterampilan->nilai_quiz_keterampilan }}%</p>
                     </td>
                 </tr>
             </table>

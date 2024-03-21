@@ -25,7 +25,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary m-auto" onclick="location.href='/user/14days'">Isi
                             sekarang</button>
-                        <button type="button" class="btn btn-secondary m-auto" data-bs-dismiss="modal">Kembali</button>
+                        <button type="button" class="btn btn-secondary m-auto" data-bs-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>
@@ -58,7 +58,7 @@
         <div class="body-dashboard d-flex flex-wrap flex-column flex-lg-rows w-100">
             <div class="content-dashboard-student d-flex flex-lg-row flex-column gap-2 w-100">
                 <div class="opening-dashboard w-100">
-                    <div class="card w-100 h-100 d-flex flex-column justify-content-evenly align-items-start p-5">
+                    <div class="card h-100 d-flex flex-column justify-content-evenly align-items-start p-5">
                         <div class="title-card">
                             <p style="font-size: 1.5em;">Daily Activity 14 Days</p>
                         </div>
@@ -114,6 +114,7 @@
                         </td>
                     </tr>
                     @foreach ($userData as $index => $data)
+                    @if ($data['username'] != 'admin')
                         <tr class="rounded border shadow text-center">
                             <td class="pt-4 pb-4">{{ $index + 1 }}</td>
                             <td class="pt-4 pb-4">{{ $data['username'] }}</td>
@@ -122,15 +123,17 @@
                             <td>{{ $data['kategori_pengetahuan'] }}</td>
                             <td>{{ $data['kategori_daily'] }}</td>
                         </tr>
-                    @endforeach
+                    @endif
+                @endforeach
                 </table>
-                <div class="d-flex justify-content-center">
-                    {{ $users->links() }}
+                <div class="d-flex justify-content-end m-3">
+                    {{ $users->links('pagination::bootstrap-4') }}
                 </div>
             </div>
-            <a href="{{ route('user.cetak_laporan') }}" class="btn btn-primary">Generate PDF</a>
+            {{-- <a href="{{ route('user.cetak_laporan') }}" class="btn btn-primary">Generate PDF</a> --}}
         </div>
     </div>
+    
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
