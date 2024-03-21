@@ -1,5 +1,7 @@
 @extends('include.sidebar')
 
+@section('title', 'Dentist - Edit Profile')
+
 @section('content')
     @vite(['resources/css/style.css', 'resources/js/app.js'])
     <div class="container-edit-profile p-5">

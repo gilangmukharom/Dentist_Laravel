@@ -1,5 +1,7 @@
 @extends('include.sidebar')
 
+@section('title', 'Dentist - Daily Activity')
+
 @section('content')
     @vite(['resources/css/style.css', 'resources/js/app.js'])
     @if (session('error'))
@@ -9,7 +11,7 @@
             });
         </script>
     @endif
-    <p class="m-3 cursor-pointer" onclick="window.location='/user/14days'">Kembali</p>
+    <a class="m-3 cursor-pointer text-decoration-none text-black" href="/user/14days">Kembali</a>
 
     <div class="content-activity w-100 rounded p-5">
         <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
@@ -33,13 +35,13 @@
                                 <p>Status : <b>Done</b></p>
                             </div>
                             <div class="bukti_daily d-flex flex-row justify-content-between">
-                                <img src="{{ asset('storage/img/' . $daily->bukti) }}" alt="Gambar" width="40%">
+                                <img src="{{ asset('storage/' . $daily->bukti) }}" alt="Gambar" width="40%">
                                 <textarea name="deskripsi" id="" disabled>{{ $daily->deskripsi }}</textarea>
                             </div>
                         @endforeach
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary m-auto" data-bs-dismiss="modal">Kembali</button>
+                        <button type="button" class="btn btn-secondary m-auto" data-bs-dismiss="modal">Tutup</button>
                     </div>
                 </div>
             </div>
@@ -58,8 +60,8 @@
                             placeholder="{{ $daily->nama }}">
                     </div>
                     <div class="input-file">
-                        <label for="bukti">Bukti</label>
-                        <input type="file" name="bukti" class="bukti w-100 rounded p-2" disabled>
+                        <label for="bukti">Bukti :</label>
+                        <img src="{{ asset('storage/' . $daily->bukti) }}" alt="Gambar" width="40%">
                     </div>
                     <div class="input-time">
                         <div class="sikat-pagi d-flex mb-3 flex-row">
@@ -78,10 +80,12 @@
                         <textarea name="deskripsi" class="deskripsi border-1 rounded h-100 w-100" disabled
                             placeholder="{{ $daily->deskripsi }}"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-danger rounded border-0">
-                        Submit
-                    </button>
+                    <button class="m-3 cursor-pointer border-0 bg-1 rounded-2 text-white" onclick="window.location='/user/14days'">Kembali</button>
                 </form>
             @endforeach
         </div>
+
+        <script>
+            console.log('{{ asset('storage/' . $daily->bukti) }}');
+        </script>
     @endsection

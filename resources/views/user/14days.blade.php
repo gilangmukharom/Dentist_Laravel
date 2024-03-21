@@ -1,5 +1,7 @@
 @extends('include.sidebar')
 
+@section('title', 'Dentist - Daily Activity')
+
 @section('content')
     @vite(['resources/css/style.css', 'resources/js/app.js'])
     <h1 class="title-14days"><b>Aktivitas Harian</b></h1>

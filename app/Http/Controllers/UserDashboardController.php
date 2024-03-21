@@ -202,8 +202,6 @@ class UserDashboardController extends Controller
         $user->sekolah = $request->sekolah;
         $user->nama_ortu = $request->nama_ortu;
 
-        $user->save();
-
         return view('user.edit_profile');
     }
 
@@ -221,31 +219,26 @@ class UserDashboardController extends Controller
 
     public function create_daily(Request $request)
     {
-        $request->validate([
-            'waktu_sikat_gigi_pagi' => 'required|date_format:H:i',
-            'waktu_sikat_gigi_malam' => 'required|date_format:H:i',
-            'bukti' => 'required|image|max:2048', // maksimal ukuran 2MB
-            'deskripsi' => 'nullable|string',
-        ]);
-
         $nomor = session('nomor');
 
         $user_id = auth()->id();
         $username = auth()->user()->username;
 
-        $tanggal_daily = Carbon::today(); // Ambil tanggal hari ini
+        $tanggal_daily = Carbon::today();
+        $bukti = $request->file('bukti')->store('img', 'public');
+
+        $request->validate([
+            'waktu_sikat_gigi_pagi' => 'required|date_format:H:i',
+            'waktu_sikat_gigi_malam' => 'required|date_format:H:i',
+            'bukti' => 'required|image', // maksimal ukuran 2MB
+            'deskripsi' => 'nullable|string',
+        ]);
 
         $dailyCore = Daily_cores::where('nomor', $nomor)
         ->where('tanggal_daily', $tanggal_daily)
         ->first();
 
-        $doneDaily = Daily_cores::where('nomor', $nomor)
-        ->where('user_id', Auth::id())
-        ->get();
-
         if ($dailyCore) {
-            $bukti = $request->file('bukti')->store('img', 'public');
-
             // Update kolom-kolom yang diperlukan
             $dailyCore->user_id = $user_id;
             $dailyCore->nama = $username;
@@ -258,7 +251,7 @@ class UserDashboardController extends Controller
 
             return redirect()->back()->with('success', 'Data Berhasil disimpan.');
         } else {
-            return redirect()->back()->with('error', 'Data tidak ditemukan.');
+            return redirect()->back()->withErrors(['error' => 'Data tidak ditemukan.'])->withInput();
         }
     }
 
@@ -352,7 +345,7 @@ class UserDashboardController extends Controller
             ->get();
 
         if ($dailyCore == NULL) {
-            // session()->put('nomor', $nomor);
+            session()->put('nomor', $nomor);
             return view('user.daysactivity', ['nomor' => $nomor], compact('dailyCore'));
         } else {
             session()->flash('error', 'Anda sudah mengisi daily activity.');

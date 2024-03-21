@@ -1,5 +1,7 @@
 @extends('include.sidebar')
 
+@section('title', 'Dentist - Video')
+
 @section('content')
 @vite(['resources/css/style.css', 'resources/js/app.js'])
     <h1 class="h2">Video</h1>

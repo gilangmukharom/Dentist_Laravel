@@ -1,5 +1,7 @@
 @extends('include.sidebar')
 
+@section('title', 'Dentist - Daily Activity')
+
 @section('content')
     <p>Kembali</p>
 

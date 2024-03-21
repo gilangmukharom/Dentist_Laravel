@@ -1,5 +1,7 @@
 @extends('include.sidebar')
 
+@section('title', 'Dentist - Dashboard')
+
 @section('content')
     @vite(['resources/css/style.css', 'resources/js/app.js'])
     @if ($cek_input_daily == false)
@@ -40,14 +42,14 @@
                             <img src="{{ asset('assets/img/profile.png') }}" alt="profile">
                         </div>
                         <div class="profile-name">
-                            <p>{{$username}}</p>
+                            <p>{{ $username }}</p>
                         </div>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><button class="dropdown-item"
                                 onclick="window.location.href='{{ route('user.edit-profile') }}'">Edit Profile</button></li>
                         <li><button class="dropdown-item"
-                                onclick="window.location.href='{{ route('logout') }}'">Logout</button></li>
+                                data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button></li>
                     </ul>
                 </div>
             </div>
@@ -61,15 +63,18 @@
                             <p style="font-size: 1.5em;">Daily Activity 14 Days</p>
                         </div>
                         <div class="body-card w-100">
-                            <h3 class="text-white" style="font-size: 2em;">Selamat datang {{$username}}</h3>
+                            <h3 class="text-white" style="font-size: 2em;">Selamat datang {{ $username }}</h3>
                             <h3 class="text-white" style="font-size: 2em;">Yuk mulai aktifitas hari ini!</h3>
                         </div>
-                        <img class="index-header-img h-100 w-auto position-absolute" src="{{ asset('assets/img/index-header.png') }}" alt="">
+                        <img class="index-header-img h-100 w-auto position-absolute"
+                            src="{{ asset('assets/img/index-header.png') }}" alt="">
                         <div class="footer-card">
-                            <button onclick="location.href='/user/14days'" type="btn" style="background-color: #FFBD13; color:white; width: 20vw" class="btn p-2 rounded-3">Mulai</button>
+                            <button onclick="location.href='/user/14days'" type="btn"
+                                style="background-color: #FFBD13; color:white; width: 20vw"
+                                class="btn p-2 rounded-3">Mulai</button>
                         </div>
                     </div>
-                    
+
                 </div>
                 <div class="card-element calendar bg-body-tertiary rounded shadow" id="calendar"> </div>
             </div>
@@ -124,6 +129,32 @@
                 </div>
             </div>
             <a href="{{ route('user.cetak_laporan') }}" class="btn btn-primary">Generate PDF</a>
+        </div>
+    </div>
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah Anda yakin ingin logout?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-danger" href="{{ route('logout') }}"
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Include jQuery -->

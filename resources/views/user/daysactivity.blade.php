@@ -1,5 +1,7 @@
 @extends('include.sidebar')
 
+@section('title', 'Dentist - Daily Activity')
+
 @section('content')
     @if (session('error'))
         <script>
@@ -8,6 +10,7 @@
             });
         </script>
     @endif
+
     <p>Kembali</p>
 
     @vite(['resources/css/style.css', 'resources/js/app.js'])
@@ -39,15 +42,32 @@
                 </div>
                 <div class="input-deskripsi">
                     <label for="deskripsi">Deskripsi makanan dan minuman yang dikonsumsi</label>
-                     <textarea name="deskripsi" class="deskripsi border-1 rounded h-100 w-100"></textarea>
+                    <textarea name="deskripsi" class="deskripsi border-1 rounded h-100 w-100"></textarea>
                 </div>
                 <button type="submit" class="btn btn-danger rounded border-0">
                     Submit
                 </button>
             </form>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <!-- Jika terdapat pesan error -->
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <script>
             var cek_input_daily_value = @json($dailyCore);
-            console.log(cek_input_daily_value);
+            console.log("ini inputnya :", cek_input_daily_value);
         </script>
     @endsection
