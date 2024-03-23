@@ -34,7 +34,7 @@ class teethqChart
         ];
 
         return $this->chart->pieChart()
-            // ->setWidth(400)
+            ->setWidth(400)
             ->setTitle('Statistics')
             ->setSubtitle('Teeth Q')
             ->addData($data)

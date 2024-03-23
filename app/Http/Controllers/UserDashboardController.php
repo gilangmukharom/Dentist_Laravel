@@ -6,6 +6,7 @@ use App\Charts\dailyChart;
 use App\Charts\teethqChart;
 use App\Models\daily_activities;
 use App\Models\Daily_cores;
+use App\Models\Informasi;
 use Illuminate\Support\Facades\Session;
 use App\Models\jawaban_sikaps;
 use App\Models\Postest_jawaban_sikaps;
@@ -339,12 +340,16 @@ class UserDashboardController extends Controller
     }
     public function info()
     {
-        return view('user.info');
+        $informasi = Informasi::all();
+        return view('user.info', compact('informasi'));
     }
-    public function info_detail()
+    public function info_detail($id)
     {
-        return view('user.info_detail');
+        $informasi = Informasi::findOrFail($id);
+
+        return view('user.info_detail', compact('informasi'));
     }
+    
     public function panduan()
     {
         return view('user.panduan');

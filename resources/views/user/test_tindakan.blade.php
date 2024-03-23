@@ -13,31 +13,68 @@
 </head>
 
 <body>
-    <h1>Quiz</h1>
-    @if (Session::has('success'))
-        <div class="alert alert-success">
-            {{ Session::get('success') }}
+    <div class="container">
+        <div class="logo p-4">
+            <img src="{{ asset('assets/img/logo4.png') }}" alt="logo tans dent" height="40">
         </div>
-    @endif
-
-    @if (Session::has('error'))
-        <div class="alert alert-danger">
-            {{ Session::get('error') }}
-        </div>
-    @endif
-    <form method="post" action="{{ route('user.test_tindakan.submit') }}">
+        <form id="pretest-form" class="rounded m-auto p-2 w-90 border border-2" method="POST"
+        action="{{ url('user/test_tindakan/submit') }}">
         @csrf
-        @foreach ($pertanyaans as $question)
-            <p>
-                {{ $question->pertanyaan }}
-            </p>
-            @foreach (json_decode($question->pilihan) as $key => $option)
-                <input type="radio" name="pertanyaan[{{ $question->id }}]" value="{{ $option }}">
-                {{ $option }}<br>
-            @endforeach
-        @endforeach
-        <button class="btn bg-1 text-0" type="submit">Submit</button>
+        <h1 class="mt-2 mb-4">Tindakan</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered text-center">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Langkah menggosok gigi</th>
+                        <th>Benar</th>
+                        <th>Salah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($pertanyaans as $key => $question)
+                        <tr>
+                            <td>{{ $key + 1 }}</td>
+                            <td>{{ $question->pertanyaan }}</td>
+                            <td>
+                                @foreach (json_decode($question->pilihan) as $key => $option)
+                                    @if ($loop->first)
+                                        <input type="radio" name="pertanyaan[{{ $question->id }}]" value="{{ $option }}"> {{ $option }}<br>
+                                    @endif
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach (json_decode($question->pilihan) as $key => $option)
+                                    @if ($loop->last)
+                                        <input type="radio" name="pertanyaan[{{ $question->id }}]" value="{{ $option }}"> {{ $option }}<br>
+                                    @endif
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+        <div class="button-form w-100 d-flex justify-content-end">
+            <button class="btn bg-1 text-0" type="submit">Submit</button>
+        </div>
     </form>
+        {{-- <form id="pretest-form" class="rounded m-auto p-2 w-90 border border-2" method="POST"
+            action="{{ url('user.test_tindakan.submit') }}">
+
+            @csrf
+            <h1 class="mt-2 mb-4">Tindakan</h1>
+            @foreach ($pertanyaans as $question)
+                <p>
+                    {{ $question->pertanyaan }}
+                </p>
+                @foreach (json_decode($question->pilihan) as $key => $option)
+                    <input type="radio" name="pertanyaan[{{ $question->id }}]" value="{{ $option }}">
+                    {{ $option }}<br>
+                @endforeach
+            @endforeach
+            <button class="btn bg-1 text-0" type="submit">Submit</button>
+        </form> --}}
 </body>
 
 </html>

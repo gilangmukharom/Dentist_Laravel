@@ -15,6 +15,18 @@
     width: 70%;
 }
 
+.w-40{
+    width: 40%;
+}
+
+.w-30{
+    width: 30%;
+}
+
+.w-20{
+    width: 20%;
+}
+
 .text-justify{
     text-align: justify;
 }
@@ -53,12 +65,22 @@
 
 .login-body,
 .register-body {
-    background: url("../img/Internet-Website-PNG-Photos.png") center/cover
-        no-repeat;
-        /* opacity: ; */
     position: relative;
     overflow: hidden;
     background-color: #34baf7;
+}
+
+.login-body::before,
+.register-body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4; /* Atur nilai opacity sesuai kebutuhan */
+    background: url("../img/Internet-Website-PNG-Photos.png") center/cover no-repeat;
+    z-index: -1;
 }
 
 .error-body {
@@ -148,6 +170,14 @@
     width: 98%;
 }
 
+.navbar-collapse{
+    flex-grow: 0 !important;
+}
+
+.chart_daily, .chart_teethq{
+    min-width: 400px !important;
+}
+
 @media (max-width: 767px) {
 
     .title-finish-pengetahuan{
@@ -158,6 +188,10 @@
         display: none;
     }
 
+    .index-header-img{
+        opacity: 0.2;
+    }
+
     .calendar{
         width: 100%;
     }
@@ -165,6 +199,10 @@
     .stat_performance{
         justify-content: center;
         align-items: center;
+    }
+
+    .footer_info{
+        text-align: -webkit-center;
     }
 
     .about-text{

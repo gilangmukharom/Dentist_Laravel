@@ -12,33 +12,11 @@
     @vite(['resources/css/style.css', 'resources/js/app.js'])
 </head>
 
-{{-- <div class="container">
-  <div class="logo">
-    <img src="{{ asset('assets/img/logo.png') }}" alt="logo tans dent" height="40">
-  </div>
-  <form id="pretest-form" class="rounded m-auto p-4 w-90 border border-2" method="POST" action="{{ url('user/cek_test_sikap') }}">
-    @csrf
-    <h1 class="mt-2 mb-4">Sikap</h1>
-    @foreach ($test_sikaps as $sikap)
-      <div>
-          <p>{{ $sikap->pertanyaan }}</p>
-          <div class="pilihan_jawaban d-flex flex-column">
-            <label><input type="radio" name="jawaban[{{ $sikap->id }}]" id="jawaban_[{{ $sikap->id }}]_1" value="1"> SS</label>
-            <label><input type="radio" name="jawaban[{{ $sikap->id }}]" value="2"> S</label>
-            <label><input type="radio" name="jawaban[{{ $sikap->id }}]" value="3"> TS</label>
-            <label><input type="radio" name="jawaban[{{ $sikap->id }}]" value="4"> STS</label>
-          </div>
-      </div>
-  @endforeach
-  <button type="submit">Submit</button>
-  </form>
-</div> --}}
-
 
 <body>
     <div class="container">
-        <div class="logo">
-            <img src="{{ asset('assets/img/logo.png') }}" alt="logo tans dent" height="40">
+        <div class="logo p-4">
+            <img src="{{ asset('assets/img/logo4.png') }}" alt="logo tans dent" height="40">
         </div>
         @if (Session::has('success'))
             <div class="alert alert-success">
@@ -54,7 +32,7 @@
         <form method="post" class="rounded m-auto p-4 w-90 border border-2"
             action="{{ route('user.test_pengetahuan.submit') }}">
             @csrf
-            <h1 class="mt-2 mb-4">Pengetahuan</h1>
+            <h3 class="mt-2 mb-4"><b>Pengetahuan</b></h3>
             @foreach ($pertanyaans as $question)
                 <p>
                     {{ $question->pertanyaan }}
@@ -64,7 +42,9 @@
                     {{ $option }}<br>
                 @endforeach
             @endforeach
-            <button class="btn bg-1" type="submit">Submit</button>
+            <div class="button-form w-100 d-flex justify-content-end">
+                <button class="btn bg-2 text-0" type="submit">Soal berikutnya</button>
+            </div>
         </form>
     </div>
 

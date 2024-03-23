@@ -45,7 +45,7 @@
   <div class="container-text d-flex flex-row justify-content-between w-90 m-auto mt-5 pb-5">
     <div class="text-content d-flex flex-column justify-content-center">
       <h2>Mari Jaga Kesehatan Gigimu!</h2>
-      <p class="w-80 text-start">Menjaga kesehatan gigi dan mulut sebenarnya tidak sulit karena dapat dilakukan sendiri di rumah. Yang
+      <p class="w-80 text-justify">Menjaga kesehatan gigi dan mulut sebenarnya tidak sulit karena dapat dilakukan sendiri di rumah. Yang
         terpenting adalah sikap konsisten dan menjadikannya sebagai bagian dari rutinitas. Kebiasaan yang harus
         dilakukan untuk menjaga mesehatan gigi dan mulut adalah rutin menggosok gigi, menggunakan sikat gigi
         yang lembut dan pasta gigi berflouride, berkumur dengan obat kumur, membersihkan gigi menggunakan benang

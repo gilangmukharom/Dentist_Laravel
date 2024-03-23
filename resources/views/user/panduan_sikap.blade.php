@@ -60,7 +60,6 @@
             <p class="pt-3"><b>Semangat dan selamat mengerjakan!</b></p>
           </div>
           <div class="button-panduan p-3">
-            <button class="btn btn-danger" onclick="window.location='/user/index'">Kembali</button>
             <button class="btn bg-1 text-0" onclick="window.location='/user/test_sikap'">Mulai kerjakan</button>
           </div>
         </div>

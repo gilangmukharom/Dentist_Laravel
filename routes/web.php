@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/video', [UserDashboardController::class, 'video'])->middleware('role:user')->name('user.video');
     Route::get('/user/teethq', [UserDashboardController::class, 'teethq'])->middleware('role:user')->name('user.teethq');
     Route::get('/user/info', [UserDashboardController::class, 'info'])->middleware('role:user')->name('user.info');
-    Route::get('/user/info_detail', [UserDashboardController::class, 'info_detail'])->middleware('role:user')->name('user.info_detail');
+    Route::get('/user/info_detail/{id}', [UserDashboardController::class, 'info_detail'])->middleware('role:user')->name('user.info_detail');
     Route::get('/user/panduan', [UserDashboardController::class, 'panduan'])->middleware('role:user')->name('user.panduan');
 
     Route::get('/user/activity', [UserDashboardController::class, 'activity'])->middleware('role:user')->name('user.activity');
@@ -88,5 +88,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/index', [AdminDashboardController::class, 'index'])->middleware('role:admin')->name('admin.index');
     Route::get('/admin/setting', [AdminDashboardController::class, 'setting'])->middleware('role:admin')->name('admin.setting');
     Route::get('/admin/informasi', [AdminDashboardController::class, 'informasi'])->middleware('role:admin')->name('admin.informasi');
+    Route::get('/admin/create_informasi', [AdminDashboardController::class, 'create_informasi'])->middleware('role:admin')->name('admin.create_informasi');
+    Route::post('/admin/create', [AdminDashboardController::class, 'store'])->middleware('role:admin')->name('admin.create');
     Route::post('/admin/delete_data', [AdminDashboardController::class, 'delete_data'])->middleware('role:admin')->name('admin.delete_data');
+    Route::get('/admin/informasi/{informasi}/edit', [AdminDashboardController::class, 'edit_informasi'])->name('admin.informasi.edit');
+    Route::put('/admin/informasi/{informasi}', [AdminDashboardController::class, 'update_informasi'])->name('admin.informasi.update');
+    Route::get('admin/download-users', [AdminDashboardController::class, 'downloadAllUsers'])->name('admin.download.users');
 });

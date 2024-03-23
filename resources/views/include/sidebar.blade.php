@@ -54,7 +54,6 @@
                     </ul>
                 </li>
                 <li>
-                    {{-- <a href="#"><span class="fa fa-cogs"></span> Services</a> --}}
                     <a href="#" class="dropdown-toggle text-0" type="button" id="dropdownMenuButton1"
                         data-bs-toggle="dropdown" aria-expanded="false">
                         <span class="fa fa-bell" aria-hidden="true"></span> Information <span

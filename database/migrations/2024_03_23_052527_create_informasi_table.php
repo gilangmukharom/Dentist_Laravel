@@ -11,6 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('informasis', function (Blueprint $table) {
+            $table->id();
+            $table->string('judul');
+            $table->text('isi_informasi');
+            $table->string('gambar')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -18,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('daily_activities');
+        Schema::dropIfExists('informasis');
     }
 };

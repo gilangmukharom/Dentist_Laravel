@@ -1,5 +1,7 @@
 @extends('include.sidebar_admin')
 
+@section('title', 'Dentist - Dashboard Admin')
+
 @section('content')
     <div class="container-dashboard pt-2">
         <div class="header-dashboard d-flex justify-content-between p-4">
@@ -55,7 +57,8 @@
                     <td>100</td>
                     <td>100</td>
                     <td>100</td>
-                    <td><button>Download</button></td>
+                    <td><td><a href="{{ route('admin.download.users') }}" class="btn btn-primary">Download</a></td>
+                </td>
                 </tr>
             </table>
         </div>

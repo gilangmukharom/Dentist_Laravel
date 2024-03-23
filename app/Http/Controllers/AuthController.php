@@ -18,7 +18,7 @@ class AuthController extends Controller
     {
         // Validasi data
         $request->validate([
-            'username' => 'required|string',
+            'username' => 'required|string|unique:users',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
             'alamat' => 'required|string',
@@ -26,6 +26,13 @@ class AuthController extends Controller
             'nama_ortu' => 'required|string',
             'password' => 'required|string|min:6',
         ]);
+
+        // Cek apakah username sudah digunakan
+        $existingUser = User::where('username', $request->username)->exists();
+        if ($existingUser) {
+            // Jika username sudah digunakan, redirect kembali dengan pesan error
+            return redirect()->back()->withInput()->with('error-message', 'Username sudah digunakan.')->withErrors(['username' => 'Username sudah digunakan.']);
+        }
 
         $user = User::create([
             'username' => $request->username,
