@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Postest_jawaban_sikaps extends Model
+class jawaban_psikaps extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['qsikaps_id', 'user_id', 'jawaban'];
+    protected $fillable = ['qpsikaps_id', 'user_id', 'jawaban'];
 
     public function pertanyaan()
     {
-        return $this->belongsTo(qsikaps::class);
+        return $this->belongsTo(qpsikaps::class);
     }
 
     public function users()

@@ -24,13 +24,14 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            text-align: center;
         }
 
         th,
         td {
             border: 1px solid #ddd;
             padding: 8px;
-            text-align: left;
+            text-align: center;
         }
 
         th {
@@ -40,15 +41,36 @@
 </head>
 
 <body>
-    <h1>Data untuk PDF</h1>
+    <div class="header_cetak">
+        <h1>Data Pengguna</h1>
+        <div class="info_pretest">
+            <div class="data_user">
+                <p>Nama : Admin Tans Dentis</p>
+                <p>Alamat : Semarang - Jawa Tengah</p>
+                <p>Asal Sekolah : SDN 2 Semarang</p>
+            </div>
+            <div class="tanggal_pretest">
+                <p>Tanggal : 12 April 2024</p>
+            </div>
+        </div>
+    </div>
     <table>
         <thead>
             <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Deskripsi</th>
-                <th>Waktu Sikat Gigi Malam</th>
-                <th>Waktu Sikat Gigi Pagi</th>
+                <th colspan="3" class="text-center">Pretest</th>
+                <th colspan="3">Postest</th>
+            </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th>Sikap</th>
+                <th>Pengetahuan</th>
+                <th>Tindakan</th>
+                <th>Sikap</th>
+                <th>Pengetahuan</th>
+                <th>Tindakan</th>
             </tr>
         </thead>
         <tbody>
@@ -56,9 +78,12 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->username }}</td>
-                    <td>{{ $item->deskripsi }}</td>
-                    <td>{{ $item->waktu_sikat_gigi_malam }}</td>
-                    <td>{{ $item->waktu_sikat_gigi_pagi }}</td>
+                    <td>{{ $item->total_jawaban_sikap }}</td>
+                    <td>{{ $item->total_jawaban_pengetahuan }}</td>
+                    <td>{{ $item->total_jawaban_tindakans }}</td>
+                    <td>{{ $item->total_postest_sikap }}</td>
+                    <td>{{ $item->total_postest_pengetahuan }}</td>
+                    <td>{{ $item->total_postest_tindakans }}</td>
                 </tr>
             @endforeach
         </tbody>

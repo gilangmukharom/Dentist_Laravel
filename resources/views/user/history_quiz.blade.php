@@ -5,7 +5,7 @@
 @section('content')
     @vite(['resources/css/style.css', 'resources/js/app.js'])
     <h1 class="h2"><b>History Quiz</b></h1>
-    <div class="container-pretest-teethq mb-4 rounded d-flex flex-row flex-wrap p-3 align-items-center gap-3">
+    <div class="container-pretest-teethq mb-4 rounded d-flex flex-row flex-wrap p-0 align-items-center gap-3">
         <div class="navigasi-quiz d-flex flex-row w-100 justify-content-between align-content-center">
             <div class="url-quiz">
                 <p class="m-0">Quiz > History</p>
@@ -14,8 +14,9 @@
 
         <hr class="w-100 bg-black">
 
+        <div class="table-responsive">
         @if ($quizKeterampilan->count() > 0)
-            <table class="table">
+            <table class="table w-100">
                 <thead>
                     <tr class="text-center">
                         <th scope="col">Jenis Quiz</th>
@@ -37,6 +38,7 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
             <div class="d-flex justify-content-center">
                 <!-- Pagination Links -->
                 {{ $quizKeterampilan->links('pagination::bootstrap-4') }}

@@ -57,7 +57,7 @@
                     <td>100</td>
                     <td>100</td>
                     <td>100</td>
-                    <td><td><a href="{{ route('admin.download.users') }}" class="btn btn-primary">Download</a></td>
+                    <td><td><a href="{{ route('admin.cetak-laporan') }}" class="btn btn-primary">Download</a></td>
                 </td>
                 </tr>
             </table>

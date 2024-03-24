@@ -6,6 +6,8 @@
     @vite(['resources/css/style.css', 'resources/js/app.js'])
     <h1 class="title-14days"><b>Aktivitas Harian</b></h1>
 
+    <hr class="w-100 bg-black">
+
     <div class="content-14days">
         <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
             aria-hidden="true">

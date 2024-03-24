@@ -37,7 +37,7 @@
             <p><b>Semangat dan selamat mengerjakan!</b></p>
           </div>
           <div class="button-panduan p-5">
-            <button class="btn bg-1 text-0" onclick="window.location='/user/test_tindakan'">Mulai kerjakan</button>
+            <button class="btn bg-1 text-0" onclick="window.location='/user/postest_tindakan'">Mulai kerjakan</button>
           </div>
         </div>
       </div>

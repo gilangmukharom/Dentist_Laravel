@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Dentist - Panduan Posttest</title>
+    <title>Dentist - Panduan Postest</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/fontawesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -36,7 +36,7 @@
                         <h1>Panduan mengisi postest</h1>
                     </div>
                     <div class="box-panduan w-80">
-                        <p>Pre-test dentist digunakan untuk mengetahui pengetahuan, sikap, tindakan menggosok gigi
+                        <p>Pos-test dentist digunakan untuk mengetahui pengetahuan, sikap, tindakan menggosok gigi
                             indikator pada anak.
                             Dalam hal ini pos test akan di bagi dalam tiga sesi pengisian:
                         </p>

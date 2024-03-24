@@ -23,21 +23,44 @@
       </div>
     </div>
     <div class="content-panduan-pretest w-90 z-1 bg-light rounded position-absolute align-self-center">
-      <div class="title-panduan p-4 w-50">
-          <h3><b>Selamat kamu berhasil melanjutkan ke soal bagian 3</b></h3>
+      <div class="title-panduan p-4">
+          <h3><b>Selamat kamu berhasil melanjutkan ke soal bagian 2</b></h3>
       </div>
         <div class="panduan-pretest d-flex flex-column align-items-center m-auto w-90">
           <div class="title-panduan-pretest p-3">
-            <h3>Panduan mengisi test tindakan</h3>
+            <h3>Panduan mengisi test sikap</h3>
           </div>
-          <div class="box-panduan w-80 pb-5">
-            <p>Pada bagian test tindakan ini kamu di tugaskan memilih yang paling benar atau salah dalam jawabanmu.
-              Setiap jawaban yang benar akan memperoleh poin 1 dan salah 0.
-              Jawaban hanya perlu di centang saja.</p>
-            <p><b>Semangat dan selamat mengerjakan!</b></p>
+          <div class="box-panduan w-80">
+            <p>Pada bagian test sikap ini kamu di tugaskan memilih yang paling setuju atau tidak setuju dalam jawabanmu.
+                Setiap jawaban yang benar akan memperoleh poin 4.
+            </p>
+            <p class="pb-2">Dengan keterangan sebagai berikut:</p>
+            <table class="border border-2 border-black">
+                <tr>
+                    <td>SS</td>
+                    <td class="gap">:</td>
+                    <td>Sangat Setuju</td>
+                </tr>
+                <tr>
+                    <td>S</td>
+                    <td class="gap">:</td>
+                    <td>Setuju</td>
+                </tr>
+                <tr>
+                    <td>TS</td>
+                    <td class="gap">:</td>
+                    <td>Tidak Setuju</td>
+                </tr>
+                <tr>
+                    <td>STS</td>
+                    <td class="gap">:</td>
+                    <td>Sangat Tidak Setuju</td>
+                </tr>
+            </table>
+            <p class="pt-3"><b>Semangat dan selamat mengerjakan!</b></p>
           </div>
-          <div class="button-panduan p-5">
-            <button class="btn bg-1 text-0" onclick="window.location='/user/test_tindakan'">Mulai kerjakan</button>
+          <div class="button-panduan p-3">
+            <button class="btn bg-1 text-0" onclick="window.location='/user/postest_sikap'">Mulai kerjakan</button>
           </div>
         </div>
       </div>

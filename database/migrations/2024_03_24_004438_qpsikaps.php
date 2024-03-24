@@ -11,18 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qtindakans', function (Blueprint $table) {
+        Schema::create('qpsikaps', function (Blueprint $table) {
             $table->id();
             $table->text('pertanyaan');
-            $table->json('pilihan');
-            $table->string('jawaban_benar');
             $table->timestamps();
-        });
-
-        Schema::table('users', function (Blueprint $table) {
-            $table->integer('total_jawaban_tindakans')->default(0);
-            $table->date('tanggal_pretest')->nullable();
-            $table->date('tanggal_postest')->nullable();
         });
     }
 
@@ -31,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('qtindakans');
+        Schema::dropIfExists('qpsikaps');
     }
 };

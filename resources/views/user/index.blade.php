@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="leaderboard w-100 mt-5">
+            <div class="leaderboard w-100 mt-5 table-responsive">
                 <p><b>Leaderboard Score</b></p>
                 <table class="w-100">
                     <tr class="text-center header-table">

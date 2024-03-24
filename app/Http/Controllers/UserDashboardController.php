@@ -7,6 +7,7 @@ use App\Charts\teethqChart;
 use App\Models\daily_activities;
 use App\Models\Daily_cores;
 use App\Models\Informasi;
+use App\Models\jawaban_psikaps;
 use Illuminate\Support\Facades\Session;
 use App\Models\jawaban_sikaps;
 use App\Models\Postest_jawaban_sikaps;
@@ -244,6 +245,83 @@ class UserDashboardController extends Controller
 
         // Render tampilan PDF
         $pdf->loadHtml(view('user.cetak_pretest', compact('data')));
+
+        // Render PDF
+        $pdf->render();
+
+        // Unduh PDF
+        return $pdf->stream('nama_file.pdf');
+    }
+
+    public function generatePostest()
+    {
+
+        $user = Auth::user();
+
+        // Mendapatkan nilai dari field username
+        $username = $user->username;
+        $alamat = $user->alamat;
+        $sekolah = $user->sekolah;
+
+        $tanggal_pretest = $user->tanggal_postest;
+        $skor_sikap = $user->total_postest_sikap;
+        $skor_tindakan = $user->total_postest_tindakans;
+        $skor_pengetahuan = $user->total_postest_pengetahuan;
+
+        if ($skor_sikap >= 40) {
+            $kategori_sikap = 'Sangat Baik';
+        } elseif ($skor_sikap >= 30) {
+            $kategori_sikap = 'Baik';
+        } elseif ($skor_sikap >= 20) {
+            $kategori_sikap = 'Cukup';
+        } else {
+            $kategori_sikap = 'Kurang';
+        }
+
+        if ($skor_tindakan >= 80) {
+            $kategori_tindakan = 'Sangat Baik';
+        } elseif ($skor_tindakan >= 60) {
+            $kategori_tindakan = 'Baik';
+        } elseif ($skor_tindakan >= 50) {
+            $kategori_tindakan = 'Cukup';
+        } else {
+            $kategori_tindakan = 'Kurang';
+        }
+
+        if ($skor_pengetahuan >= 80) {
+            $kategori_pengetahuan = 'Sangat Baik';
+        } elseif ($skor_pengetahuan >= 60) {
+            $kategori_pengetahuan = 'Baik';
+        } elseif ($skor_pengetahuan >= 50) {
+            $kategori_pengetahuan = 'Cukup';
+        } else {
+            $kategori_pengetahuan = 'Kurang';
+        }
+
+
+        $data = [
+            'username' => $username,
+            'alamat' => $alamat,
+            'sekolah' => $sekolah,
+            'tanggal_pretest' => $tanggal_pretest,
+            'skor_sikap' => $skor_sikap,
+            'skor_tindakan' => $skor_tindakan,
+            'skor_pengetahuan' => $skor_pengetahuan,
+            'kategori_sikap' => $kategori_sikap,
+            'kategori_tindakan' => $kategori_tindakan,
+            'kategori_pengetahuan' => $kategori_pengetahuan,
+        ];
+
+        // Buat objek Dompdf
+        $pdf = new Dompdf();
+
+        // Atur opsi Dompdf jika diperlukan
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
+
+        // Render tampilan PDF
+        $pdf->loadHtml(view('user.cetak_postest', compact('data')));
 
         // Render PDF
         $pdf->render();
@@ -739,6 +817,11 @@ class UserDashboardController extends Controller
         return view('user.postest_pengetahuan', compact('pertanyaans'));
     }
 
+    public function panduan_post_pengetahuan()
+    {
+        return view('user.panduan_post_pengetahuan');
+    }
+
     public function hasil_postest_pengetahuan(Request $request)
     {
         $user_id = Auth::id();
@@ -761,7 +844,7 @@ class UserDashboardController extends Controller
         // Pastikan user ditemukan sebelum menyimpan data
         if ($user) {
             // Tambahkan jumlah jawaban yang benar
-            $user->total_jawaban_pengetahuan += $percentage;
+            $user->total_postest_pengetahuan += $percentage;
 
             // Simpan perubahan ke database
             $user->save();
@@ -773,7 +856,7 @@ class UserDashboardController extends Controller
             Session::flash('error', 'User tidak ditemukan.');
         }
 
-        return redirect('user/postest_pengetahuan');
+        return redirect('user/panduan_post_sikap');
     }
 
     public function panduan_sikap()
@@ -809,21 +892,15 @@ class UserDashboardController extends Controller
         return redirect('user/panduan_tindakan');
     }
 
-    public function total_sikap()
-    {
-        $user_id = Auth::id();
-
-        // Mengambil total jawaban dari basis data menggunakan model User
-        $totalJawaban = User::find($user_id)->total_jawaban_sikap;
-
-        // Mengirim total jawaban ke view untuk ditampilkan
-        return view('user/total_sikap', ['totalJawaban' => $totalJawaban]);
-    }
-
     public function postest_sikap()
     {
         $test_sikaps = QPsikaps::all();
-        return view('user/test_sikap', compact('test_sikaps'));
+        return view('user/postest_sikap', compact('test_sikaps'));
+    }
+
+    public function panduan_post_sikap()
+    {
+        return view('user.panduan_post_sikap');
     }
 
     public function cek_postest_sikap(Request $request)
@@ -832,31 +909,20 @@ class UserDashboardController extends Controller
         $jawaban = $request->input('jawaban');
 
         foreach ($jawaban as $qsikaps_id => $jawab) {
-            Postest_jawaban_sikaps::create([
-                'qsikaps_id' => $qsikaps_id,
+            jawaban_psikaps::create([
+                'qpsikaps_id' => $qsikaps_id,
                 'user_id' => $user_id,
                 'jawaban' => $jawab
             ]);
         }
 
-        $total_jawaban = Postest_jawaban_sikaps::where('user_id', $user_id)->sum('jawaban');
+        $total_jawaban = jawaban_psikaps::where('user_id', $user_id)->sum('jawaban');
 
         $user = User::find($user_id);
-        $user->total_postest_jawaban_sikap = $total_jawaban;
+        $user->total_postest_sikap = $total_jawaban;
         $user->save();
 
-        return redirect('user/test_sikap');
-    }
-
-    public function postest_total_sikap()
-    {
-        $user_id = Auth::id();
-
-        // Mengambil total jawaban dari basis data menggunakan model User
-        $totalJawaban = User::find($user_id)->postest_jawaban_sikap;
-
-        // Mengirim total jawaban ke view untuk ditampilkan
-        return view('user/total_sikap', ['totalJawaban' => $totalJawaban]);
+        return redirect('user/panduan_post_tindakan');
     }
 
     public function panduan_tindakan()
@@ -905,10 +971,16 @@ class UserDashboardController extends Controller
 
         return redirect('user/pretest');
     }
+
     public function postest_tindakan()
     {
         $pertanyaans = QPtindakans::all();
         return view('user/postest_tindakan', compact('pertanyaans'));
+    }
+
+    public function panduan_post_tindakan()
+    {
+        return view('user.panduan_post_tindakan');
     }
 
     public function hasil_postest_tindakan(Request $request)
@@ -932,7 +1004,7 @@ class UserDashboardController extends Controller
         // Pastikan user ditemukan sebelum menyimpan data
         if ($user) {
             // Tambahkan jumlah jawaban yang benar
-            $user->total_postest_jawaban_tindakans += $percentage;
+            $user->total_postest_tindakans += $percentage;
 
             // Simpan perubahan ke database
             $user->save();
@@ -944,7 +1016,7 @@ class UserDashboardController extends Controller
             Session::flash('error', 'User tidak ditemukan.');
         }
 
-        return redirect('user/postest_tindakan');
+        return redirect('user/postest');
     }
 
     public function panduan_postest()
@@ -964,6 +1036,46 @@ class UserDashboardController extends Controller
 
     public function postest()
     {
-        return view('user.postest');
+        $user = Auth::user();
+
+        // Mendapatkan nilai dari field username
+        $username = $user->username;
+        $tanggal_postest = $user->tanggal_postest;
+        $skor_sikap = $user->total_postest_sikap;
+        $skor_tindakan = $user->total_postest_tindakans;
+        $skor_pengetahuan = $user->total_postest_pengetahuan;
+
+        if ($skor_sikap >= 80) {
+            $kategori_sikap = 'Sangat Baik';
+        } elseif ($skor_sikap >= 60) {
+            $kategori_sikap = 'Baik';
+        } elseif ($skor_sikap >= 50) {
+            $kategori_sikap = 'Cukup';
+        } else {
+            $kategori_sikap = 'Kurang';
+        }
+
+        if ($skor_tindakan >= 80) {
+            $kategori_tindakan = 'Sangat Baik';
+        } elseif ($skor_tindakan >= 60) {
+            $kategori_tindakan = 'Baik';
+        } elseif ($skor_tindakan >= 50) {
+            $kategori_tindakan = 'Cukup';
+        } else {
+            $kategori_tindakan = 'Kurang';
+        }
+
+        if ($skor_pengetahuan >= 80) {
+            $kategori_pengetahuan = 'Sangat Baik';
+        } elseif ($skor_pengetahuan >= 60) {
+            $kategori_pengetahuan = 'Baik';
+        } elseif ($skor_pengetahuan >= 50) {
+            $kategori_pengetahuan = 'Cukup';
+        } else {
+            $kategori_pengetahuan = 'Kurang';
+        }
+
+        // Mengirim data username ke view
+        return view('user.postest', compact('username', 'tanggal_postest', 'skor_sikap', 'kategori_sikap', 'kategori_tindakan', 'kategori_pengetahuan'));
     }
 }

@@ -40,7 +40,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/first_daily', [UserDashboardController::class, 'first_daily'])->middleware('role:user')->name('user.first_daily');
     Route::get('/user/daysactivity/{nomor}', [UserDashboardController::class, 'daysactivity'])->middleware('role:user')->name('user.daysactivity');
     Route::get('/user/daily_activity_history/{nomor}', [UserDashboardController::class, 'daysactivity'])->middleware('role:user')->name('user.daysactivity');
-    Route::get('user/cetak_laporan', [UserDashboardController::class, 'generatePDF'])->middleware(('role:user'))->name('user.cetak_laporan');
 
     Route::get('/user/quiz', [UserDashboardController::class, 'quiz'])->middleware('role:user')->name('user.quiz');
     Route::get('/user/history-quiz', [UserDashboardController::class, 'history_quiz'])->middleware('role:user')->name('user.history_quiz');
@@ -62,13 +61,15 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('/user/panduan_postest', [UserDashboardController::class, 'panduan_postest'])->middleware('role:user')->name('user.panduan_postest');
     Route::get('/user/postest', [UserDashboardController::class, 'postest'])->middleware('role:user')->name('user.postest');
+    Route::get('user/cetak_postest', [UserDashboardController::class, 'generatePostest'])->middleware(('role:user'))->name('user.cetak_postest');
     
     Route::get('/user/panduan_sikap', [UserDashboardController::class, 'panduan_sikap'])->middleware('role:user')->name('user.panduan_sikap');
     Route::get('/user/test_sikap', [UserDashboardController::class, 'test_sikap'])->middleware('role:user')->name('user.test_sikap');
     Route::get('/user/total_sikap', [UserDashboardController::class, 'total_sikap'])->middleware('role:user')->name('user.total_sikap');
     Route::post('/user/cek_test_sikap', [UserDashboardController::class, 'cek_test_sikap'])->middleware('role:user')->name('user.cek_test_sikap');
 
-    Route::get('/user/postest_sikap', [UserDashboardController::class, 'postest_test_sikap'])->middleware('role:user')->name('user.postest_sikap');
+    Route::get('/user/panduan_post_sikap', [UserDashboardController::class, 'panduan_post_sikap'])->middleware('role:user')->name('user.panduan_post_sikap');
+    Route::get('/user/postest_sikap', [UserDashboardController::class, 'postest_sikap'])->middleware('role:user')->name('user.postest_sikap');
     Route::get('/user/postest_total_sikap', [UserDashboardController::class, 'postest_total_sikap'])->middleware('role:user')->name('user.postest_total_sikap');
     Route::post('/user/cek_postest_sikap', [UserDashboardController::class, 'cek_postest_sikap'])->middleware('role:user')->name('user.cek_postest_sikap');
     
@@ -76,7 +77,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/test_tindakan', [UserDashboardController::class, 'test_tindakan'])->middleware('role:user')->name('user.test_tindakan');
     Route::post('/user/test_tindakan/submit', [UserDashboardController::class, 'hasil_test_tindakan'])->middleware('role:user')->name('user.test_tindakan.submit');
 
-    Route::get('/user/postest_tindakan', [UserDashboardController::class, 'test_tindakan'])->middleware('role:user')->name('user.postest_tindakan');
+    Route::get('/user/panduan_post_tindakan', [UserDashboardController::class, 'panduan_post_tindakan'])->middleware('role:user')->name('user.panduan_post_tindakan');
+    Route::get('/user/postest_tindakan', [UserDashboardController::class, 'postest_tindakan'])->middleware('role:user')->name('user.postest_tindakan');
     Route::post('/user/postest_tindakan/submit', [UserDashboardController::class, 'hasil_postest_tindakan'])->middleware('role:user')->name('user.postest_tindakan.submit');
     
     Route::get('/user/test_pengetahuan', [UserDashboardController::class, 'test_pengetahuan'])->middleware('role:user')->name('user.test_pengetahuan');
@@ -93,5 +95,5 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/delete_data', [AdminDashboardController::class, 'delete_data'])->middleware('role:admin')->name('admin.delete_data');
     Route::get('/admin/informasi/{informasi}/edit', [AdminDashboardController::class, 'edit_informasi'])->name('admin.informasi.edit');
     Route::put('/admin/informasi/{informasi}', [AdminDashboardController::class, 'update_informasi'])->name('admin.informasi.update');
-    Route::get('admin/download-users', [AdminDashboardController::class, 'downloadAllUsers'])->name('admin.download.users');
+    Route::get('admin/cetak-laporan', [AdminDashboardController::class, 'downloadAllUsers'])->name('admin.cetak-laporan');
 });

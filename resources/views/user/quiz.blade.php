@@ -4,7 +4,7 @@
 
 @section('content')
 @vite(['resources/css/style.css', 'resources/js/app.js'])
-<h1 class="h2">Quiz</h1>
+<h2><b>Quiz</b></h2>
 <div class="box-quiz w-100">
   <div class="navigasi-quiz d-flex flex-row w-100 justify-content-between align-content-center">
     <div class="url-quiz">
@@ -12,7 +12,7 @@
     </div>
     <button class="border-0 shadow rounded text-0 p-2" onclick="window.location='{{ route('user.history_quiz') }}'">History</button>
   </div>
-  <hr>
+  <hr class="w-100 bg-black">
   <div class="body-quiz d-flex gap-2 justify-content-center align-content-center w-100">
     <div class="card-quiz_keterampilan p-3 rounded d-flex flex-column gap-5 justify-content-center align-items-center" id="quiz_keterampilan">
       <img src="{{asset('assets/img/puzzle.png')}}" alt="">

@@ -449,6 +449,10 @@
     -webkit-box-orient: vertical;
 }
 
+.card-info{
+    width: 50% !important;
+}
+
 .box-info-detail{   
     border: 1px solid #868686;
     background-color: #E8E8E8;
@@ -506,6 +510,10 @@
 @media (max-width: 767px) {
     .sidebar {
         height: fit-content;
+    }
+
+    .card-info{
+        width: 100% !important;
     }
 
     .sidebar ul {

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Daily_cores;
 use App\Models\Informasi;
+use App\Models\User;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -23,7 +27,15 @@ class AdminDashboardController extends Controller
     public function delete_data()
     {
         // Tabel yang ingin dikecualikan
-        $excludedTables = ['users', 'qsikaps', 'jawaban_sikaps', 'qpengetahuans', 'qtindakans', 'jawaban_quiz_keterampilans', 'quiz_keterampilans'];
+        $excludedTables = [
+            'users',
+            'qsikaps', 'jawaban_sikaps',
+            'qpsikaps', 'jawaban_psikaps',
+            'qpengetahuans', 'qppengetahuans',
+            'qtindakans', 'qptindakans',
+            'jawaban_quiz_keterampilans', 'quiz_keterampilans',
+            'jawaban_quiz_pengetahuans', 'quiz_pengetahuans'
+        ];
 
         // Mendapatkan semua nama tabel di database
         $tables = DB::select('SHOW TABLES');
@@ -44,13 +56,25 @@ class AdminDashboardController extends Controller
 
     public function downloadAllUsers()
     {
-        $pdfExport = new UsersPdfExport();
-        $pdfContent = $pdfExport->export();
+        // Ambil data dari model
+        $data = User::all();
 
-        return Response::make($pdfContent, 200, [
-            'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="users.pdf"',
-        ]);
+        // Buat objek Dompdf
+        $pdf = new Dompdf();
+
+        // Atur opsi Dompdf jika diperlukan
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $pdf->setOptions($options);
+
+        // Render tampilan PDF
+        $pdf->loadHtml(view('admin.cetak_laporan', compact('data')));
+
+        // Render PDF
+        $pdf->render();
+
+        // Unduh PDF
+        return $pdf->stream('nama_file.pdf');
     }
 
     public function informasi()
