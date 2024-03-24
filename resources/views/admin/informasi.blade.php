@@ -24,8 +24,9 @@
                     <td>
                         <img src="{{ asset('storage/' . $info->gambar) }}" alt="Gambar Informasi" width="100">
                     </td>
-                    <td>
+                    <td class="d-flex flex-row">
                         <a href="{{ route('admin.informasi.edit', $info) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('admin.informasi.edit', $info) }}" class="btn btn-danger">Hapus</a>
                     </td>
                 </tr>
             @endforeach

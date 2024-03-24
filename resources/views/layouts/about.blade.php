@@ -20,17 +20,17 @@
 
     <div class="container-about">
         <div class="img-about w-100">
-            <div class="position-absolute top-50 start-20 text-center text-white">
+            <div class="text-about position-absolute top-50 translate-left text-center text-white">
                 <h3 class="text-1"><b>Welcome to the official website</b></h3>
-                <h1 class="text-1"><b>Tans Dent</b></h1>
+                <h1 class="text-1" style="font-size: 5vw"><b>Tans Dent</b></h1>
             </div>
-            <img src="{{ asset('assets/img/bg-about.png') }}" alt="" class="w-100 h-100">
+            <img src="{{ asset('assets/img/coverabout.png') }}" alt="" class="w-100 h-100">
         </div>
 
         <div class="about-box w-100">
             <div class="about-content w-100 position-relative">
                 <div class="about-text position-absolute p-4 text-justify">
-                    <h1>About Us</h1>
+                    <h1 class="pb-3">About Us</h1>
                     </h1>
                     <p>Tan’s Dent-Card QR Model Berbasis Website ” merupakan suatu model yang dirancang untuk
                         meningkatkan perilaku menggosok gigi pada anak sekolah dasar dengan menggunakan Dent-Card QR

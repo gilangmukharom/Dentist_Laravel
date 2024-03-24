@@ -9,16 +9,16 @@
         <div class="navigasi-info-detail">
             <a href="{{ route('user.info') }}">Kembali</a>
         </div>
-        <div class="content-info-detail d-flex flex-row gap-4">
+        <div class="content-info-detail d-flex flex-column gap-4">
             <div class="image-info-detail w-auto h-50">
                 <img src="{{ asset('storage/' . $informasi->gambar) }}" class="w-100 h-100" alt="Gambar Informasi">
             </div>
             <div class="text-info-detail">
                 <div class="title-info-detail">
-                    <h1>{{ $informasi->judul }}</h1>
+                    <h1><b>{{ $informasi->judul }}</b></h1>
                 </div>
                 <div class="desc-info-detail">
-                    <p>{{ $informasi->isi_informasi }}</p>
+                    <p class="text-justify">{{ $informasi->isi_informasi }}</p>
                 </div>
             </div>
         </div>

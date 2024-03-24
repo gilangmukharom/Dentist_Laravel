@@ -53,7 +53,7 @@
                 @endif
                 <div class="login-username d-flex flex-column">
                     <label for="username">Username / Nama</label>
-                    <input type="text" name="username" class="form-control">
+                    <input type="text" name="username" class="form-control" placeholder="Masukkan Username">
                 </div>
 
                 <div class="form-group password-input-group">

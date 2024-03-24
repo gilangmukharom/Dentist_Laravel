@@ -16,7 +16,11 @@ class AdminDashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $users = User::all();
+        $jumlah_user = User::count();
+        $jumlah_tanpa_admin = $jumlah_user - 1;
+
+        return view('admin.dashboard', compact('jumlah_tanpa_admin'));
     }
 
     public function setting()

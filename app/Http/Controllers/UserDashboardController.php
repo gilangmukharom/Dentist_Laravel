@@ -119,18 +119,23 @@ class UserDashboardController extends Controller
 
         $cek_pretest = User::where('id', Auth::id())->first()->tanggal_pretest;
 
-        $cek_daily_full = Daily_cores::where('user_id', Auth::id())->whereNull('tanggal_input')->count();
+        $todays = \Carbon\Carbon::now()->format('Y-m-d');
+
+        $cek_tanggal_daily = Daily_cores::whereNotNull('tanggal_daily')->exists();
+
+        $cek_daily_full = Daily_cores::where('user_id', Auth::id())
+        ->whereDate('tanggal_daily', $todays)
+        ->exists();
 
         if ($cek_pretest == null) {
             return view('user.panduan_pretest', compact('users', 'today', 'time'));
+        } elseif (!$cek_daily_full && !$cek_tanggal_daily) {
+            return view('user.panduan_postest', compact('users', 'today', 'time'));
         }
-        // elseif ($cek_daily_full == 0) {
-        //     return view('user.panduan_postest', compact('users', 'today', 'time'));
-        // } 
         else {
             $user_id = Auth::id();
 
-            $todays = \Carbon\Carbon::now()->format('Y-m-d');
+
             $cek_input_daily = Daily_cores::where('user_id', $user_id)
                 ->whereDate('tanggal_input', $todays)
                 ->exists();
@@ -770,6 +775,12 @@ class UserDashboardController extends Controller
 
     public function test_pengetahuan()
     {
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        if ($user && $user->total_jawaban_pengetahuan > 0) {
+            // Pengguna sudah mengisi tes, maka arahkan ke halaman lain atau tampilkan pesan
+            return redirect()->route('user.hasil_pretest')->with('warning', 'Anda sudah mengisi tes pengetahuan.');
+        }
         $pertanyaans = qpengetahuans::all();
         return view('user.test_pengetahuan', compact('pertanyaans'));
     }
@@ -866,6 +877,12 @@ class UserDashboardController extends Controller
 
     public function test_sikap()
     {
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        if ($user && $user->total_jawaban_sikap > 0) {
+            // Pengguna sudah mengisi tes, maka arahkan ke halaman lain atau tampilkan pesan
+            return redirect()->route('user.hasil_pretest')->with('warning', 'Anda sudah mengisi tes pengetahuan.');
+        }
         $test_sikaps = qsikaps::all();
         return view('user/test_sikap', compact('test_sikaps'));
     }
@@ -932,6 +949,12 @@ class UserDashboardController extends Controller
 
     public function test_tindakan()
     {
+        $user_id = Auth::id();
+        $user = User::find($user_id);
+        if ($user && $user->total_jawaban_tindakans > 0) {
+            // Pengguna sudah mengisi tes, maka arahkan ke halaman lain atau tampilkan pesan
+            return redirect()->route('user.hasil_pretest')->with('warning', 'Anda sudah mengisi tes pengetahuan.');
+        }
         $pertanyaans = qtindakans::all();
         return view('user/test_tindakan', compact('pertanyaans'));
     }

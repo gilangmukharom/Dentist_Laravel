@@ -32,20 +32,20 @@
 }
 
 .youtube_frame {
-    min-width: 30%;
+    min-width: 40%;
     min-height: 40vh;
 }
 
 .header .img-wrapper img,
 .img-about img {
     background-size: cover;
-    object-fit: contain;
+    object-fit: cover;
     background-position: center;
 }
-
+/* 
 .header .img-wrapper {
     height: 80vh;
-}
+} */
 
 .img-about {
     position: relative;
@@ -178,7 +178,15 @@
     min-width: 400px !important;
 }
 
+.text-about{
+    margin-left: 5vh !important;
+}
+
 @media (max-width: 767px) {
+
+    /* .youtube_frame{
+        width: 100% !important;
+    } */
 
     .title-finish-pengetahuan{
         text-align: center;

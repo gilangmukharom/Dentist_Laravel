@@ -62,9 +62,9 @@
                         <div class="title-card">
                             <p style="font-size: 1.5em;">Daily Activity 14 Days</p>
                         </div>
-                        <div class="body-card w-100">
-                            <h3 class="text-white" style="font-size: 2em;">Selamat datang {{ $username }}</h3>
-                            <h3 class="text-white" style="font-size: 2em;">Yuk mulai aktifitas hari ini!</h3>
+                        <div class="body-card w-100 pb-3">
+                            <h3 class="text-white" style="font-size: 2em; line-height: 1em;"><b>Selamat datang {{ $username }}</b></h3>
+                            <h3 class="text-white" style="font-size: 2em; line-height: 1em;"><b>Yuk mulai aktifitas hari ini!</b></h3>
                         </div>
                         <img class="index-header-img h-100 w-auto position-absolute"
                             src="{{ asset('assets/img/index-header.png') }}" alt="">

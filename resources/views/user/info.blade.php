@@ -6,7 +6,7 @@
     @vite(['resources/css/style.css', 'resources/js/app.js'])
     <h3><b>Informasi</b></h3>
     
-    <div class="box-info mb-4 rounded d-flex flex-row flex-wrap p-3 align-items-center gap-3">
+    <div class="box-info mb-4 rounded d-flex flex-row flex-wrap p-3 align-items-center justify-content-center gap-3">
         @foreach($informasi as $info)
         <div class="card-info bg-light rounded p-3 w-100 d-flex flex-column gap-2 justify-content-center align-items-center"
              onclick="window.location='{{ route('user.info_detail', $info->id) }}'"

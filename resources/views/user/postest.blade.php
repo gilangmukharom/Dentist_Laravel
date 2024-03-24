@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <hr class="w-100">
+        <hr class="w-100 bg-black">
         <div class="table-responsive">
             <table class="w-100">
                 <tr class="text-center">

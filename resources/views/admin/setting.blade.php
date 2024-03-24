@@ -7,8 +7,8 @@
     <div class="container-setting">
         <div class="content-before-modal">
             <h2><b>Settings</b></h2>
-            <h4>Selamat dan terima kasih banyak atas apresiasi Anda!</h4>
-            <p>kami sangat senang mendengar bahwa pengalaman pengguna dengan website Dents dalam memonitoring kebersihan gigi
+            <h4 class="pt-4"><b>Selamat dan terima kasih banyak atas apresiasi Anda!</b></h4>
+            <p class="text-justify pt-3 pb-5">Kami sangat senang mendengar bahwa pengalaman pengguna dengan website Dents dalam memonitoring kebersihan gigi
                 dan siswa telah memuaskan. Kami berkomitmen untuk terus mengembangkan aplikasi ini agar dapat memberikan
                 layanan yang lebih baik lagi.
                 Kami sangat berterima kasih atas kepercayaan Anda dalam menggunakan layanan kami. Semoga aplikasi ini dapat
