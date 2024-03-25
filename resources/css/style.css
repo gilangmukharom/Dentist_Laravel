@@ -1,0 +1,558 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.w-90 {
+    width: 90%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.w-40{
+    width: 40%;
+}
+
+.w-30{
+    width: 30%;
+}
+
+.w-20{
+    width: 20%;
+}
+
+.text-justify{
+    text-align: justify;
+}
+
+.youtube_frame {
+    min-width: 40%;
+    min-height: 40vh;
+}
+
+.header .img-wrapper img,
+.img-about img {
+    background-size: contain;
+    object-fit: cover;
+    background-position: center;
+}
+
+.header .img-wrapper {
+    height: 80vh !important;
+}
+
+.img-about {
+    position: relative;
+    height: 50vh;
+}
+
+.card-testi img {
+    background-size: cover;
+    object-fit: cover;
+    background-position: center;
+}
+
+.text-prim:hover,
+.text-prim:active {
+    color: #34baf7 !important;
+}
+
+.login-body,
+.register-body {
+    position: relative;
+    overflow: hidden;
+    background-color: #34baf7;
+}
+
+.login-body::before,
+.register-body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.4; /* Atur nilai opacity sesuai kebutuhan */
+    background: url("../img/Internet-Website-PNG-Photos.png") center/cover no-repeat;
+    z-index: -1;
+}
+
+.error-body {
+    background: url("../img/Internet-Website-PNG-Photos.png");
+    position: relative;
+    overflow: hidden;
+    background-color: #1c5570;
+}
+
+.text-0 {
+    color: #ffff;
+}
+
+.text-1 {
+    color: #34baf7;
+}
+
+.bg-1 {
+    background-color: #34baf7;
+}
+
+.bg-2 {
+    background-color: #ffbd13 !important;
+    color: white !important;
+}
+
+.bg-2:hover {
+    background-color: #34baf7 !important;
+    color: white !important;
+}
+
+.login-form form,
+.register-form form {
+    width: 80%;
+    min-height: 80vh;
+}
+
+.card-content {
+    position: relative;
+}
+
+.card-content::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 2px solid #ccc;
+    z-index: -1;
+}
+
+.about-wave {
+    width: 50%;
+    height: auto;
+    right: 0;
+}
+
+.about-text{
+    z-index: 4;
+    width: 50%;
+}
+
+.index-header-img{
+    right: 0;
+}
+
+.calendar{
+    width: 25%;
+}
+
+.page-item.active .page-link{
+    background-color: #34BAF7 !important;
+    border: #34baf7 !important;
+    color: #E8E8E8 !important;
+}
+
+.page-link{
+    color: #34BAF7 !important;
+}
+
+
+/* .stat_performance .chart_daily, .stat_performance .chart_teethq{
+    width: 40%;
+} */
+
+.opening-dashboard .card{
+    width: 98%;
+}
+
+.navbar-collapse{
+    flex-grow: 0 !important;
+}
+
+.chart_daily, .chart_teethq{
+    min-width: 400px !important;
+}
+
+.text-about{
+    margin-left: 5vh !important;
+}
+
+@media (max-width: 767px) {
+
+    .header .img-wrapper {
+        height: 50vh !important;
+    }
+
+    .title-finish-pengetahuan{
+        text-align: center;
+    }
+
+    .profile-dashboard .profile-name{
+        display: none;
+    }
+
+    .index-header-img{
+        opacity: 0.2;
+    }
+
+    .calendar{
+        width: 100%;
+    }
+
+    .stat_performance{
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer_info{
+        text-align: -webkit-center;
+    }
+
+    .about-text{
+        width: 100%;
+    }
+
+    .about-text h1{
+        text-align: center;
+    }
+
+    .about-text p{
+        padding: 20px;
+        text-align: justify;
+    }
+
+    .about-image{
+        display: none;
+    }
+
+    .title-14days{
+        text-align: center;
+    }
+
+    .content-14days{
+        justify-content: center;
+    }
+
+    .container-panduan{
+        min-height: 150vh !important;
+    }
+
+    .content-panduan-pretest{
+        text-align: justify;
+        margin-top: 10vh;
+        width: 90%;
+    }
+
+    .body-quiz{
+        flex-direction: column !important;
+    }
+}
+
+.about-image .img-about1{
+    right: 10%;
+}
+
+.container-slider {
+    overflow: hidden;
+}
+
+.card-slider {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    /* Untuk Firefox */
+    -webkit-overflow-scrolling: touch;
+}
+
+.card {
+    flex: 0 0 auto;
+    width: 300px;
+    /* Sesuaikan lebar card */
+    margin-right: 15px;
+    /* Sesuaikan margin antar card */
+    scroll-snap-align: start;
+}
+
+.card-slider::-webkit-scrollbar {
+    width: 12px;
+}
+
+.card-slider::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.sidebar {
+    min-height: 100vh;
+}
+
+.element-dashboard{
+    right: 5vh;
+}
+
+.element-dashboard .card-element{
+    height: 200px;
+    width: 250px;
+}
+
+.fc-toolbar-title{
+    font-size: 20px !important;
+    color: #34baf7;
+    width: 100% !important;
+}
+
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events{
+    display: none;
+}
+
+.fc .fc-col-header-cell-cushion, .fc .fc-daygrid-day-number{
+    font-size: small;
+    text-align: center !important;
+    color: black;
+    text-decoration: none;
+}
+
+.fc-button-group{
+    width: 10px !important;
+}
+
+.fc-toolbar-chunk .fc-today-button{
+    display: none;
+}
+
+.fc-toolbar-chunk{
+    padding: 10px;
+}
+
+.fc-toolbar-chunk .fc-button-group{
+    display: none;
+}
+
+.fc-scrollgrid-sync-inner {
+    color: black;
+    text-decoration: none;
+}
+
+.btn-toggle {
+    background-color: #34baf7;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.content-14days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+.card-14days {
+    cursor: pointer;
+    background-color: #6fff7d;
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-activity {
+    border: 1px solid #a5a5a5;
+}
+
+.form-activity {
+    min-height: 70vh;
+}
+
+.form-activity form .input-nama,
+.input-file,
+.input-time {
+    width: 48%;
+}
+/* 
+.form-activity form .input-deskripsi{
+    width: 100%;
+} */
+
+.form-activity form .input-file input {
+    border: 1px solid #a5a5a5;
+}
+
+.form-activity button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 1vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+}
+
+.box-quiz .navigasi-quiz button{
+    width: 20vh;
+    background-color: #a5a5a5;
+}
+
+.box-quiz .navigasi-quiz .url-quiz{
+    color: #a5a5a5;
+}
+
+.card-quiz_keterampilan {
+    cursor: pointer;
+    background-color: #34baf7;
+    font-weight: bolder;
+}
+
+.navigasi-keterampilan .timer-keterampilan, .navigasi-pengetahuan .timer-pengetahuan{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.card-quiz_pengetahuan{
+    cursor: pointer;
+    background-color: #6fff7d;
+    font-weight: bolder;
+}
+
+.card-quiz_keterampilan img , .card-quiz_pengetahuan img{
+    width: 50%;
+    height: auto;
+}
+
+.status-skor{
+    background-color: #B1FFB9;
+}
+
+.status-skor h1{
+    color: #204F25;
+}
+
+.status-skor p{
+    color: #204F25;
+}
+
+.box-info{
+    min-height: 80vh;
+    background-color: #34baf7;
+    border: 1px solid #a5a5a5;
+}
+
+.box-video .card-video{
+    border: 1px solid #a5a5a5;
+}
+
+.box-info .card-info .card-footer-info{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.card-info{
+    width: 50% !important;
+}
+
+.box-info-detail{   
+    border: 1px solid #868686;
+    background-color: #E8E8E8;
+    min-height: 80vh;
+}
+
+.container-panduan .box-panduan-pretest{
+    height: 50vh;
+}
+
+.box-panduan-pretest .bg-panduan-pretest{
+    background-color: #34baf7;
+}
+
+.box-panduan-pretest .bg-panduan-pretest img{
+    height: 100%;
+    width: auto;
+}
+
+.content-panduan-pretest{
+    margin-top: 10vh;
+    border: 1px solid #A5A5A5;
+}
+
+.container-pretest-teethq
+.box-statistik
+.card-teethq-pretest{
+    background-color: #34baf7;
+}
+
+.profile-dashboard .dropdown .profile-picture img {
+    width: 100%;
+}
+
+.profile-dashboard .dropdown .profile-picture {
+    width: 50px;
+    height: 50px;
+    background-color: #1c5570;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.body-dashboard .card{
+    background-color: #34BAF7;
+    color: #ffffff;
+}
+
+.body-dashboard .leaderboard table .header-table{
+    background-color: #34BAF7;
+    color: #ffffff;
+}
+
+
+
+@media (max-width: 767px) {
+    .sidebar {
+        height: fit-content;
+    }
+
+    .card-info{
+        width: 100% !important;
+    }
+
+    .sidebar ul {
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .fc-toolbar-title {
+        font-size: 16px !important; /* Adjust the font size for smaller screens */
+    }
+
+    .btn-toggle {
+        background-color: #34baf7;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+    }
+
+    .register-body, .login-body {
+        overflow: visible;
+    }
+
+    .login-logo,
+    .register-logo {
+        margin: 0 auto;
+    }
+
+    .login-form form,
+    .register-form form {
+        width: 90%;
+        min-height: 70%;
+    }
+}

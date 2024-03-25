@@ -1,0 +1,302 @@
+.w-90 {
+    width: 90%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.youtube_frame {
+    min-width: 30%;
+    min-height: 40vh;
+}
+
+.header .img-wrapper img,
+.img-about img {
+    background-size: cover;
+    object-fit: cover;
+    background-position: center;
+}
+
+.header .img-wrapper {
+    height: 80vh;
+}
+
+.img-about {
+    position: relative;
+    height: 50vh;
+}
+
+.card-testi img {
+    background-size: cover;
+    object-fit: cover;
+    background-position: center;
+}
+
+.text-prim:hover,
+.text-prim:active {
+    color: #34baf7 !important;
+}
+
+.login-body,
+.register-body {
+    background: url("../img/Internet-Website-PNG-Photos.png") center/cover
+        no-repeat;
+    position: relative;
+    overflow: hidden;
+    background-color: #34baf7;
+}
+
+.error-body {
+    background: url("../img/Internet-Website-PNG-Photos.png") center/cover
+        no-repeat;
+    position: relative;
+    overflow: hidden;
+    background-color: #1c5570;
+}
+
+.text-0 {
+    color: #ffff;
+}
+
+.text-1 {
+    color: #34baf7;
+}
+
+.bg-1 {
+    background-color: #34baf7;
+}
+
+.bg-2 {
+    background-color: #ffbd13 !important;
+    color: white !important;
+}
+
+.bg-2:hover {
+    background-color: #34baf7 !important;
+    color: white !important;
+}
+
+.login-form form,
+.register-form form {
+    width: 80%;
+    min-height: 80vh;
+}
+
+.card-content {
+    position: relative;
+}
+
+.card-content::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 2px solid #ccc;
+    z-index: -1;
+}
+
+.container-about {
+    position: relative;
+}
+
+.about-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.about-wave {
+    width: 50%;
+    height: auto;
+}
+
+.container-slider {
+    overflow: hidden;
+}
+
+.card-slider {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: thin;
+    /* Untuk Firefox */
+    -webkit-overflow-scrolling: touch;
+}
+
+.card {
+    flex: 0 0 auto;
+    width: 300px;
+    /* Sesuaikan lebar card */
+    margin-right: 15px;
+    /* Sesuaikan margin antar card */
+    scroll-snap-align: start;
+}
+
+.card-slider::-webkit-scrollbar {
+    width: 12px;
+}
+
+.card-slider::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.sidebar {
+    min-height: 100vh;
+}
+
+.btn-toggle {
+    background-color: #34baf7;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.content-14days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+}
+
+.card-14days {
+    cursor: pointer;
+    background-color: #6fff7d;
+    width: 250px;
+    height: 250px;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.content-activity {
+    border: 1px solid #a5a5a5;
+}
+
+.form-activity {
+    min-height: 70vh;
+}
+
+.form-activity form .input-nama,
+.input-file,
+.input-time,
+.input-deskripsi {
+    width: 48%;
+}
+
+.form-activity form .input-file input {
+    border: 1px solid #a5a5a5;
+}
+
+.form-activity button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 1vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+}
+
+.box-quiz .navigasi-quiz button{
+    width: 20vh;
+    background-color: #a5a5a5;
+}
+
+.box-quiz .navigasi-quiz .url-quiz{
+    color: #a5a5a5;
+}
+
+.card-quiz_keterampilan {
+    cursor: pointer;
+    background-color: #34baf7;
+    font-weight: bolder;
+}
+
+.card-quiz_pengetahuan{
+    cursor: pointer;
+    background-color: #6fff7d;
+    font-weight: bolder;
+}
+
+.card-quiz_keterampilan img , .card-quiz_pengetahuan img{
+    width: 50%;
+    height: auto;
+}
+
+.status-skor{
+    background-color: #B1FFB9;
+}
+
+.status-skor h1{
+    color: #204F25;
+}
+
+.status-skor p{
+    color: #204F25;
+}
+
+.box-info{
+    min-height: 80vh;
+    background-color: #34baf7;
+    border: 1px solid #a5a5a5;
+}
+
+.box-video .card-video{
+    border: 1px solid #a5a5a5;
+}
+
+.box-info .card-info .card-footer-info{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.box-info-detail{   
+    border: 1px solid #868686;
+    background-color: #E8E8E8;
+    min-height: 80vh;
+}
+
+
+@media (max-width: 767px) {
+    .sidebar {
+        height: fit-content;
+    }
+
+    .sidebar ul {
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .btn-toggle {
+        background-color: #34baf7;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+    }
+
+    .register-body, .login-body {
+        overflow: visible;
+    }
+
+    .login-logo,
+    .register-logo {
+        margin: 0 auto;
+    }
+
+    .login-form form,
+    .register-form form {
+        width: 90%;
+        min-height: 70%;
+    }
+}
