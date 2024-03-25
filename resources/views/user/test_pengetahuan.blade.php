@@ -33,14 +33,20 @@
             action="{{ route('user.test_pengetahuan.submit') }}">
             @csrf
             <h3 class="mt-2 mb-4"><b>Pengetahuan</b></h3>
+            @php
+                $number = 1;
+            @endphp
             @foreach ($pertanyaans as $question)
-                <p>
-                    {{ $question->pertanyaan }}
+                <p class="mt-3">
+                    <strong>{{ $number }}.) </strong> {{ $question->pertanyaan }}
                 </p>
                 @foreach (json_decode($question->pilihan) as $key => $option)
                     <input type="radio" name="pertanyaan[{{ $question->id }}]" value="{{ $option }}">
                     {{ $option }}<br>
                 @endforeach
+                @php
+                    $number++;
+                @endphp
             @endforeach
             <div class="button-form w-100 d-flex justify-content-end">
                 <button class="btn bg-2 text-0" type="submit">Soal berikutnya</button>

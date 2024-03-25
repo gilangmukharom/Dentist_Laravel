@@ -48,8 +48,8 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><button class="dropdown-item"
                                 onclick="window.location.href='{{ route('user.edit-profile') }}'">Edit Profile</button></li>
-                        <li><button class="dropdown-item"
-                                data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</button></li>
+                        <li><button class="dropdown-item" data-bs-toggle="modal"
+                                data-bs-target="#logoutModal">Logout</button></li>
                     </ul>
                 </div>
             </div>
@@ -63,8 +63,10 @@
                             <p style="font-size: 1.5em;">Daily Activity 14 Days</p>
                         </div>
                         <div class="body-card w-100 pb-3">
-                            <h3 class="text-white" style="font-size: 2em; line-height: 1em;"><b>Selamat datang {{ $username }}</b></h3>
-                            <h3 class="text-white" style="font-size: 2em; line-height: 1em;"><b>Yuk mulai aktifitas hari ini!</b></h3>
+                            <h3 class="text-white" style="font-size: 2em; line-height: 1em;"><b>Selamat datang
+                                    {{ $username }}</b></h3>
+                            <h3 class="text-white" style="font-size: 2em; line-height: 1em;"><b>Yuk mulai aktifitas hari
+                                    ini!</b></h3>
                         </div>
                         <img class="index-header-img h-100 w-auto position-absolute"
                             src="{{ asset('assets/img/index-header.png') }}" alt="">
@@ -81,12 +83,38 @@
 
             <div class="dashboard-performance mt-5">
                 <p><b>Performance</b></p>
-                <div class="stat_performance d-flex flex-columns gap-5 flex-wrap">
+                <div class="stat_performance d-flex flex-columns justify-content-between gap-3 flex-wrap">
                     <div class="chart_daily bg-white rounded shadow">
                         {!! $chart2->container() !!}
                     </div>
                     <div class="chart_teethq bg-white rounded shadow d-flex justify-content-center align-items-center">
                         {!! $chart->container() !!}
+                    </div>
+                    <div class="card card-ulasan">
+                        <div class="card-header bg-1 text-0">Berikan ulasan aplikasi ini</div>
+
+                        <div class="card-body">
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form action="{{ route('user.ulasan') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+
+                                <div class="form-group">
+                                    <label for="ulasan">Isi Ulasan :</label>
+                                    <textarea class="form-control" id="ulasan" name="ulasan">{{ old('ulasan') }}</textarea>
+                                </div>
+
+                                <button type="submit" class="btn bg-2 float-end">Simpan</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,17 +142,17 @@
                         </td>
                     </tr>
                     @foreach ($userData as $index => $data)
-                    @if ($data['username'] != 'admin')
-                        <tr class="rounded border shadow text-center">
-                            <td class="pt-4 pb-4">{{ $index + 1 }}</td>
-                            <td class="pt-4 pb-4">{{ $data['username'] }}</td>
-                            <td>{{ $data['kategori_sikap'] }}</td>
-                            <td>{{ $data['kategori_tindakan'] }}</td>
-                            <td>{{ $data['kategori_pengetahuan'] }}</td>
-                            <td>{{ $data['kategori_daily'] }}</td>
-                        </tr>
-                    @endif
-                @endforeach
+                        @if ($data['username'] != 'admin')
+                            <tr class="rounded border shadow text-center">
+                                <td class="pt-4 pb-4">{{ $index + 1 }}</td>
+                                <td class="pt-4 pb-4">{{ $data['username'] }}</td>
+                                <td>{{ $data['kategori_sikap'] }}</td>
+                                <td>{{ $data['kategori_tindakan'] }}</td>
+                                <td>{{ $data['kategori_pengetahuan'] }}</td>
+                                <td>{{ $data['kategori_daily'] }}</td>
+                            </tr>
+                        @endif
+                    @endforeach
                 </table>
                 <div class="d-flex justify-content-end m-3">
                     {{ $users->links('pagination::bootstrap-4') }}
@@ -133,7 +161,7 @@
             {{-- <a href="{{ route('user.cetak_laporan') }}" class="btn btn-primary">Generate PDF</a> --}}
         </div>
     </div>
-    
+
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">

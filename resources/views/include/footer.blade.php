@@ -17,11 +17,9 @@
         <div class="footer_support d-flex flex-column justify-content-center align-items-center">
             <p><b>Didukung Oleh :</b></p>
             <div class="support_logo d-flex justify-content-center align-items-center flex-wrap">
-                <img src="{{ asset('assets/img/logo-footer1.png') }}" alt="logo tans dent"
-                    class="w-lg-25 w-md-50 m-2">
-                <img src="{{ asset('assets/img/logo-footer2.png') }}" alt="logo tans dent"
-                    class="w-lg-25 w-md-50 m-2">
-                <img src="{{ asset('assets/img/logo-footer3.png') }}" alt="logo tans dent"
+                <img src="{{ asset('assets/img/logo-footer1.png') }}" alt="logo tans dent" class="w-lg-25 w-md-50 m-2">
+                <img src="{{ asset('assets/img/logo-footer2.png') }}" alt="logo tans dent" class="w-lg-25 w-md-50 m-2">
+                <img src="{{ asset('assets/img/logo-footer4mini.png') }}" alt="logo tans dent"
                     class="w-lg-25 w-md-50 m-2">
             </div>
         </div>

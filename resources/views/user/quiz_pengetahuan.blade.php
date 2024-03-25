@@ -36,13 +36,13 @@
                         <div class="pilihan d-flex gap-4 w-75 m-auto">
                             <label
                                 class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
-                                <img src="{{ asset('assets/img/Keterampilan/' . $question->image_a) }}"
+                                <img src="{{ asset('assets/img/pengetahuan/' . $question->image_a) }}"
                                     alt="Option Image" class="w-75"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="A">
                             </label>
                             <label
                                 class="image-radio-label d-flex flex-column justify-content-center align-items-center bg-light rounded">
-                                <img src="{{ asset('assets/img/Keterampilan/' . $question->image_b) }}"
+                                <img src="{{ asset('assets/img/pengetahuan/' . $question->image_b) }}"
                                     alt="Option Image" class="w-75"><br>
                                 <input type="radio" name="jawabans[{{ $question->id }}]" value="B">
                             </label>

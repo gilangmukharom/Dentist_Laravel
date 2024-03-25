@@ -19,6 +19,7 @@ use App\Models\qsikaps;
 use App\Models\qtindakans;
 use App\Models\Quiz_keterampilans;
 use App\Models\Quiz_pengetahuans;
+use App\Models\ulasans;
 use App\Models\User;
 use App\Models\User_quiz_keterampilans;
 use App\Models\User_quiz_pengetahuans;
@@ -155,6 +156,20 @@ class UserDashboardController extends Controller
                 'username' => $username,
             ]);
         }
+    }
+
+    public function ulasan(Request $request)
+    {
+        $request->validate([
+            'ulasan' => 'required|string|max:255|min:15',
+        ]);
+
+        ulasans::create([
+            'ulasan' => $request->ulasan,
+            'user_id' => auth()->id(),
+        ]);
+
+        return redirect('user/index')->with('success', 'Ulasan anda telah terkirim');
     }
 
 

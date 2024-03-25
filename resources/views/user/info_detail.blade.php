@@ -7,7 +7,7 @@
     <h1 class="h2">Informasi Detail</h1>
     <div class="box-info-detail mb-4 rounded p-3">
         <div class="navigasi-info-detail">
-            <a href="{{ route('user.info') }}">Kembali</a>
+            <a href="{{ route('user.info') }}" class="btn bg-1 text-0 mb-5">Kembali</a>
         </div>
         <div class="content-info-detail d-flex flex-column gap-4">
             <div class="image-info-detail w-auto h-50">

@@ -18,7 +18,7 @@
                             </div>
                         @endif
 
-                        <form action="{{ route('admin.create_informasi') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('admin.create') }}" method="POST" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">

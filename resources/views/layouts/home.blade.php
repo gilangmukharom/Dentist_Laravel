@@ -89,48 +89,17 @@
             </div>
             <div class="container-slider p-5">
                 <div class="card-slider">
-                    <div class="card border-0">
-                        <img src="{{ asset('assets/img/testi-2.png') }}" alt="" class="w-25 m-auto">
-                        <div class="card-body">
-                            <p class="card-text text-justify">Tampilan, gambar, fitur dan menu dari aplikasi ini sangat menarik
-                                sehingga cocok digunakan oleh anak-anak. Saya semakin rajin menggosok gigi berkat Tan's
-                                Dent , terima kasih telah menciptakan aplikasi ini .</p>
+                    @foreach ($ulasan as $ulasanItem)
+                        <div class="card border-0">
+                            <img src="{{ asset('assets/img/testi-2.png') }}" alt="" class="w-25 m-auto">
+                            <div class="card-body">
+                                <p class="card-text text-justify">{{ $ulasanItem->ulasan }}</p>
+                            </div>
+                            <div class="card-footer-card">
+                                <p class="card-text text-center"><strong>{{ $ulasanItem->ulasan }}</strong></p>
+                            </div>
                         </div>
-                        <div class="card-footer-card">
-                          <p class="card-text text-center"><strong>Taufiq</strong></p>
-                        </div>
-                    </div>
-                    <div class="card border-0">
-                        <img src="{{ asset('assets/img/testi-2.png') }}" alt="" class="w-25 m-auto">
-                        <div class="card-body">
-                            <p class="card-text text-justify">fitur daily activity sangat menarik, saya bisa mengerjakan quiz sambil
-                                melihat video animasi gigi di youtube. Tan's Dent keren 👍🏻
-                            </p>
-                        </div>
-                        <div class="card-footer-card">
-                          <p class="card-text text-center"><strong>Bayu</strong></p>
-                        </div>
-                    </div>
-                    <div class="card border-0">
-                        <img src="{{ asset('assets/img/testi-2.png') }}" alt="" class="w-25 m-auto">
-                        <div class="card-body">
-                            <p class="card-text text-justify">Berkat Tan's Dent saya rajin menggosok gigi, bisa mengirim foto dan
-                                video aktifitas harian menggosok gigi disini sangat seruu. Ayo jangan lupa
-                                gosok gigi kalian yaa.</p>
-                        </div>
-                        <div class="card-footer-card">
-                          <p class="card-text text-center"><strong>Ramadhan Ali</strong></p>
-                        </div>
-                    </div>
-                    <div class="card border-0">
-                        <img src="{{ asset('assets/img/testi-2.png') }}" alt="" class="w-25 m-auto">
-                        <div class="card-body">
-                            <p class="card-text text-justify">Bagus sekali sangat membantu untuk menjaga kesehatan gigi dan mulut.</p>
-                        </div>
-                        <div class="card-footer-card">
-                          <p class="card-text text-center"><strong>Erik</strong></p>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

@@ -508,6 +508,11 @@
     color: #ffffff;
 }
 
+.body-dashboard .card-ulasan{
+    background-color: #ffffff !important;
+    color: black !important;
+}
+
 .body-dashboard .leaderboard table .header-table{
     background-color: #34BAF7;
     color: #ffffff;
