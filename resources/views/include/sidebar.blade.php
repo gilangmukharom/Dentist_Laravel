@@ -13,7 +13,8 @@
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
     </script>
 
-    @vite(['resources/css/style.css', 'resources/css/style_sidebar.css', 'resources/js/app.js', 'resources/js/main.js', 'resources/js/jquery.min.js', 'resources/js/bootstrap.min.js', 'resources/js/popper.js'])
+    @vite(['resources/css/style.css', 'resources/css/style_sidebar.css', 'resources/js/app.js', 'resources/js/main.js', 
+    'resources/js/jquery.min.js', 'resources/js/bootstrap.min.js', 'resources/js/popper.js'])
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -67,6 +68,11 @@
                     </ul>
                 </li>
                 <li>
+                    <a href="#" data-toggle="modal" data-target="#helpModal">
+                        <span class="fa fa-phone"></span> Bantuan
+                    </a>
+                </li>
+                <li>
                     <a href="#" data-toggle="modal" data-target="#logoutModal">
                         <span class="fa fa-sign-out"></span> Logout
                     </a>
@@ -109,6 +115,29 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="helpModalLabel">Konfirmasi Bantuan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Apakah anda membutuhkan bantuan?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <a class="btn btn-danger" href="https://wa.link/r52o2j" target="_blank">
+                        Buka Bantuan
+                    </a>
                 </div>
             </div>
         </div>
