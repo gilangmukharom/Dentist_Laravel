@@ -21,12 +21,12 @@
         <div class="img-wrapper w-100 h-auto">
             <img src="{{ asset('assets/img/coverlp.jpg') }}" alt="Tans Dentist Logo" class="img-fluid w-100 h-100">
         </div>
-        <div class="position-absolute top-50 start-50 translate-middle text-center text-white">
+        <div class="position-absolute top-50 start-50 translate-middle w-70 text-center text-white">
             <h1 style="font-size: 3.5vw;"><b>Selamat Datang di Tans’ Dent</b></h1>
             <p style="font-size: 2vw;">Tan’s Dent-Card QR Model Berbasis Website merupakan website edukasi menggosok
                 gigi dengan media
                 interaktif untuk memfasilitasi keterampilan menggosok gigi anak sekolah dasar</p>
-            <button value="Masuk" class="btn bg-2 w-50" onclick="location.href='/login'">
+            <button value="Masuk" class="btn bg-2 w-25" onclick="location.href='/login'">
                 Masuk
             </button>
         </div>

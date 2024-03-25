@@ -14,11 +14,11 @@
 <body class="login-body">
     <div class="navigasi-pengetahuan d-flex justify-content-between align-items-center p-2">
         <div class="title-pengetahuan">
-            <h1>Quiz</h1>
+            <h1 class="text-0">Quiz</h1>
             <p class="text-0">Pengetahuan Gigi dan Mulut</p>
         </div>
         <div class="timer-pengetahuan bg-light d-flex justify-content-center align-items-center">
-            <h2 id="timer">30</h2>
+            <h2 id="timer">60</h2>
         </div>
     </div>
     <div class="box-pengetahuan d-flex flex-column justify-content-center align-items-center">
@@ -59,7 +59,7 @@
     </div>
 
     <script>
-        var timerDuration = 30;
+        var timerDuration = 60;
         var timerElement = document.getElementById('timer');
 
         function startTimer() {
@@ -89,7 +89,7 @@
                 }
 
                 // Restart timer for the next question
-                timerDuration = 3;
+                timerDuration = 60;
                 timerElement.innerText = timerDuration;
                 startTimer();
             } else {

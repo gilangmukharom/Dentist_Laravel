@@ -38,14 +38,14 @@
 
 .header .img-wrapper img,
 .img-about img {
-    background-size: cover;
+    background-size: contain;
     object-fit: cover;
     background-position: center;
 }
-/* 
+
 .header .img-wrapper {
-    height: 80vh;
-} */
+    height: 80vh !important;
+}
 
 .img-about {
     position: relative;
@@ -184,9 +184,9 @@
 
 @media (max-width: 767px) {
 
-    /* .youtube_frame{
-        width: 100% !important;
-    } */
+    .header .img-wrapper {
+        height: 50vh !important;
+    }
 
     .title-finish-pengetahuan{
         text-align: center;

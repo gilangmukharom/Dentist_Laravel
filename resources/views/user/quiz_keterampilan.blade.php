@@ -21,7 +21,7 @@
             <p class="text-0">Keterampilan Gigi dan Mulut</p>
         </div>
         <div class="timer-keterampilan bg-light d-flex justify-content-center align-items-center">
-            <h2 id="time">60</h2>
+            <h2 id="timer">60</h2>
         </div>
     </div>
     <div class="box-keterampilan d-flex flex-column justify-content-center align-items-center">

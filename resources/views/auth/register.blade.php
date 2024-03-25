@@ -13,6 +13,23 @@
 </head>
 
 <body class="register-body">
+    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="successModalLabel">Registrasi Berhasil</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Registrasi Anda berhasil.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -25,29 +42,6 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="successModalLabel">Registrasi Berhasil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    @if (Auth::user())
-                        <p>Selamat datang,
-                            {{ Auth::user()->username }}!
-                        </p>
-                        <p>Registrasi Anda berhasil.</p>
-                    @else
-                        <p>Registrasi Anda berhasil.</p>
-                    @endif
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
                 </div>
             </div>
         </div>
@@ -126,115 +120,100 @@
             </form>
         </div>
 
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+        </script>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
+        <script>
+            $(document).ready(function() {
+                // Intercept the form submission
+                $('#registerForm').submit(function(event) {
+                    // Check if all required fields are filled
+                    var formIsValid = true;
 
-    <script>
-        $(document).ready(function() {
-            // Intercept the form submission
-            $('#registerForm').submit(function(event) {
-                // Check if all required fields are filled
-                var formIsValid = true;
+                    $('.form-control[required]').each(function() {
+                        if ($(this).val().trim() === '') {
+                            formIsValid = false;
+                            // Display invalid feedback
+                            $(this).siblings('.invalid-feedback').text('Field ini harus diisi.');
+                        } else {
+                            // Clear invalid feedback if the field is filled
+                            $(this).siblings('.invalid-feedback').text('');
+                        }
+                    });
 
-                $('.form-control[required]').each(function() {
-                    if ($(this).val().trim() === '') {
-                        formIsValid = false;
-                        // Display invalid feedback
-                        $(this).siblings('.invalid-feedback').text('Field ini harus diisi.');
-                    } else {
-                        // Clear invalid feedback if the field is filled
-                        $(this).siblings('.invalid-feedback').text('');
-                    }
-                });
-
-                // If the form is not valid, prevent submission and show error modal
-                if (!formIsValid) {
-                    event.preventDefault();
-                    $('#errorModal').modal('show');
-                } else {
-                    // Check if there's an error message in the error modal
-                    var errorMessage = $('#errorMessage').text().trim();
-                    if (errorMessage !== '') {
+                    // If the form is not valid, prevent submission and show error modal
+                    if (!formIsValid) {
+                        event.preventDefault();
                         $('#errorModal').modal('show');
-                        event.preventDefault(); // Prevent form submission if there's an error
                     } else {
-                        // Show the success modal
-                        $('#successModal').modal('show');
-                    }
-                }
-            });
-
-            // Toggle password visibility
-            $('#password-toggle').click(function() {
-                var passwordInput = $('#password');
-                var showPasswordBtn = $(this).find('i');
-
-                if (passwordInput.attr('type') === 'password') {
-                    passwordInput.attr('type', 'text');
-                    showPasswordBtn.removeClass('fa-eye').addClass('fa-eye-slash');
-                } else {
-                    passwordInput.attr('type', 'password');
-                    showPasswordBtn.removeClass('fa-eye-slash').addClass('fa-eye');
-                }
-            });
-
-            // Clear validation messages when the input is valid
-            $('#registerForm input').on('input', function() {
-                var validField = $(this);
-                validField.siblings('.invalid-feedback').text('');
-            });
-
-            // Disable submit button initially
-            $('#submitBtn').attr('disabled', true);
-
-            // Enable submit button only when all required fields are filled
-            $('.form-control[required]').on('input', function() {
-                var allFieldsFilled = true;
-
-                $('.form-control[required]').each(function() {
-                    if ($(this).val().trim() === '') {
-                        allFieldsFilled = false;
-                        return false; // Exit the loop early if any field is empty
+                        // Check if there's an error message in the error modal
+                        var errorMessage = $('#errorMessage').text().trim();
+                        if (errorMessage !== '') {
+                            $('#errorModal').modal('show');
+                            event.preventDefault();
+                        } else {
+                            // Show the success modal
+                            $('#successModal').modal('show');
+                        }
                     }
                 });
 
-                $('#submitBtn').attr('disabled', !allFieldsFilled);
+                // Clear validation messages when the input is valid
+                $('#registerForm input').on('input', function() {
+                    var validField = $(this);
+                    validField.siblings('.invalid-feedback').text('');
+                });
+
+                // Disable submit button initially
+                $('#submitBtn').attr('disabled', true);
+
+                // Enable submit button only when all required fields are filled
+                $('.form-control[required]').on('input', function() {
+                    var allFieldsFilled = true;
+
+                    $('.form-control[required]').each(function() {
+                        if ($(this).val().trim() === '') {
+                            allFieldsFilled = false;
+                            return false; // Exit the loop early if any field is empty
+                        }
+                    });
+
+                    $('#submitBtn').attr('disabled', !allFieldsFilled);
+                });
+
+                // Handle validation error modal
+                $('#errorModal').on('show.bs.modal', function(event) {
+                    var modal = $(this);
+                    var errorMessage = modal.find('.modal-body #errorMessage').text(); // Correct selector
+                    modal.find('.modal-body #errorMessage').text(errorMessage);
+                });
+
+                // Check if there's an error message from server, then show error modal
+                var errorMessage = '{{ session('error-message') }}';
+                if (errorMessage.trim() !== '') { // Add .trim() to check if the message is not empty
+                    $('#errorModal').modal('show');
+                }
             });
+        </script>
 
-            // Handle validation error modal
-            $('#errorModal').on('show.bs.modal', function(event) {
-                var modal = $(this);
-                var errorMessage = modal.data('error-message');
-                modal.find('.modal-body #errorMessage').text(errorMessage);
-            });
+        <script>
+            function togglePasswordVisibility() {
+                var passwordInput = document.getElementById('password');
+                var showPasswordBtn = document.querySelector('.password-input-group button i');
 
-            // Check if there's an error message from server, then show error modal
-            var errorMessage = '{{ session('error-message') }}';
-            if (errorMessage) {
-                $('#errorModal').modal('show');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    showPasswordBtn.className = 'fas fa-eye-slash';
+                } else {
+                    passwordInput.type = 'password';
+                    showPasswordBtn.className = 'fas fa-eye';
+                }
             }
-        });
-    </script>
-
-    <script>
-        function togglePasswordVisibility() {
-            var passwordInput = document.getElementById('password');
-            var showPasswordBtn = document.querySelector('.password-input-group button i');
-
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                showPasswordBtn.className = 'fas fa-eye-slash';
-            } else {
-                passwordInput.type = 'password';
-                showPasswordBtn.className = 'fas fa-eye';
-            }
-        }
-    </script>
+        </script>
 </body>
 
 </html>

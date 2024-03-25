@@ -29,7 +29,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/profile-update', [UserDashboardController::class, 'update_profile'])->middleware('role:user')->name('user.profile-update');
 
     Route::get('/user/video', [UserDashboardController::class, 'video'])->middleware('role:user')->name('user.video');
-    Route::get('/user/teethq', [UserDashboardController::class, 'teethq'])->middleware('role:user')->name('user.teethq');
     Route::get('/user/info', [UserDashboardController::class, 'info'])->middleware('role:user')->name('user.info');
     Route::get('/user/info_detail/{id}', [UserDashboardController::class, 'info_detail'])->middleware('role:user')->name('user.info_detail');
     Route::get('/user/panduan', [UserDashboardController::class, 'panduan'])->middleware('role:user')->name('user.panduan');

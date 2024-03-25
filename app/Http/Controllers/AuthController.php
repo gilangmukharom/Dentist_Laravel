@@ -10,7 +10,12 @@ use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function register(){
+    public function register()
+    {
+        if (Auth::check()) {
+            // Jika sudah login, arahkan ke halaman beranda atau halaman lain yang sesuai
+            return redirect()->back()->with('error', 'Anda sudah login! silahkan logout');
+        }
         return view('auth/register');
     }
 
@@ -31,7 +36,7 @@ class AuthController extends Controller
         $existingUser = User::where('username', $request->username)->exists();
         if ($existingUser) {
             // Jika username sudah digunakan, redirect kembali dengan pesan error
-            return redirect()->back()->withInput()->with('error-message', 'Username sudah digunakan.')->withErrors(['username' => 'Username sudah digunakan.']);
+            return redirect()->back()->withInput()->with('error-message', 'Username sudah digunakan.');
         }
 
         $user = User::create([
@@ -46,8 +51,15 @@ class AuthController extends Controller
 
         return redirect('/login')->with('registration_success', true);
     }
-    public function login(){
-        return view('auth/login');
+
+    public function login()
+    {
+        // Periksa apakah pengguna sudah login
+        if (Auth::check()) {
+            // Jika sudah login, arahkan ke halaman beranda atau halaman lain yang sesuai
+            return redirect()->back();
+        }
+        return view('auth/login')->with('error', 'Anda sudah login! silahkan logout');;
     }
 
     public function login_auth(Request $request)

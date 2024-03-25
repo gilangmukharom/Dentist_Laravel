@@ -3,19 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function home(){
+        if (Auth::check()) {
+            return redirect()->back()->with('error', 'Anda sudah login! silahkan logout');;
+        }
+
         return view('layouts/home');
     }
     public function about()
     {
-        return view('layouts/about');
-    }
+        if (Auth::check()) {
+            return redirect()->back()->with('error', 'Anda sudah login! silahkan logout');;
+        }
 
-    public function errorPage()
-    {
-        return view('auth/error');
+        return view('layouts/about');
     }
 }
