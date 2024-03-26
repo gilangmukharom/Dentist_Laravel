@@ -549,7 +549,7 @@ class UserDashboardController extends Controller
 
     public function quiz_keterampilan(Request $request)
     {
-        $q_keterampilans = Quiz_keterampilans::with('jawabans')->inRandomOrder()->limit(5)->get();
+        $q_keterampilans = Quiz_keterampilans::with('jawabans')->inRandomOrder()->limit(10)->get();
 
         return view('user.quiz_keterampilan', compact('q_keterampilans'));
     }
@@ -601,7 +601,7 @@ class UserDashboardController extends Controller
 
     public function quiz_pengetahuan()
     {
-        $q_pengetahuans = Quiz_pengetahuans::with('jawabans')->inRandomOrder()->limit(5)->get();
+        $q_pengetahuans = Quiz_pengetahuans::with('jawabans')->inRandomOrder()->limit(10)->get();
 
         return view('user.quiz_pengetahuan', compact('q_pengetahuans'));
     }
